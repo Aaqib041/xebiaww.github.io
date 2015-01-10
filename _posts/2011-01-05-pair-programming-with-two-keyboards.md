@@ -1,27 +1,35 @@
 ---
 layout: post
 header-img: img/default-blog-pic.jpg
+author: pranjan
+description: 
+post_id: 7453
+created: 2011/01/05 00:32:16
+created_gmt: 2011/01/04 19:32:16
+comment_status: open
 ---
 
 # Pair Programming With Two Keyboards
 
-Today when I started pair programming, me and my partner did an experiment by using two keyboards. I don’t know whether its advised to do in pair programming or not, but we started it mostly out of curiosity and fun.
+<p style="text-align: justify;">Today when I started pair programming, me and my partner did an experiment by using two keyboards. I don’t know whether its advised to do in pair programming or not, but we started it mostly out of curiosity and fun.</p>
 
-Generally we pair with only one keyboard and one person becomes the navigator and the other person becomes the driver. We change the roles every half/one hour.
+<p style="text-align: justify;">Generally we pair with only one keyboard and one person becomes the navigator and the other person becomes the driver. We change the roles every half/one hour.</p>
 
-One major problem while pair programming with only one keyboard is that the navigator can doze off in between with his eyes on screen and mind somewhere in Hawaii. This is a pretty common thing, specially for newbies who start pairing. And if the driver is someone who loves himself and his code a lot, then he will neither know nor mind the navigator’s virtual Hawaii trip.  Other than that, the person who codes a particular part is having more control over it than the navigator. So, when we switch the roles of the navigator and driver, the new driver takes some time to have a complete control over the code. The outcomes of this can be loss of productivity due to time taken by the navigator to take the complete control over the code written earlier . And if the new driver is not able to grasp the old code soon, the new code written by him might not be the best he can write.
+<p style="text-align: justify;">One major problem while pair programming with only one keyboard is that the navigator can doze off in between with his eyes on screen and mind somewhere in Hawaii. This is a pretty common thing, specially for newbies who start pairing. And if the driver is someone who loves himself and his code a lot, then he will neither know nor mind the navigator’s virtual Hawaii trip.
+<!--more-->
+Other than that, the person who codes a particular part is having more control over it than the navigator. So, when we switch the roles of the navigator and driver, the new driver takes some time to have a complete control over the code. The outcomes of this can be loss of productivity due to time taken by the navigator to take the complete control over the code written earlier . And if the new driver is not able to grasp the old code soon, the new code written by him might not be the best he can write.</p>
 
-The navigator has to adjust himself to grab the keyboard if he wants to contribute a line or to analyze something using keyboard. The keyboard’s need arises if the navigator wants to highlight something on the code, or he wants to name/rename a variable/method/class, then writing is far better than spelling it out. Grabbing the keyboard requires a bit of shifting of chairs and sitting positions. The main point is that there is discomfort involved, which can lead to early tiredness.
+<p style="text-align: justify;">The navigator has to adjust himself to grab the keyboard if he wants to contribute a line or to analyze something using keyboard. The keyboard’s need arises if the navigator wants to highlight something on the code, or he wants to name/rename a variable/method/class, then writing is far better than spelling it out. Grabbing the keyboard requires a bit of shifting of chairs and sitting positions. The main point is that there is discomfort involved, which can lead to early tiredness.</p>
 
-So, when we started coding with two keyboards, we both had control over the code at the same time. We switched the driver/navigator role every two to five minutes. So, the code was being written by both of us. At any moment of time, both of us were having the complete picture of the code being written. No one can distinguish who wrote which part of the code. The same level of control over the code enabled us to think better than what we would have thought in a navigator’s role, which, ultimately, lead to a better design.
+<p style="text-align: justify;">So, when we started coding with two keyboards, we both had control over the code at the same time. We switched the driver/navigator role every two to five minutes. So, the code was being written by both of us. At any moment of time, both of us were having the complete picture of the code being written. No one can distinguish who wrote which part of the code. The same level of control over the code enabled us to think better than what we would have thought in a navigator’s role, which, ultimately, lead to a better design.</p>
 
-The other benefit was that the code was being continuously refactored by the pair. There was less talk and more coding. Whatever the problem was, no matter how small, was being fixed then and there. In short, the code was more cleaner than it would have been.
+<p style="text-align: justify;">The other benefit was that the code was being continuously refactored by the pair. There was less talk and more coding. Whatever the problem was, no matter how small, was being fixed then and there. In short, the code was more cleaner than it would have been.</p>
 
-As both the driver and navigator were involved in the coding for most of the time, there was no boredom or disconnect from code involved, which prevented even a yawn, leave aside dozing off. And of course, you don’t need to shift your chair every now and then, so, its more comfortable and enjoyable.
+<p style="text-align: justify;">As both the driver and navigator were involved in the coding for most of the time, there was no boredom or disconnect from code involved, which prevented even a yawn, leave aside dozing off. And of course, you don’t need to shift your chair every now and then, so, its more comfortable and enjoyable.</p>
 
-Sometimes, we had problems when both of us started typing at the same time. To fix this problem, we kept a green flag. The person having the green flag was allowed to type, this solved the chaos pretty much.
+<p style="text-align: justify;">Sometimes, we had problems when both of us started typing at the same time. To fix this problem, we kept a green flag. The person having the green flag was allowed to type, this solved the chaos pretty much.</p>
 
-In all, I would say that if you have not tried pair programming with two keyboards, try it out. Its more comfortable, enjoyable and productive.
+<p style="text-align: justify;">In all, I would say that if you have not tried pair programming with two keyboards, try it out. Its more comfortable, enjoyable and productive.</p>
 
 ## Comments
 

@@ -1,24 +1,105 @@
 ---
 layout: post
 header-img: img/default-blog-pic.jpg
+author: anubhava
+description: 
+post_id: 9035
+created: 2011/06/14 15:20:01
+created_gmt: 2011/06/14 10:20:01
+comment_status: open
 ---
 
 # Drupal Webform : Add a dynamic select option list
 
-Ever wanted to have a dynamic option list in your Webform select widget ( checkbox, radiobutton, dropdown ) ? Well, I wanted to load a dynamic list of dates in a Webform and display them as checkboxes. I faced this problem when I was developing a training website where each training class would have different training dates. _So let's start and build our dynamic select option list._ In order to achieve this you need to do the following steps: 1\. Add a select widget to your Webform 
+<p>Ever wanted to have a dynamic option list in your Webform select widget ( checkbox, radiobutton, dropdown ) ?</p>
+<p>Well, I wanted to load a dynamic list of dates in a Webform and display them as checkboxes. I faced this problem when I was developing a training website where each training class would have different training dates.</p>
+<p><em>So let's start and build our dynamic select option list.</em></p>
+<!--more-->
 
-![](/wp-content/uploads/2011/06/webform_from1-1024x457.png)
+<p>In order to achieve this you need to do the following steps:</p>
+<ol>
+<li>Add a select widget to your Webform
+<div style="padding-top: 10px;"><a rel="attachment wp-att-9089" href="http://xebee.xebia.in/2011/06/14/drupal-webform-add-a-dynamic-select-option-list/webform_from-2/"><img class="alignnone size-large wp-image-9089" title="webform_from" src="http://xebee.xebia.in/wp-content/uploads/2011/06/webform_from1-1024x457.png" alt="" width="639" height="285" /></a></div></li>
+<li>Create a custom Webform module ( webform_custom ) with the following files.</li>
+</ol>
+<!-- p { margin-bottom: 0.08in; } -->
 
-2\. Create a custom Webform module ( webform_custom ) with the following files. 
+<ul>
+    <li><strong>webform_custom.info</strong> – as the name suggest contains the info of the module</li>
+[sourcecode language="php"]
+name = Webform Custom
+description = Provides custom functionality for the Webform
+core = 6.x
+project = &quot;webform_custom&quot;
+package = Other
+[/sourcecode]
+    <li><strong>webform_custom.module</strong> – this file will contain the code that will generate our dynamic options list, for now just keep this file empty</li>
+</ul>
 
-  * **webform_custom.info** – as the name suggest contains the info of the module
-[sourcecode language="php"] name = Webform Custom description = Provides custom functionality for the Webform core = 6.x project = "webform_custom" package = Other [/sourcecode] 
-  * **webform_custom.module** – this file will contain the code that will generate our dynamic options list, for now just keep this file empty
-3\. Active you custom module from _**Administer → Site building → Modules**_ 4\. The following hook adds another item for “Load a pre-built option list” menu in Webform's select form component. This hook will go into the module file: [sourcecode language="php"] function webform_custom_webform_select_options_info() { $items = array(); if (function_exists('_webform_get_dates')) { $items['training_dates'] = array( 'title' => t('Training class dates'), 'options callback' => '_webform_get_dates', ); } return $items; } [/sourcecode] The result of the above function will add the following item in the select form component drop-down: 
+<ol>
+<li>
+<p>Active you custom module from    <em><strong>Administer → Site building → Modules</strong></em></p>
+</li>
+<li>
+<p>The following hook adds another item for “Load a pre-built option list” menu in Webform's select     form component. This hook will go into the module file:</p>
+</li>
+</ol>
+<p>[sourcecode language="php"]
+function webform_custom_webform_select_options_info()</p>
+<p>{</p>
+<pre><code> $items = array();
 
-![](/wp-content/uploads/2011/06/prebuilt-option-list1.png)
+ if (function_exists('_webform_get_dates'))
+ {
 
-As you have noted already we still do not have the data yet. No worries!! The following code fetches the data from the database and returns a list of all dates for a particular node/training class but you can return whatever you want as long as its an array: [sourcecode language="php"] function _webform_get_dates() { $dates = array(); $node_id = arg(1); $select = db_query(db_rewrite_sql(" SELECT t.nid, t.field_training_date_value as tdate FROM {content_type_training_class} c, {node} n WHERE c.nid='$node_id' and c.nid=n.nid ORDER BY field_training_date_value")); while ($date = db_fetch_object($select)) { $td = $date->tdate; $dates[$td] = $td; } return $dates; } [/sourcecode] 5\. Now go back to the Webform select form component and choose the 'Training class dates' option from the “Load a pre-built option list” dropdown and save the field. You can do a lot of customization with these hooks, which may not be possible to do via Drupal's admin interface. See the full list of Webform hooks [here](http://api.lullabot.com/group/webform_hooks/7). That's it folks!!
+      $items['training_dates'] = array(
+
+   'title' =&amp;gt; t('Training class dates'),
+
+    'options callback' =&amp;gt; '_webform_get_dates',
+
+    );
+</code></pre>
+<p>}</p>
+<p>return $items;</p>
+<p>}
+[/sourcecode]</p>
+<p>The result of the above function will add the following item in the select form component drop-down:
+<div style="padding-top: 10px;"><a rel="attachment wp-att-9105" href="http://xebee.xebia.in/2011/06/14/drupal-webform-add-a-dynamic-select-option-list/prebuilt-option-list-2/"><img class="alignnone size-full wp-image-9105" title="prebuilt-option-list" src="http://xebee.xebia.in/wp-content/uploads/2011/06/prebuilt-option-list1.png" alt="" width="631" height="138" /></a></div>
+<!-- p { margin-bottom: 0.08in; } --></p>
+<p>As you have noted already we still do not have the data yet. No worries!!</p>
+<p>The following code fetches the data from the database and returns a list of all dates for a particular node/training class but you can return whatever you want as long as its an array:</p>
+<p>[sourcecode language="php"]
+function _webform_get_dates()</p>
+<p>{</p>
+<p>$dates = array();</p>
+<p>$node_id = arg(1);</p>
+<p>$select = db_query(db_rewrite_sql(&quot;</p>
+<pre><code>          SELECT t.nid, t.field_training_date_value as tdate
+
+          FROM {content_type_training_class} c, {node} n
+
+          WHERE c.nid='$node_id'
+
+          and c.nid=n.nid
+
+          ORDER BY field_training_date_value&amp;quot;));
+
+while ($date = db_fetch_object($select)) {
+
+ $td = $date-&amp;gt;tdate;
+
+ $dates[$td] = $td;
+</code></pre>
+<p>}</p>
+<p>return $dates;</p>
+<p>}
+[/sourcecode]</p>
+<ol>
+<li>Now go back to the Webform select form component and choose the 'Training class dates' option from the “Load a pre-built option list” dropdown and save the field.</li>
+</ol>
+<p>You can do a lot of customization with these hooks, which may not be possible to do via Drupal's admin interface. See the full list of Webform hooks <a title="here" href="http://api.lullabot.com/group/webform_hooks/7" target="_blank">here</a>.</p>
+<p>That's it folks!!</p>
 
 ## Comments
 

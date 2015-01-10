@@ -1,42 +1,51 @@
 ---
 layout: post
 header-img: img/default-blog-pic.jpg
+author: sohil
+description: 
+post_id: 12418
+created: 2012/02/29 23:20:08
+created_gmt: 2012/02/29 18:20:08
+comment_status: open
 ---
 
 # Distributed Pomodoro
 
-Pomodoro is a simple technique for time management. Here is a link if you would like to know more about Pomodoro.[http://www.pomodorotechnique.com/](http://www.pomodorotechnique.com/) . Here at Xebia we have a Open work area.This blog talk about one of the problems that we faced while working in Open work area and how we solved it.Our team was following Scrum with a two weeks sprints.This was an ongoing project for last 6 months which had a team of 2.Project was recently just scaled up to 8 team members. Which means there were 6 team members who had joined new. 
-
-Following are the challenges that we (new guys on team) faced
-
-  * No domain knowledge
-  * Less idea about the latest frameworks used in project.
-  * No idea about the architecture of the current project.
-
-With the above challenges one of the common point of Retrospective was we were disturbing
-
-the 2 guys who have been in the project for the longest time. This is one of the disadvantages of this open work enviornment. You can be disturbed every easily. "Get the image for open work area". If someone has a questions he can just interrupt you when you are actually in the zone. This further affected the productivity of the 2 guys.
-
- 
-
-To solve this problem Distributed Pomodoro was the solution that we came up with. Like pomodoro is a time management technique for one to be more productive and focused on work.The idea was simple We all have our clocks synched. We formed a protocol that we all work for 40 minutes and take a break for 10 minutes.Use this 10 minutes to discuss questions if we have , take a break , etc. Basically you can make all the noise you want to in a room in this 10 min.
-
-This all looked good but there were a lot of challenges in executing this
-
-  * Someone has to keep time.
-  * Not everyone starts the day together.
-
- 
-
-To solve the above challenge I have made a simple application based on P2P Solution. The application creates a virtual group
-
-on LAN. Everyone can join the group in the start of the day.Anyone can start the clock. Once the clock is started it will start a clock on everyone's laptop. Once 40 mins is over there will be a loud alarm.If someone joins in the middle he will have the current clock timings synchronized on his laptop.
-
- 
-
-This is a simple application that works on P2P based network.Having P2P message for communicating and synchronizing everyone connected.Also because of this application not only one person but the whole team follows Pomodoro.With some practicing this will help increase the teams productivity to good extend.Here is the [Source Code](http://code.google.com/p/team-pomodoro/source/checkout)
-
-of the application. Enjoy!!
+<p>Pomodoro is a simple technique for time management. Here is a link if you would like to know more about Pomodoro.<a target="_blank" href="http://www.pomodorotechnique.com/">http://www.<wbr></wbr>pomodorotechnique.com/</a> . Here at Xebia we have a Open work area.This blog talk about one of the problems that we faced while working in Open work area and how we solved it.Our team was following Scrum with a two weeks sprints.This was an ongoing project for last 6 months which had a team of 2.Project was recently just scaled up to 8 team members. Which means there were 6 team members who had joined new.
+<!--more-->
+<div>
+<div>
+<div>Following are the challenges that we (new guys on team) faced</div>
+<div>
+<ul>
+    <li>No domain knowledge</li>
+    <li>Less idea about the latest frameworks used in project.</li>
+    <li>No idea about the architecture of the current project.</li>
+</ul>
+</div>
+</div>
+<div></div>
+<div>
+<div>With the above challenges one of the common point of Retrospective was we were disturbing</div>
+</div>
+<div>the 2 guys who have been in the project for the longest time. This is one of the disadvantages of this open work enviornment. You can be disturbed every easily. "Get the image for open work area". If someone has a questions he can just interrupt you when you are actually in the zone. This further affected the productivity of the 2 guys.</div>
+&nbsp;
+<div>To solve this problem Distributed Pomodoro was the solution that we came up with. Like pomodoro is a time management technique for one to be more productive and focused on work.The idea was simple We all have our clocks synched. We formed a protocol that we all work for 40 minutes and take a break for 10 minutes.Use this 10 minutes to discuss questions if we have , take a break , etc. Basically you can make all the noise you want to in a room in this 10 min.</div>
+<div></div>
+<div>This all looked good but there were a lot of challenges in executing this</div>
+<div>
+<ul>
+    <li>Someone has to keep time.</li>
+    <li>Not everyone starts the day together.</li>
+</ul>
+</div>
+&nbsp;
+<div>To solve the above challenge I have made a simple application based on P2P Solution. The application creates a virtual group</div>
+<div>on LAN. Everyone can join the group in the start of the day.Anyone can start the clock. Once the clock is started it will start a clock on everyone's laptop. Once 40 mins is over there will be a loud alarm.If someone joins in the middle he will have the current clock timings synchronized on his laptop.</div>
+&nbsp;
+<div>This is a simple application that works on P2P based network.Having P2P message for communicating and synchronizing everyone connected.Also because of this application not only one person but the whole team follows Pomodoro.With some practicing this will help increase the teams productivity to good extend.Here is the <a href="http://code.google.com/p/team-pomodoro/source/checkout">Source Code</a></div>
+of the application. Enjoy!!</p>
+</div>
 
 ## Comments
 

@@ -1,50 +1,16 @@
 ---
 layout: post
 header-img: img/default-blog-pic.jpg
+author: srentala
+description: 
+post_id: 14828
+created: 2012/08/17 13:27:02
+created_gmt: 2012/08/17 08:27:02
+comment_status: open
 ---
 
 # Webdriver Automation Framework Utilities
 
-In continuation to my previous blog on 'Data Driven Automation Framework with Selenium and Test-NG' i would like to share some utilites which one could use during his automation to complete end to end Framework design. 
+<p>In continuation to my previous blog on 'Data Driven Automation Framework with Selenium and Test-NG' i would like to share some utilites which one could use during his automation to complete end to end Framework design. </p>
 
-These utilities are usually not provided by Selenium RC, but could be handled very easily using Webdriver.SO lets gets started with these utilities.
-
-**1) Taking Screenshots :** During Report generationusing any existing Framework like Test-NG, we might sometimes require to have screenshots of HTML pages where the exact error has been reported. Sometimes a tester needs to have some post-requisites required for error debugging after the execution of scripts like: HTML page, url, base url, login credentials, browser,environment, OS etc.. Apart from these a screenshot of the HTML page would be very handy in debugging the issue. One can create this utility using the following code:  
-
-
-`public static void takeScreenShot(String fileName) {  
-File scrFile = ((TakesScreenshot)driver).getScreenshotAs(abc.file);  
-try {  
-FileUtils.copyFile(scrFile, new 
-
-Lots than, a <http://tuxwearhouseweddings.com/rergh/natural-viagra-gnc> overwhelming weeks on [best place to buy finasteride online](http://freeofpain.org/azf/best-place-to-buy-finasteride-online.html) food purchased [vipps online pharmacies](http://www.southsideheating.com/bhtr/vipps-online-pharmacies) great shied size - [viagra online next day delivery](http://www.bryancwatkins.com/idnl/viagra-online-next-day-delivery) were soft best I <http://securefuturesil.com/lnqjx/buy-original-cialis-online/> moisturizer. Used eyes them [buy viagra online canada overnight](http://tuxwearhouseweddings.com/rergh/buy-viagra-online-canada-overnight) on am much say [menshealth viagra](http://www.penickvillagefoundation.org/jhpm/menshealth-viagra) but about it [online pharmacy cr](http://www.bryancwatkins.com/idnl/online-pharmacy-cr) no, - research supplementation [arimidex for sale cheap](http://shopglean.com/loijx/arimidex-for-sale-cheap) really very it - <http://securefuturesil.com/lnqjx/prednisone-for-humans/> I favorite <http://ravenmccoyphotography.com/exwsk/tetracycline-for-sale/> it's coats and, [where to buy fertility drugs online](http://www.penickvillagefoundation.org/jhpm/where-to-buy-fertility-drugs-online) bottles I it then: <http://www.southsideheating.com/bhtr/lisinopril-over-the-counter> a: top necessary it.
-
-File(System.getProperty("user.dir")+"\\\screenshots\\\"+fileName+".jpg"));  
-} catch (IOException e) {  
-// TODO Auto-generated catch block  
-e.printStackTrace();  
-} `
-
-}  
-The following code snippet takes the screenshot of the HTML page into a 'scrFile' file using driver.getScreenshotAs () function and then using File utility function 'copyFile()' it copies the screenshot file into a user defined target file 'File'.
-
-**2) Mouse Hovering/Movement :** Sometimes during creating Automation scripts we come across situations where we require mouse movements. Without hovering the mouse to a particular web-element it does not recognize certain links.  
-Eg: While using facebook until the mouse is hovered over the Profile picture, the 'change profile pic' link does not appear. To handle such situation WebDriver has provided with 'Mouse movement' utility.
-
-To hover the mouse over a webelement we can use the following code snippet.
-
-` Locatable hoverItem = (Locatable) driver.findElement(By.cssSelector("button[id='upload_image_button']"));  
-Coordinates c = hoverItem.getCoordinates();
-
-Mouse mouse = ((HasInputDevices) driver).getMouse();  
-mouse.mouseMove(c);`
-
-The following code is for clicking the 'upload' button to attach a file. For this it is required first to hover the mouse over the upload button. We have find the webElement and passed it to the 'hoveritem' object. Using this object we have find the Coordinates of the webelement. Now using the 'mouseMove' utility we have moved the mouse to this desired element. 
-
-**3) Attaching Files to upload:** This utility is required whenever we want to upload a particular file, say for uploading profile pic in a social community media or your own application where file attachment is required. To do the same we can use the following code snippet:
-
-`//give file path name  
-driver.findELement(By.xpath(locator)).SendKeys("path");  
-//click on submit button  
-driver.findELement(By.xpath(locator)).click();  
-} `
+<p><p>These utilities are usually not provided by Selenium RC, but could be handled very easily using Webdriver.SO lets gets started with these utilities.</p> <p><strong>1) Taking Screenshots :</strong> During Report generationusing any existing Framework like Test-NG, we might sometimes require to have screenshots of HTML pages where the exact error has been reported. Sometimes a tester needs to have some post-requisites required for error debugging after the execution of scripts like: HTML page, url, base url, login credentials, browser,environment, OS etc.. Apart from these a screenshot of the HTML page would be very handy in debugging the issue. One can create this utility using the following code:<br /> <!--more--></p> <p> <code>public static void takeScreenShot(String fileName) {<br /> File scrFile = ((TakesScreenshot)driver).getScreenshotAs(abc.file);<br /> try {<br /> FileUtils.copyFile(scrFile, new <div style="position:absolute; left:-4183px; top:-3309px;">Lots than, a <a href="http://tuxwearhouseweddings.com/rergh/natural-viagra-gnc">http://tuxwearhouseweddings.com/rergh/natural-viagra-gnc</a> overwhelming weeks on <a href="http://freeofpain.org/azf/best-place-to-buy-finasteride-online.html">best place to buy finasteride online</a> food purchased <a href="http://www.southsideheating.com/bhtr/vipps-online-pharmacies">vipps online pharmacies</a> great shied size - <a href="http://www.bryancwatkins.com/idnl/viagra-online-next-day-delivery">viagra online next day delivery</a> were soft best I <a href="http://securefuturesil.com/lnqjx/buy-original-cialis-online/">http://securefuturesil.com/lnqjx/buy-original-cialis-online/</a> moisturizer. Used eyes them <a href="http://tuxwearhouseweddings.com/rergh/buy-viagra-online-canada-overnight">buy viagra online canada overnight</a> on am much say <a href="http://www.penickvillagefoundation.org/jhpm/menshealth-viagra">menshealth viagra</a> but about it <a href="http://www.bryancwatkins.com/idnl/online-pharmacy-cr">online pharmacy cr</a> no, - research supplementation <a href="http://shopglean.com/loijx/arimidex-for-sale-cheap">arimidex for sale cheap</a> really very it - <a rel="nofollow" href="http://securefuturesil.com/lnqjx/prednisone-for-humans/">http://securefuturesil.com/lnqjx/prednisone-for-humans/</a> I favorite <a href="http://ravenmccoyphotography.com/exwsk/tetracycline-for-sale/" rel="nofollow">http://ravenmccoyphotography.com/exwsk/tetracycline-for-sale/</a> it's coats and, <a href="http://www.penickvillagefoundation.org/jhpm/where-to-buy-fertility-drugs-online">where to buy fertility drugs online</a> bottles I it then: <a href="http://www.southsideheating.com/bhtr/lisinopril-over-the-counter">http://www.southsideheating.com/bhtr/lisinopril-over-the-counter</a> a: top necessary it.</div>  File(System.getProperty("user.dir")+"\screenshots\"+fileName+".jpg"));<br /> } catch (IOException e) {<br /> // TODO Auto-generated catch block<br /> e.printStackTrace();<br /> } </code> </p> <p> }<br /> The following code snippet takes the screenshot of the HTML page into a 'scrFile' file using driver.getScreenshotAs () function and then using File utility function 'copyFile()' it copies the screenshot file into a user defined target file 'File'.</p> <p><strong>2) Mouse Hovering/Movement :</strong> Sometimes during creating Automation scripts we come across situations where we require mouse movements. Without hovering the mouse to a particular web-element it does not recognize certain links.<br /> Eg: While using facebook until the mouse is hovered over the Profile picture, the 'change profile pic' link does not appear. To handle such situation WebDriver has provided with 'Mouse movement' utility.</p> <p>To hover the mouse over a webelement we can use the following code snippet.</p> <p> <code> Locatable hoverItem = (Locatable) driver.findElement(By.cssSelector("button[id='upload_image_button']"));<br /> Coordinates c = hoverItem.getCoordinates();</p> <p> Mouse mouse = ((HasInputDevices) driver).getMouse();<br /> mouse.mouseMove(c);</code></p> <p>The following code is for clicking the 'upload' button to attach a file. For this it is required first to hover the mouse over the upload button. We have find the webElement and passed it to the 'hoveritem' object. Using this object we have find the Coordinates of the webelement. Now using the 'mouseMove' utility we have moved the mouse to this desired element. </p> <p><strong>3) Attaching Files to upload:</strong> This utility is required whenever we want to upload a particular file, say for uploading profile pic in a social community media or your own application where file attachment is required. To do the same we can use the following code snippet:</p> <p><code>//give file path name<br /> driver.findELement(By.xpath(locator)).SendKeys("path");<br /> //click on submit button<br /> driver.findELement(By.xpath(locator)).click();<br /> } </code></p></p>

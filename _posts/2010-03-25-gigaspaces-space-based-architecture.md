@@ -1,30 +1,52 @@
 ---
 layout: post
 header-img: img/default-blog-pic.jpg
+author: rsharma
+description: 
+post_id: 3333
+created: 2010/03/25 12:42:53
+created_gmt: 2010/03/25 07:42:53
+comment_status: open
 ---
 
 # GigaSpaces: Space Based Architecture 
 
-Recently one of our clients asked to make a distributed application that can be scaled and managed easily and cost effectively. So we evaluated [JavaSpaces](http://java.sun.com/developer/technicalArticles/tools/JavaSpaces/), a Space Based Architecture concept, and one of its commercial implementation [GigaSpaces ](http://www.gigaspaces.com/)for the purpose. In this post I will try to describe in brief what the Space based Architecture approach is all about.
+<!--        @page { margin: 2cm }       P { margin-bottom: 0.21cm } -->
 
-Space Based Architecture(SBA) is a paradigm of co-located tiers. It combines the elements of SOA, event driven architecture and grid computing. In SBA we would create tiers but would co-locate them with the messaging and data in-memory, at one single box. Now there are no network hop-overs as the data required is available in memory rather on an ESB or Database, hence there is minimum latency and thus maximum throughput. The whole box will now be called a **_**PROCESSING UNIT**_**, that will have an in memory bus known as the _**SPACE**. _For fail-over strategy we would eventually create backups of this Processing Unit, with their own space having synchronous replication with primary space. 
+<p style="margin-bottom: 0cm;" align="LEFT">Recently one of our clients asked to make a distributed application that can be scaled and managed easily and cost effectively. So we evaluated  <a href="http://java.sun.com/developer/technicalArticles/tools/JavaSpaces/">JavaSpaces</a>, a Space Based Architecture concept,  and one of its commercial implementation <a href="http://www.gigaspaces.com/">GigaSpaces </a>for the purpose. In this post I will try to describe in brief what the Space based Architecture approach is all about.</p>
 
-In order to create a highly scalable application we would like to employ the concept of _**PARTITIONING**_ of space rather clustering. In partitioning we would have one single view of a space that is eventually distributed across different processing units(_ it utilizes the shared dynamic memory of networked JVMs)_. When ever some object is written to the space it will determine its location first and then will be routed to that Space partition. This eventually calls for the concept of _**DATA-AFFINITY**_. It says that you should keep all the data that is attached to your primary object should be available in one single partitioned space. This would enable you not to query over other spaces and thus reduce the network calls.
+<p style="margin-bottom: 0cm;" align="LEFT">Space Based Architecture(SBA) is a paradigm of co-located tiers. It combines the elements of SOA, event  driven architecture and grid computing. In SBA  we  would create tiers but would co-locate them with the messaging and data in-memory, at one single box. Now there are no network hop-overs as the data required is available in memory rather on an ESB or Database, hence there is minimum latency and thus maximum throughput. The whole box will now be called a <strong><em><span style="font-weight: normal;"><strong>PROCESSING UNIT</strong></span></em></strong><span style="font-weight: normal;">,</span> that will have an in memory bus known as the <em><strong>SPACE</strong>. </em><span style="font-style: normal;">For fail-over strategy we would eventually create  backups of this Processing Unit, with their own space having synchronous replication with primary space. </span></p>
 
-![SBA](/wp-content/uploads/2010/03/SBA1.png)Now for scalable,high throughput applications we create _**SLA**_s using partitioning that would instantiate new partitions or destroy old ones depending on the current load i.e. Scale-on-Demand. These SLAs are deployed along-with the application in an SLA-Driven container.
+<p style="margin-bottom: 0cm; font-style: normal;" align="LEFT"><span style="font-style: normal;">In order to create a highly scalable application we would like to employ the concept of </span><em><strong>PARTITIONING</strong></em><span style="font-style: normal;"> of space rather clustering. In partitioning we would have one single view of a space that is eventually distributed across different processing units(</span><em> it utilizes the shared dynamic memory of networked JVMs)</em><span style="font-style: normal;">. When ever some object is written to the space it will determine its location first and then will be routed to that Space partition. This eventually calls for the concept of </span><em><strong>DATA-AFFINITY</strong></em><span style="font-style: normal;">. It says that you should keep all the data that is attached to your primary object should be available in one single partitioned space. This would enable you not to query over other spaces and thus reduce the network calls.</span></p>
 
-Applications also require persistent storage, since applications in SBA have in memory data grid(the _SPACE_) so they must persist data to DB. But DB writes are quite slow, so we would not like to interact with DB directly, here we have another new entity called _**MIRROR SERVICE**_. Mirror service is usually a single space connected to an external storage(Files,DB etc). Your application space would write the data asynchronously to the Mirror, which would eventually persist the data. In SBA you do not read much data from persistent storage as most of the time data is available in the in memory grid, but at times there can be some data that is required to be read from the DB. In such cases a read-at-start-up strategy is employed where the space will load the entire data from the DB at start-up and will keep it in its in-memory grid.
+<p style="margin-bottom: 0cm;" align="LEFT"><img class="size-full wp-image-3335 alignright" title="SBA" src="http://xebee.xebia.in/wp-content/uploads/2010/03/SBA1.png" alt="SBA" width="450" height="318" /><span style="font-style: normal;">Now for scalable,high throughput applications we create </span><em><strong>SLA</strong></em><span style="font-style: normal;">s using partitioning that would instantiate new partitions or destroy old ones depending on the current load i.e. Scale-on-Demand. These SLAs are deployed along-with the application in an SLA-Driven container.</span></p>
 
-Here are some of the implications of using SBA:
+<!--        @page { margin: 2cm }       P { margin-bottom: 0.21cm } -->
 
-  * Scalability becomes predictable and linear
-  * Offers quite low latency thus a high throughput
-  * Lower Total Cost of Ownership
-  * Developers write code as if it was for a single server so eliminate efforts required to integrate tiers
-  * Simplistic API(read/write/take/update) with POJO based model
-  * Developers need to take consideration of Partitioning their data.
-  * Data in th DB that is being modified by some other application can not detected by the space application and thus can not be loaded.
-  * SLAs are often written in XML files with the application code(system administrators may not like that)
+<p style="margin-bottom: 0cm;" align="LEFT"><span style="font-style: normal;">Applications also require persistent storage, since applications in SBA have in memory data grid(the </span><em>SPACE</em><span style="font-style: normal;">)  so they must persist data to DB. But DB writes are quite slow, so we would not like to interact with DB directly, here we have another new entity called </span><em><strong>MIRROR SERVICE</strong></em><span style="font-style: normal;">. Mirror service is usually a single space connected to an external storage(Files,DB etc). Your application space would write the data asynchronously to the Mirror, which would eventually persist the data. In SBA you do not read much data from persistent storage as most of the time data is available in the in memory grid, but at times there can be some data that is required to be read from the DB. In such cases a read-at-start-up strategy is employed where the space will load the entire data from the DB at start-up and will keep it in its in-memory grid.</span></p>
+
+<p style="margin-bottom: 0cm;" align="LEFT">Here are  some of the implications of using SBA:</p>
+
+<ul>
+    <li>Scalability becomes predictable and linear</li>
+    <li>Offers quite low latency thus a high throughput</li>
+    <li>Lower Total Cost of Ownership</li>
+    <li>Developers write code as if it was for a single server so eliminate efforts required to integrate tiers</li>
+    <li>Simplistic API(read/write/take/update) with POJO based model</li>
+    <li>Developers need to take consideration of Partitioning their data.</li>
+    <li>Data in th DB that is being modified by some other application can not detected by the space application and thus can not be loaded.</li>
+    <li>SLAs are often written in XML files with the application code(system administrators may not like that)</li>
+</ul>
+
+<p style="margin-bottom: 0cm;" align="LEFT"></p>
+
+<p style="margin-bottom: 0cm;" align="LEFT"><span style="font-style: normal;">
+</span></p>
+
+<p style="margin-bottom: 0cm;" align="LEFT"></p>
+
+<p style="margin-bottom: 0cm;" align="LEFT"><span style="font-style: normal;">
+</span></p>
 
 ## Comments
 

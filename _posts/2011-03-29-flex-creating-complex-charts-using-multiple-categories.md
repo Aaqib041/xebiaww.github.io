@@ -1,30 +1,86 @@
 ---
 layout: post
 header-img: img/default-blog-pic.jpg
+author: nkhattar
+description: 
+post_id: 8143
+created: 2011/03/29 09:51:25
+created_gmt: 2011/03/29 04:51:25
+comment_status: open
 ---
 
 # Flex: Creating Complex Charts using Multiple Categories
 
-In my last [Blog]( http://xebee.xebia.in/2011/03/24/flex-composite-charts-with-multiple-series-axes/) on Flex Charting components, we talked about how to create **Composite charts** in Flex using _multiple chart series, multiple data series and multiple axes_. We also discussed the common problem faced while clubbing different chart series within a single chart. Then we explored the concept of **ColumnSet** in Column Charts & similarly **BarSet** in Bar Charts. Also we learned about the significance of having multiple axes (vertical or horizontal) in a chart and how we can visualize indirectly related data with each other. So now let’s raise the complexity to the next level and discuss how to create Complex Charts in Flex, and also showcase an example on creating such charts, this time using multiple categories. Creating Complex charts accounts for some **important considerations** that one should keep in mind: 
-
-  1. **Format** (or Syntax) of the Data Collection (Arrays, XML, Objects, etc.)
-  2. **Parsing **the data collection into suitable Chart Data collection
-  3. **Configuring** Specific Chart Type with its specific properties & behavior
-The **first & second **points deal with the way we store the data collection in the form of XMLs or Remote Objects; and the way we parse it before sending to the chart. This might look like a minor detail to fuss over, but trust me, it’s important to tackle this beforehand; otherwise the chart would represent the same in a wholly unexpected graphical format. The **third **point is undoubtedly the most important of above all. This deals with configuring the required chart type with its distinct properties & controls and that too in the right manner. The properties may include vertical axis, horizontal axis, series, chart type, etc. Ok, let’s start exploring this concept with the help of an example: **Example – Column Chart with multiple categories & chart series** Let’s use the problem statement as used in the previous [blog](/2011/03/24/flex-composite-charts-with-multiple-series-axes/#compositeChartEg1) and redefine it a bit: As a sales manager, I want to visualize the Data for the Sales (Bottle & Canned) of different types of Soft Drinks (Coke, Pepsi & Sprite) in different metropolitan Cities (Delhi, Mumbai & Bangalore) in the form of a Column Chart where Soft Drink is the primary category, City is the secondary category, and Bottled Sales & Canned Sales are the two series. In a nutshell, we are looking at **City Sales (Bottled & Canned), Product wise**. From the above mentioned statement, we could easily make out some basic facts that ‘product’ as soft drink will serve as the horizontal axis, ‘bottled / canned sales’ will serve as the vertical axis. But the question is Where to accommodate an extra category, i.e. ‘**city**’? The chart should appear like this: 
-
-![Complex Chart with Multiple=](/wp-content/uploads/2011/03/MultipleCategoryChart.bmp)
-
-What we know so far is that we can have **only one category axis** as the horizontal axis of a chart and can have multiple chart series which can be grouped accordingly but having another Category Axis is altogether a new and a bit unclear requirement. But, again the answer to this question is **ColumnSet**.  If you remember, Definition of Column Set as per the Flex Charting API has something to add in this respect: “_ColumnSet is a grouping set that can be used to stack or cluster column series in any arbitrary chart. A ColumnSet encapsulates the same grouping behavior used in a ColumnChart, but can be used to assemble custom charts based on CartesianChart. ColumnSets can be used to cluster any chart element type that implements the IColumn** **interface. It can stack any chart element type that implements the IColumn and IStackable interfaces. _**_Since ColumnSet itself implements the IColumn interface, you can use ColumnSets to cluster other ColumnSets to build more advanced custom charts._**_”_ Summarizing the ‘Golden Rule’ above, we need to **make a collection of such Column sets for every distinct City grouped within a Parent Column Set for the product**. Each City Column Set will be of type ‘**Stacked’** and Product Column Set will be of type ‘**Clustered’**. And we will get our chart created in the desired manner. 
-
-![Multiple Category Column Set Representation](/wp-content/uploads/2011/03/MultipleCategoryColumnSet.png)
-
-So let’s solve this problem taking into consideration the above mentioned approach for creating complex charts: 
-
-  * Data Collection Format – I am using a simple xml as the data collection
-[sourcecode lang="xml"] <chart> <chartData product="Coke" city="Delhi" bottledSales="500" cannedSales="400"/> <chartData product="Coke" city="Mumbai" bottledSales="800" cannedSales="600"/> <chartData product="Coke" city="Banglore" bottledSales="1200" cannedSales="700"/> <chartData product="Pepsi" city="Delhi" bottledSales="700" cannedSales="1000"/> <chartData product="Pepsi" city="Mumbai" bottledSales="500" cannedSales="800"/> <chartData product="Pepsi" city="Banglore" bottledSales="800" cannedSales="300"/> <chartData product="Sprite" city="Delhi" bottledSales="1200" cannedSales="800"/> <chartData product="Sprite" city="Mumbai" bottledSales="500" cannedSales="1000"/> <chartData product="Sprite" city="Banglore" bottledSales="1200" cannedSales="500"/> </chart> [/sourcecode] 
-  * Correctly Parsing the Data collection into Suitable Chart Data –
-[sourcecode lang="javascript"] public function set chartData(chart:Object):void { var chartDataCollection:ArrayCollection = new ArrayCollection(chart.chartData); var chartDataCollection:ArrayCollection = event.result.chart.chartData; for each(var chartDataObject:Object in chartDataCollection) { if(!categoryOneDataprovider.contains(chartDataObject[ChartEnum.CATEGORY_ONE])) {categoryOneDataprovider.addItem(chartDataObject[ChartEnum.CATEGORY_ONE]);} if(!categoryTwoCollection.contains(chartDataObject[ChartEnum.CATEGORY_TWO])) {categoryTwoCollection.addItem(chartDataObject[ChartEnum.CATEGORY_TWO]);} } for each(var categoryTwoDataValue:String in categoryTwoCollection) { var categoryTwoDataCollection:ArrayCollection = new ArrayCollection(); for each(var chartDataVO:Object in chartDataCollection) { if(chartDataVO[ChartEnum.CATEGORY_TWO] == categoryTwoDataValue) {categoryTwoDataCollection.addItem(chartDataVO);} } categoryTwoDataProvider.addItem(categoryTwoDataCollection); } } [/sourcecode] 
-  * Configuring Column Chart with its specific controls & properties like categories, series & axes –
+<p>In my last <a href=" http://xebee.xebia.in/2011/03/24/flex-composite-charts-with-multiple-series-axes/" target="_blank">Blog</a> on Flex Charting components, we talked about how to create <strong>Composite charts</strong> in Flex using <em>multiple chart series, multiple data series and multiple axes</em>. We also discussed the common problem faced while clubbing different chart series within a single chart. Then we explored the concept of <strong>ColumnSet</strong> in Column Charts &amp; similarly <strong>BarSet</strong> in Bar Charts. Also we learned about the significance of having multiple axes (vertical or horizontal) in a chart and how we can visualize indirectly related data with each other.</p>
+<p>So now let’s raise the complexity to the next level and discuss how to create Complex Charts in Flex, and also showcase an example on creating such charts, this time using multiple categories.<!--more--></p>
+<p>Creating Complex charts accounts for some <strong>important considerations</strong> that one should keep in mind:
+<ol>
+    <li><strong>Format</strong> (or Syntax) of the Data Collection (Arrays,      XML, Objects, etc.)</li>
+    <li><strong>Parsing </strong>the data collection into suitable Chart      Data collection</li>
+    <li><strong>Configuring</strong> Specific Chart Type with its specific      properties &amp; behavior</li>
+</ol>
+The <strong>first &amp; second </strong>points deal with the way we store the data collection in the form of XMLs or Remote Objects; and the way we parse it before sending to the chart. This might look like a minor detail to fuss over, but trust me, it’s important to tackle this beforehand; otherwise the chart would represent the same in a wholly unexpected graphical format.</p>
+<p>The <strong>third </strong>point is undoubtedly the most important of above all. This deals with configuring the required chart type with its distinct properties &amp; controls and that too in the right manner. The properties may include vertical axis, horizontal axis, series, chart type, etc.</p>
+<p>Ok, let’s start exploring this concept with the help of an example:</p>
+<p><strong>Example – Column Chart with multiple categories &amp; chart series</strong></p>
+<p>Let’s use the problem statement as used in the previous <a href="http://xebee.xebia.in/2011/03/24/flex-composite-charts-with-multiple-series-axes/#compositeChartEg1" target="_blank">blog</a> and redefine it a bit:</p>
+<p>As a sales manager, I want to visualize the Data for the Sales (Bottle &amp; Canned) of different types of Soft Drinks (Coke, Pepsi &amp; Sprite) in different metropolitan Cities (Delhi, Mumbai &amp; Bangalore) in the form of a Column Chart where Soft Drink is the primary category, City is the secondary category, and Bottled Sales &amp; Canned Sales are the two series. In a nutshell, we are looking at <strong>City Sales (Bottled &amp; Canned), Product wise</strong>.</p>
+<p>From the above mentioned statement, we could easily make out some basic facts that ‘product’ as soft drink will serve as the horizontal axis, ‘bottled / canned sales’ will serve as the vertical axis. But the question is <span style="color: #ff0000;">Where to accommodate an extra category, i.e. ‘<strong>city</strong>’?</span></p>
+<p>The chart should appear like this:
+<div style="width: 100%; align: center;"><img class="aligncenter size-full wp-image-8155" title="MultipleCategoryChart" src="http://xebee.xebia.in/wp-content/uploads/2011/03/MultipleCategoryChart.bmp" alt="Complex Chart with Multiple=" /></div>
+What we know so far is that we can have <strong>only one category axis</strong> as the horizontal axis of a chart and can have multiple chart series which can be grouped accordingly but having another Category Axis is altogether a new and a bit unclear requirement.</p>
+<p>But, again the answer to this question is <strong>ColumnSet</strong>.  If you remember, Definition of Column Set as per the Flex Charting API has something to add in this respect:</p>
+<p>“<em>ColumnSet is a grouping set that can be used to stack or cluster column series in any arbitrary chart. A ColumnSet encapsulates the same grouping behavior used in a ColumnChart, but can be used to assemble custom charts based on CartesianChart. ColumnSets can be used to cluster any chart element type that implements the IColumn<strong> </strong>interface. It can stack any chart element type that implements the IColumn and IStackable interfaces. </em><strong><em>Since ColumnSet itself implements the IColumn interface, you can use ColumnSets to cluster other ColumnSets to build more advanced custom charts.</em></strong><em>”</em></p>
+<p>Summarizing the ‘Golden Rule’ above, we need to <strong>make a collection of such Column sets for every distinct City grouped within a Parent Column Set for the product</strong>. Each City Column Set will be of type ‘<strong>Stacked’</strong> and Product Column Set will be of type ‘<strong>Clustered’</strong>.
+And we will get our chart created in the desired manner.
+<div style="width: 100%; align: center;"><img class="aligncenter size-full wp-image-8156" title="MultipleCategoryColumnSet" src="http://xebee.xebia.in/wp-content/uploads/2011/03/MultipleCategoryColumnSet.png" alt="Multiple Category Column Set Representation" width="546" height="402" /></div>
+So let’s solve this problem taking into consideration the above mentioned approach for creating complex charts:
+<ul>
+    <li>Data Collection Format – I am using a simple xml as the data collection</li>
+</ul>
+[sourcecode lang="xml"]
+&lt;chart&gt;
+   &lt;chartData product=&quot;Coke&quot; city=&quot;Delhi&quot; bottledSales=&quot;500&quot; cannedSales=&quot;400&quot;/&gt;
+   &lt;chartData product=&quot;Coke&quot; city=&quot;Mumbai&quot; bottledSales=&quot;800&quot; cannedSales=&quot;600&quot;/&gt;
+   &lt;chartData product=&quot;Coke&quot; city=&quot;Banglore&quot; bottledSales=&quot;1200&quot; cannedSales=&quot;700&quot;/&gt;
+   &lt;chartData product=&quot;Pepsi&quot; city=&quot;Delhi&quot; bottledSales=&quot;700&quot; cannedSales=&quot;1000&quot;/&gt;
+   &lt;chartData product=&quot;Pepsi&quot; city=&quot;Mumbai&quot; bottledSales=&quot;500&quot; cannedSales=&quot;800&quot;/&gt;
+   &lt;chartData product=&quot;Pepsi&quot; city=&quot;Banglore&quot; bottledSales=&quot;800&quot; cannedSales=&quot;300&quot;/&gt;
+   &lt;chartData product=&quot;Sprite&quot; city=&quot;Delhi&quot; bottledSales=&quot;1200&quot; cannedSales=&quot;800&quot;/&gt;
+   &lt;chartData product=&quot;Sprite&quot; city=&quot;Mumbai&quot; bottledSales=&quot;500&quot; cannedSales=&quot;1000&quot;/&gt;
+   &lt;chartData product=&quot;Sprite&quot; city=&quot;Banglore&quot; bottledSales=&quot;1200&quot; cannedSales=&quot;500&quot;/&gt;
+&lt;/chart&gt;
+[/sourcecode]
+<ul>
+    <li><span style="font-family: Georgia, 'Times New Roman', 'Bitstream Charter', Times, serif; line-height: 19px; white-space: normal;">Correctly Parsing the Data collection into      Suitable Chart Data –</span></li>
+</ul>
+[sourcecode lang="javascript"]
+public function set chartData(chart:Object):void
+{
+   var chartDataCollection:ArrayCollection = new ArrayCollection(chart.chartData);
+   var chartDataCollection:ArrayCollection = event.result.chart.chartData;
+   for each(var chartDataObject:Object in chartDataCollection)
+   {
+     if(!categoryOneDataprovider.contains(chartDataObject[ChartEnum.CATEGORY_ONE]))
+        {categoryOneDataprovider.addItem(chartDataObject[ChartEnum.CATEGORY_ONE]);}
+     if(!categoryTwoCollection.contains(chartDataObject[ChartEnum.CATEGORY_TWO]))
+        {categoryTwoCollection.addItem(chartDataObject[ChartEnum.CATEGORY_TWO]);}
+   }
+   for each(var categoryTwoDataValue:String in categoryTwoCollection)
+   {
+     var categoryTwoDataCollection:ArrayCollection = new ArrayCollection();
+     for each(var chartDataVO:Object in chartDataCollection)
+     {
+         if(chartDataVO[ChartEnum.CATEGORY_TWO] == categoryTwoDataValue)
+           {categoryTwoDataCollection.addItem(chartDataVO);}
+     }
+     categoryTwoDataProvider.addItem(categoryTwoDataCollection);
+   }
+}
+[/sourcecode]
+<ul>
+    <li>Configuring Column Chart with its specific controls &amp; properties like categories, series &amp; axes –</li>
+</ul></p>
 
 ## Comments
 

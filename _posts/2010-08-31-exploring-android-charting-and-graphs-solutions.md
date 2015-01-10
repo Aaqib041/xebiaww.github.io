@@ -1,23 +1,122 @@
 ---
 layout: post
 header-img: img/default-blog-pic.jpg
+author: ykapoor
+description: 
+post_id: 4669
+created: 2010/08/31 12:56:24
+created_gmt: 2010/08/31 07:56:24
+comment_status: open
 ---
 
 # Exploring Android Charting and Graphs solutions
 
-In one of the Android applications that I was creating the requirement was to have graphs and charts to present the data in a meaningful way to the user. With no direct charting API support in Android to address graphs and charts creation, I explored few other possible solutions. This blog does not focus on comparing the available solutions but demonstrates the simple implementations using the approaches explored. I considered three different ways to create charts in Android device 1\. [Google chart API](http://code.google.com/apis/chart/) 2\. [Achartengine](http://www.achartengine.org/) 3\. [ChartDroid](http://code.google.com/p/chartdroid/) I tried creating a Pie Chart while using the solutions. Google charting API being the easiest one to integrate is taken first 
+<p>In one of the Android applications that I was creating the requirement was to have graphs and charts to present the data in a meaningful way to the user. With no direct charting API support in Android to address graphs and charts creation, I explored few other possible solutions.</p>
+<p>This blog does not focus on comparing the available solutions but demonstrates the simple implementations using the approaches explored.</p>
+<p>I considered three different ways to create charts in Android device</p>
+<ol>
+<li><a href="http://code.google.com/apis/chart/">Google chart API</a></li>
+<li><a href="http://www.achartengine.org/">Achartengine</a></li>
+<li><a href="http://code.google.com/p/chartdroid/">ChartDroid</a>
+<!--more-->
+I tried creating a Pie Chart while using the solutions. Google charting API being the easiest one to integrate is taken first</li>
+</ol>
+<!--        @page { margin: 0.79in }        P { margin-bottom: 0.08in }         H4 { margin-bottom: 0.08in }        H4.western { font-family: "Arial", sans-serif; font-size: 11pt; font-style: italic }        H4.cjk { font-family: "SimSun"; font-size: 11pt; font-style: italic }       H4.ctl { font-size: 11pt; font-style: italic } -->
 
-#### Google Charting API support
+<h4>Google Charting API support</h4>
 
-Using Google charting API, we can create charts and graphs directly by providing data to the Google charting service The call to the Google's charting API looks like below: [code language="xml"]http://chart.apis.google.com/chart?cht=&amp;chd=&amp;chs=&amp;...additional_parameters...[/code] More on Google charting API can be found [here](http://code.google.com/apis/chart/docs/making_charts.html) For creating a pie chart using Google charting solution, I created the following URI [code language="xml"]http://chart.apis.google.com/chart?cht=p3&amp;chd=t:30,60,10&amp;chs=250x100&amp;chl=cars|bikes|trucks[/code] Within my activity's onCreate() I included the code below [code language="java"]@Override public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); WebView googleChartView = new WebView(this); setContentView(googleChartView); String mUrl = "http://chart.apis.google.com/chart?cht=p3&amp;chd=t:30,60,10&amp;chs=250x100&amp;chl=cars|bikes|trucks"; googleChartView.loadUrl(mUrl); }[/code] In the onCreate() method, I am creating a WebView and just loading it with the URL response. It needs an internet access so I included the code below within AndroidManifest.xml [code language="xml"] <uses-permission android:name="android.permission.INTERNET" /> [/code] That's it!!! we are done with the first approach. The screen shot for the application I build using Google chart API looks like below: [caption id="attachment_4674" align="alignnone" width="300" caption="Google Charting API PIE Chart"]![Google Charting API PIE Chart](/wp-content/uploads/2010/08/GoogleAPIChart-300x193.png)[/caption] The only issue I had with this approach is that the device should have internet access available which in my case may not be always there. This small limitation made me look into other approaches and I came across another solution [Achartengine](http://www.achartengine.org/). 
+<p>Using Google charting API, we can create charts and graphs directly by providing data to the Google charting service</p>
+<p>The call to the Google's charting API looks like below:</p>
+<p>[code language="xml"]http://chart.apis.google.com/chart?cht=&amp;amp;chd=&amp;amp;chs=&amp;amp;...additional_parameters...[/code]</p>
+<p>More on Google charting API can be found <a href="http://code.google.com/apis/chart/docs/making_charts.html">here</a></p>
+<p>For creating a pie chart using Google charting solution, I created the following URI</p>
+<p>[code language="xml"]http://chart.apis.google.com/chart?cht=p3&amp;amp;chd=t:30,60,10&amp;amp;chs=250x100&amp;amp;chl=cars|bikes|trucks[/code]</p>
+<p>Within my activity's onCreate() I included the code below</p>
+<p>[code language="java"]@Override
+public void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState);
+WebView googleChartView = new WebView(this);
+setContentView(googleChartView);
+String mUrl = &quot;http://chart.apis.google.com/chart?cht=p3&amp;amp;chd=t:30,60,10&amp;amp;chs=250x100&amp;amp;chl=cars|bikes|trucks&quot;;
+googleChartView.loadUrl(mUrl);
+}[/code]</p>
+<p>In the onCreate() method, I am creating a WebView and just loading it with the URL response.
+It needs an internet access so I included the code below within AndroidManifest.xml
+[code language="xml"]
+&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot; /&gt;
+[/code]</p>
+<p>That's it!!! we are done with the first approach. The screen shot for the application I build using Google chart API looks like below:</p>
+<p>[caption id="attachment_4674" align="alignnone" width="300" caption="Google Charting API PIE Chart"]<a rel="attachment wp-att-4674" href="http://xebee.xebia.in/2010/08/31/exploring-android-charting-and-graphs-solutions/googleapichart/"><img class="size-medium wp-image-4674" title="GoogleAPIChart" src="http://xebee.xebia.in/wp-content/uploads/2010/08/GoogleAPIChart-300x193.png" alt="Google Charting API PIE Chart" width="300" height="193" /></a>[/caption]</p>
+<p>The only issue I had with this approach is that the device should have internet access available which in my case may not be always there. This small limitation made me look into other approaches and I came across another solution <a href="http://www.achartengine.org/">Achartengine</a>.</p>
+<!--        @page { margin: 0.79in }        P { margin-bottom: 0.08in }         H4 { margin-bottom: 0.08in }        H4.western { font-family: "Arial", sans-serif; font-size: 11pt; font-style: italic }        H4.cjk { font-family: "SimSun"; font-size: 11pt; font-style: italic }       H4.ctl { font-size: 11pt; font-style: italic } -->
 
-#### Achartengine
+<h4>Achartengine</h4>
 
-This Achart's charting support comes in the form of a download-able [Jar](http://code.google.com/p/achartengine/downloads/list). I added this into the lib folder of my application. [caption id="attachment_4677" align="alignnone" width="247" caption="Android App Structure"]![Library Folder](/wp-content/uploads/2010/08/libFolder.png)[/caption] I created a class with a method that gives out a Pie chart intent as below [code language="java"] public class AChartExample { public Intent execute(Context context) { int[] colors = new int[] { Color.RED, Color.YELLOW, Color.BLUE }; DefaultRenderer renderer = buildCategoryRenderer(colors); CategorySeries categorySeries = new CategorySeries("Vehicles Chart"); categorySeries.add("cars ", 30); categorySeries.add("trucks", 20); categorySeries.add("bikes ", 60); return ChartFactory.getPieChartIntent(context, categorySeries, renderer); } protected DefaultRenderer buildCategoryRenderer(int[] colors) { DefaultRenderer renderer = new DefaultRenderer(); for (int color : colors) { SimpleSeriesRenderer r = new SimpleSeriesRenderer(); r.setColor(color); renderer.addSeriesRenderer(r); } return renderer; } } [/code] Within the execute method a SimpleSeriesRender is created with the required color that is required in the pie chart. These renderers are then added to the DefaultRender. Next step is to create a CategorySeries with the appropriate data. Once this is done we can get achartingengine specific intent back with the following call ` ChartFactory.getPieChartIntent(context, categorySeries, renderer); ` With this intent we launch our activity and the code goes as below [code language="java"] Intent achartIntent = new AChartExample().execute(this); startActivity(achartIntent); [/code] The screen shot below shows the generated PIE chart using Achart library [caption id="attachment_4697" align="alignleft" width="223" caption="Achart"]![](http://xebee.xebia.in/wp-content/uploads/2010/08/Achart2-223x300.png)[/caption] The other charting solution I explored is [chartDroid ](http://code.google.com/p/chartdroid/)
+<p>This Achart's charting support comes in the form of a download-able <a href="http://code.google.com/p/achartengine/downloads/list">Jar</a>.</p>
+<p>I added this into the lib folder of my application.</p>
+<p>[caption id="attachment_4677" align="alignnone" width="247" caption="Android App Structure"]<a rel="attachment wp-att-4677" href="http://xebee.xebia.in/2010/08/31/exploring-android-charting-and-graphs-solutions/libfolder/"><img class="size-full wp-image-4677" title="libFolder" src="http://xebee.xebia.in/wp-content/uploads/2010/08/libFolder.png" alt="Library Folder" width="247" height="290" /></a>[/caption]</p>
+<p>I created a class with a method that gives out a Pie chart intent as below</p>
+<p>[code language="java"]
+public class AChartExample {</p>
+<p>public Intent execute(Context context) {
+int[] colors = new int[] { Color.RED, Color.YELLOW, Color.BLUE };
+DefaultRenderer renderer = buildCategoryRenderer(colors);</p>
+<p>CategorySeries categorySeries = new CategorySeries(&quot;Vehicles Chart&quot;);
+categorySeries.add(&quot;cars &quot;, 30);
+categorySeries.add(&quot;trucks&quot;, 20);
+categorySeries.add(&quot;bikes &quot;, 60);</p>
+<p>return ChartFactory.getPieChartIntent(context, categorySeries, renderer);
+}</p>
+<p>protected DefaultRenderer buildCategoryRenderer(int[] colors) {
+DefaultRenderer renderer = new DefaultRenderer();
+for (int color : colors) {
+SimpleSeriesRenderer r = new SimpleSeriesRenderer();
+r.setColor(color);
+renderer.addSeriesRenderer(r);
+}
+return renderer;
+}
+}
+[/code]</p>
+<p>Within the execute method a SimpleSeriesRender is created with the required color that is required in the pie chart.
+These renderers are then added to the DefaultRender.</p>
+<p>Next step is to create a CategorySeries with the appropriate data. Once this is done we can get achartingengine specific intent back with the following call
+<code>
+ChartFactory.getPieChartIntent(context, categorySeries, renderer);
+</code></p>
+<p>With this intent we launch our activity and the code goes as below</p>
+<p>[code language="java"]
+Intent achartIntent = new AChartExample().execute(this);
+startActivity(achartIntent);
+[/code]
+The screen shot below shows the generated PIE chart using Achart library</p>
+<p>[caption id="attachment_4697" align="alignleft" width="223" caption="Achart"]<a href="http://xebee.xebia.in/2010/08/31/exploring-android-charting-and-graphs-solutions/achart-3/" rel="attachment wp-att-4697"><img src="http://xebee.xebia.in/wp-content/uploads/2010/08/Achart2-223x300.png" alt="" title="Achart" width="223" height="300" class="size-medium wp-image-4697" /></a>[/caption]
+The other charting solution I explored is <a href="http://code.google.com/p/chartdroid/">chartDroid </a></p>
+<!--        @page { margin: 0.79in }        P { margin-bottom: 0.08in }         H4 { margin-bottom: 0.08in }        H4.western { font-family: "Arial", sans-serif; font-size: 11pt; font-style: italic }        H4.cjk { font-family: "SimSun"; font-size: 11pt; font-style: italic }       H4.ctl { font-size: 11pt; font-style: italic } -->
 
-#### Chartdroid
+<h4>Chartdroid</h4>
 
-This solution needs the ChartDroid Application to be installed along with the application which intends to use the charting solution. Although, we can install the application programmaticly from the Android apps market place, I directly installed the application into my device to explore it further.To install it download the apk from [here](http://code.google.com/p/chartdroid/downloads/list) and install it to the device. The Chartdroid's charting solution requires a content provider to be created. Below is the content provider's code that I created [code language="java"] public class ChartDroidDataProvider extends ContentProvider { static final String AUTHORITY = "com.xyz.contentprovider.chardroid"; @Override public String getType(Uri uri) { return "vnd.android.cursor.dir/vnd.com.googlecode.chartdroid.graphable"; } public static final Uri PROVIDER_URI = new Uri.Builder().scheme( ContentResolver.SCHEME_CONTENT).authority(AUTHORITY).build(); @Override public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) { // Fetch the actual data MatrixCursor c = new MatrixCursor(new String[] { BaseColumns._ID, "COLUMN_AXIS_INDEX", "COLUMN_SERIES_INDEX", "COLUMN_DATUM_VALUE", "COLUMN_DATUM_LABEL" }); c.newRow().add(1).add(0).add(1).add(30).add(null); c.newRow().add(2).add(0).add(1).add(10).add(null);
+<p>This solution needs the ChartDroid Application to be installed along with the application which intends to use the charting solution.</p>
+<p>Although, we can install the application programmaticly from the Android apps market place, I directly installed the application into my device to explore it further.To install it download the apk from <a href="http://code.google.com/p/chartdroid/downloads/list">here</a> and install it to the device.</p>
+<p>The Chartdroid's charting solution requires a content provider to be created. Below is the content provider's code that I created</p>
+<p>[code language="java"]
+public class ChartDroidDataProvider extends ContentProvider {</p>
+<p>static final String AUTHORITY =  &quot;com.xyz.contentprovider.chardroid&quot;;</p>
+<p>@Override
+public String getType(Uri uri) {
+return &quot;vnd.android.cursor.dir/vnd.com.googlecode.chartdroid.graphable&quot;;
+}</p>
+<p>public static final Uri PROVIDER_URI = new Uri.Builder().scheme(
+ContentResolver.SCHEME_CONTENT).authority(AUTHORITY).build();</p>
+<p>@Override
+public Cursor query(Uri uri, String[] projection, String selection,
+String[] selectionArgs, String sortOrder) {</p>
+<p>// Fetch the actual data</p>
+<p>MatrixCursor c = new MatrixCursor(new String[]                  { BaseColumns._ID,
+&quot;COLUMN_AXIS_INDEX&quot;, &quot;COLUMN_SERIES_INDEX&quot;,
+&quot;COLUMN_DATUM_VALUE&quot;, &quot;COLUMN_DATUM_LABEL&quot; });</p>
+<p>c.newRow().add(1).add(0).add(1).add(30).add(null);
+c.newRow().add(2).add(0).add(1).add(10).add(null);</p>
 
 ## Comments
 

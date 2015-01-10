@@ -1,21 +1,54 @@
 ---
 layout: post
 header-img: img/default-blog-pic.jpg
+author: jdhingra
+description: 
+post_id: 7880
+created: 2011/02/28 18:02:31
+created_gmt: 2011/02/28 13:02:31
+comment_status: open
 ---
 
 #  Microsoft Web Camps for HTML5
 
-**Microsoft venture into HTML5 **got hold of my attention and led me to visit Microsoft HTML5 meetup on 4th Feb'11 at SCO Complex, Lodhi Road. The day started with warm tea and a light refreshing breakfast. It was a time to have a handshake with the attendees and ice breaking space with the speakers. The speakers from Microsoft were very much enthusiastic with the launch of IE9 and new features being added/introduced to the browser. The agenda of the event was to demonstrate MS intentions towards the latest waves in the industry. Though MS was silent for quite sometime for its venture in this field finally they came up with the IE9 beta version. MS is targeting to be the best in the browsers war in coming years considering the addons and the capabilities they have implemented in the browser. The HTML5 wave has been led by major browsers like Chrome, Opera, Firefox etc. The **[HTML5 Specification](http://www.w3schools.com/html5/default.asp)** is very interesting and lot of efforts seemed to have put in in building these features post HTML4. Browsers also seemed to have made efforts in complying with the new specification. There is the war being waged amongst the browser community as far as performance, efficiency and usability are concerned. The presenter did show the difference in the browsers capabilities by playing few HTML controls and hence claimed IE to be the best in the breed in coming years. I am not going to share the specification and the features in this article since it is readily available at W3C site and it is left for the reader to experience and decide about it. The only reason why one would choose IE9 or other browser is by testing the performance of the controls. There seems to be major difference in video performance in different browser, for an example, which is due to varied approaches in implementing either through GPU or only with CPU as it used to be earlier. A new kid on the block-**Pinned Sites** and MS is supporting various Indian vendors like [rediff songbuzz](http://songbuzz.rediff.com/#) and others in broadcasting the updates to the subscribers. Use Pinned Sites to pin websites to the taskbar on your Windows 7 desktop so you can access them later with a single click. For more information about Pinned Sites, see "Pin a website" to your taskbar. Concept of pinned sites came up with their implementation with rediff songbuzz project in which the website is pinned and behaves like a desktop client. The data or the information is timely pushed by the server and the user creates a limited tasklist which he/she subscribes to. In this way user doesn't have to go to the website for regular updates and keeps himself updated. Internet Explorer 9 is going to be more compliant with JavaScript standards-**[ECMA4](http://en.wikipedia.org/wiki/ECMAScript)**. The browser has now improved its Javascript engine which will now work smoothly and efficiently on multicore CPUs. You would have played 3D and online games as well and that works perfectly fine on windows platform with all the necessary setups and drivers installed. But the crucial point is that games require high end graphics rendering for which lots of computation is required to be done by CPU and GPU. **Hardware Acceleration** uses the power of your computer's graphics processor (GPU) to speed up graphics-heavy tasks like video streaming or online gaming. Browsers are now-a-days started leveraging the GPU capabilities for rendering graphics on webpages. IE9 has now started using hardware acceleration for its graphics content and other stuff along with using CPU. It was closed to afternoon when we had a break for lunch and needless to say that the arrangement was amazing. Soon after lunch we assembled in the conference hall and attended the rest of the sessions. The post lunch sessions were chosen to be light considering the lunch effect. **CSS3 new features **and how it has eradicated long awaited improvements in Usability was the next topic of discussion. Couple of improvements made to CSS library are: 
+<div>
+<b>Microsoft venture into HTML5 </b>got hold of my attention and led me to visit Microsoft HTML5 meetup on 4th Feb'11 at SCO Complex, Lodhi Road. The day started with warm tea and a light refreshing breakfast. It was a time to have a handshake with the attendees and ice breaking space with the speakers. The speakers from Microsoft were very much enthusiastic with the launch of IE9 and new features being added/introduced to the browser.
 
-* Rounded corners via border-radius property
-* CSS3 background and border features
-* Opacity property
-* RGBA, HSL, and HSLA color models
-* CSS3 media queries
-* CSS3 namespaces, CSS3 values and units
-* CSS3 selectors
+The agenda of the event was to demonstrate MS intentions towards <!--more-->the latest waves in the industry. Though MS was silent for quite sometime for its venture in this field finally they came up with the IE9 beta version. MS is targeting to be the best in the browsers war in coming years considering the addons and the capabilities they have implemented in the browser. The HTML5 wave has been led by major browsers like Chrome, Opera, Firefox etc.
 
-**Strong Javascript** ECMAScript ES 3.1 was considered to be standard specification which had "JSON" object which was interoperable through well defined interfaces. Native JSON support started with IE8 and before that json2.js library used to be used on old browsers. JSON object is overridden in js but now browser started implemented JSON serialization and de-serialization since IE8. The js can directly create native JSON object provided by the browser. Since it is ECMA 4 compliant the script would run and behave the same way on all the browsers and would work faster. The [earlier problem](http://blogs.msdn.com/b/ie/archive/2008/09/10/native-json-in-ie8.aspx) can also be referred to. There were couple of videos explaining the features on IE9, MS ActionScript utilities in scenarios and its edge over other browsers. With this note we had a tea break and shared our experiences with the speakers. Post tea there was QnA session which brought an end to this happening event. In totality it was quite a learning session in the field of upcoming technologies which brought an insight into MS contribution to the web community in various capacities. I really appreciate Microsoft who organized this event and enlightened us with this upcoming and cutting edge technologies' sessions and hope to attend similar kind of events regularly.
+The <b style="font-family:verdana; font-size:18"><a href="http://www.w3schools.com/html5/default.asp">HTML5 Specification</a></b> is very interesting and lot of efforts seemed to have put in in building these features post HTML4. Browsers also seemed to have made efforts in complying with the new specification. There is the war being waged amongst the browser community as far as performance, efficiency and usability are concerned. The presenter did show the difference in the browsers capabilities by playing few HTML controls and hence claimed IE to be the best in the breed in coming years. I am not going to share the specification and the features in this article since it is readily available at W3C site and it is left for the reader to experience and decide about it. The only reason why one would choose IE9 or other browser is by testing the performance of the controls. There seems to be major difference in video performance in different browser, for an example, which is due to varied approaches in implementing either through GPU or only with CPU as it used to be earlier.
+
+A new kid on the block-<b style="font-family:verdana; font-size:18">Pinned Sites</b> and MS is supporting various Indian vendors like <a href="http://songbuzz.rediff.com/#">rediff songbuzz</a> and others in broadcasting the updates to the subscribers. Use Pinned Sites to pin websites to the taskbar on your Windows 7 desktop so you can access them later with a single click. For more information about Pinned Sites, see "Pin a website" to your taskbar. Concept of pinned sites came up with their implementation with rediff songbuzz project in which the website is pinned and behaves like a desktop client. The data or the information is timely pushed by the server and the user creates a limited tasklist which he/she subscribes to. In this way user doesn't have to go to the website for regular updates and keeps himself updated.
+
+Internet Explorer 9 is going to be more compliant with JavaScript standards-<b style="font-family:verdana; font-size:18"><a href="http://en.wikipedia.org/wiki/ECMAScript">ECMA4</a></b>. The browser has now improved its Javascript engine which will now work smoothly and efficiently on multicore CPUs.
+
+You would have played 3D and online games as well and that works perfectly fine on windows platform with all the necessary setups and drivers installed. But the crucial point is that games require high end graphics rendering for which lots of computation is required to be done by CPU and GPU. <b style="font-family:verdana; font-size:18">Hardware Acceleration</b> uses the power of your computer's graphics processor (GPU) to speed up graphics-heavy tasks like video streaming or online gaming. Browsers are now-a-days started leveraging the GPU capabilities for rendering graphics on webpages. IE9 has now started using hardware acceleration for its graphics content and other stuff along with using CPU.
+
+It was closed to afternoon when we had a break for lunch and needless to say that the arrangement was amazing. Soon after lunch we assembled in the conference hall and attended the rest of the sessions. The post lunch sessions were chosen to be light considering the lunch effect.
+
+<b style="font-family:verdana; font-size:18">CSS3 new features </b>and how it has eradicated long awaited improvements in Usability was the next topic of discussion.
+Couple of improvements made to CSS library are:
+<div style="float:left; margin-left:50px;">
+    <li>    Rounded corners via border-radius property</li>
+    <li>    CSS3 background and border features</li>
+    <li>    Opacity property</li>
+    <li>    RGBA, HSL, and HSLA color models</li>
+    <li>    CSS3 media queries</li>
+    <li>    CSS3 namespaces, CSS3 values and units</li>
+    <li>    CSS3 selectors</li>
+</div>
+
+<div style="float:left; margin-left:0px;">
+
+<b style="font-family:verdana; font-size:18">Strong Javascript</b>
+ECMAScript ES 3.1 was considered to be standard specification which had "JSON" object which was interoperable through well defined interfaces. Native JSON support started with IE8 and before that json2.js library used to be used on old browsers. JSON object is overridden in js but now browser started implemented JSON serialization and de-serialization since IE8. The js can directly create native JSON object provided by the browser. Since it is ECMA 4 compliant the script would run and behave the same way on all the browsers and would work faster. The <a href="http://blogs.msdn.com/b/ie/archive/2008/09/10/native-json-in-ie8.aspx">earlier problem</a> can also be referred to.
+
+There were couple of videos explaining the features on IE9, MS ActionScript utilities in scenarios and its edge over other browsers. With this note we had a tea break and shared our experiences with the speakers. Post tea there was QnA session which brought an end to this happening event. In totality it was quite a learning session in the field of upcoming technologies which brought an insight into MS contribution to the web community in various capacities.
+
+I really appreciate Microsoft who organized this event and enlightened us with this upcoming and cutting edge technologies' sessions and hope to attend similar kind of events regularly.
+</div>
+
+</div>
 
 ## Comments
 

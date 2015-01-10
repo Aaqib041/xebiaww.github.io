@@ -1,13 +1,123 @@
 ---
 layout: post
 header-img: img/default-blog-pic.jpg
+author: ankitk
+description: 
+post_id: 3917
+created: 2010/06/29 08:49:55
+created_gmt: 2010/06/29 03:49:55
+comment_status: open
 ---
 
 # Soap web service call in Android
 
-Recently I started using the [Android SDK](http://developer.android.com/guide/basics/what-is-android.html) and came across a requirement to make a [SOAP](http://en.wikipedia.org/wiki/SOAP) based web service call on the Android platform. In this blog I will explain how this can be implemented. Android SDK does not contain any framework/library for making SOAP calls hence we are left with either messing with XML and HTTP call or searching for an open-source library which does this for us. **[kSOAP 2](http://ksoap2.sourceforge.net/)** is one such light weight Soap communication framework that handles the XML and HTTP work in the background.  **[Download kSOAP 2 jar](http://code.google.com/p/ksoap2-android/downloads/detail?name=ksoap2-android-assembly-2.4-jar-with-dependencies.jar&can=2&q=)** If you are building your project with eclipse you need to add the jar file ksoap2-android-assembly-2.4-jar-with-dependencies in the build path. **Maven dependency** [java] <dependency> <groupId>com.google.code.ksoap2-android</groupId> <artifactId>ksoap2-android</artifactId> <version>2.4</version> </dependency>[/java] **Code Snippet for making a Soap call in Android** [java]package com.dummy.soap.android; import org.ksoap2.SoapEnvelope; import org.ksoap2.serialization.SoapObject; import org.ksoap2.serialization.SoapSerializationEnvelope; import org.ksoap2.transport.AndroidHttpTransport; import android.app.Activity; import android.os.Bundle; import android.view.View; import android.view.View.OnClickListener; import android.widget.Button; import android.widget.EditText; import android.widget.TextView; public class DummyAppAndroid extends Activity { private static final String SOAP_ACTION = "getSuggestionResult"; private static final String METHOD_NAME = "getSuggestionResult"; private static final String NAMESPACE = "http://www.dummynamespace.com/MyNameSpace"; private static final String URL = "http://192.168.2.10:8080/DummyApp/services/DummyApp?wsdl"; private SoapObject resultRequestSOAP = null; /** Called when the activity is first created. */ @Override public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); TextView tv = new TextView(this); setContentView(R.layout.main); Button cmd_submit = (Button) findViewById(R.id.widget35); cmd_submit.setOnClickListener(new OnClickListener() { @Override public void onClick(View arg0) { AndroidHttpTransport androidHttpTransport = new AndroidHttpTransport(URL); try { /** Get what user typed to the EditText. */ String searchNameString = ((EditText) findViewById(R.id.widget42)) .getText().toString(); SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME); // Add the input required by web service request.addProperty("input", searchNameString); SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11); envelope.setOutputSoapObject(request); // Make the soap call. androidHttpTransport.call(SOAP_ACTION, envelope); // Get the SoapResult from the envelope body. resultRequestSOAP = (SoapObject) envelope.bodyIn; SoapObject nameResult = (SoapObject) resultRequestSOAP .getProperty(0); int count = nameResult.getPropertyCount(); StringBuilder stringBuilder = new StringBuilder(); /** * Retrieve one property from the complex SoapObject * response */ for (int i = 0; i &lt; count - 1; i++) { SoapObject simpleSuggestion = (SoapObject) nameResult .getProperty(i); stringBuilder.append(simpleSuggestion.getProperty( "representation").toString()); stringBuilder.append("\n"); } String temp = stringBuilder.toString(); /** Show the suggestions in a text area field called * lblStatus */ ((TextView) findViewById(R.id.widget32)).setText(temp .toString()); } catch (Exception aE) { System.out.println(aE.toString()); aE.printStackTrace(); } } }); } }[/java] **Modifications in AndroidManifest.xml **In order to make soap calls on a web service exposed on the internet, additional permissions need to be added. [java] <uses-permission android:name="android.permission.INTERNET"> </uses-permission> [/java] 
+<p>Recently I started using the <a href="http://developer.android.com/guide/basics/what-is-android.html">Android SDK</a> and came across a requirement to make a <a href="http://en.wikipedia.org/wiki/SOAP">SOAP</a> based web service call on the Android platform. In this blog I will explain how this can be implemented.</p>
+<p>Android SDK does not contain any framework/library for making SOAP calls hence we are left with either messing with XML and HTTP call or searching for an open-source library which does this for us.</p>
+<p><strong><a href="http://ksoap2.sourceforge.net/">kSOAP 2</a></strong> is one such light weight Soap communication framework that handles the XML and HTTP work in the background.</p>
+<!--more-->
 
-**Parsing the response received** The best way to figure out how to retrieve the attributes (and properties) is to put a breakpoint straight where you get the raw response from httpclient in your code. Then you can just browse through the structure with your debugger and try retrieving the values you are looking for by chaining getProperty(“somename”) and getAttribute(“someothername”) the way you need. You will often need to access parts of the structure by getting some property as a SoapObject and then e.g. looping through its properties and retrieving the attributes from each.
+<p><strong><a href="http://code.google.com/p/ksoap2-android/downloads/detail?name=ksoap2-android-assembly-2.4-jar-with-dependencies.jar&amp;can=2&amp;q=">Download kSOAP 2 jar</a></strong></p>
+<p>If you are building your project with eclipse you need to add the jar file ksoap2-android-assembly-2.4-jar-with-dependencies in the build path.</p>
+<p><strong>Maven dependency</strong>
+[java]
+&lt;dependency&gt;
+    &lt;groupId&gt;com.google.code.ksoap2-android&lt;/groupId&gt;
+    &lt;artifactId&gt;ksoap2-android&lt;/artifactId&gt;
+    &lt;version&gt;2.4&lt;/version&gt;
+&lt;/dependency&gt;[/java]</p>
+<p><strong>Code Snippet for making a Soap call in Android</strong>
+[java]package com.dummy.soap.android;</p>
+<p>import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.SoapObject;
+import org.ksoap2.serialization.SoapSerializationEnvelope;
+import org.ksoap2.transport.AndroidHttpTransport;</p>
+<p>import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;</p>
+<p>public class DummyAppAndroid extends Activity {
+    private static final String SOAP_ACTION = &quot;getSuggestionResult&quot;;
+    private static final String METHOD_NAME = &quot;getSuggestionResult&quot;;
+    private static final String NAMESPACE =
+             &quot;http://www.dummynamespace.com/MyNameSpace&quot;;
+    private static final String URL =
+             &quot;http://192.168.2.10:8080/DummyApp/services/DummyApp?wsdl&quot;;
+    private SoapObject resultRequestSOAP = null;</p>
+<pre><code>/** Called when the activity is first created. */
+@Override
+public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    TextView tv = new TextView(this);
+    setContentView(R.layout.main);
+    Button cmd_submit = (Button) findViewById(R.id.widget35);
+    cmd_submit.setOnClickListener(new OnClickListener() {
+
+        @Override
+        public void onClick(View arg0) {
+            AndroidHttpTransport androidHttpTransport =
+                 new AndroidHttpTransport(URL);
+            try {
+                /** Get what user typed to the EditText. */
+                String searchNameString =
+                       ((EditText) findViewById(R.id.widget42))
+                        .getText().toString();
+
+                SoapObject request = new SoapObject(NAMESPACE,
+                       METHOD_NAME);
+                // Add the input required by web service
+                request.addProperty(&amp;quot;input&amp;quot;, searchNameString);
+                SoapSerializationEnvelope envelope =
+                       new SoapSerializationEnvelope(SoapEnvelope.VER11);
+                envelope.setOutputSoapObject(request);
+                // Make the soap call.
+                androidHttpTransport.call(SOAP_ACTION, envelope);
+
+                // Get the SoapResult from the envelope body.
+                resultRequestSOAP = (SoapObject) envelope.bodyIn;
+
+                SoapObject nameResult = (SoapObject) resultRequestSOAP
+                        .getProperty(0);
+                int count = nameResult.getPropertyCount();
+                StringBuilder stringBuilder = new StringBuilder();
+                /**
+                 * Retrieve one property from the complex SoapObject
+                 * response
+                 */
+                for (int i = 0; i &amp;amp;lt; count - 1; i++) {
+                    SoapObject simpleSuggestion = (SoapObject) nameResult
+                            .getProperty(i);
+                    stringBuilder.append(simpleSuggestion.getProperty(
+                            &amp;quot;representation&amp;quot;).toString());
+                    stringBuilder.append(&amp;quot;\n&amp;quot;);
+                }
+                String temp = stringBuilder.toString();
+
+                /** Show the suggestions in a text area field called
+                * lblStatus */
+                ((TextView) findViewById(R.id.widget32)).setText(temp
+                        .toString());
+            } catch (Exception aE) {
+                System.out.println(aE.toString());
+                aE.printStackTrace();
+            }
+        }
+    });
+}
+</code></pre>
+<p>}[/java]
+<strong>Modifications in AndroidManifest.xml
+</strong>In order to make soap calls on a web service exposed on the internet, additional permissions need to be added.
+[java]
+&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot;&gt;
+&lt;/uses-permission&gt;
+[/java]
+<div></p>
+<p><strong>Parsing the response received</strong>
+The best way to figure out how to retrieve the attributes (and properties) is to put a breakpoint straight where you get the raw response from httpclient in your code. Then you can just browse through the structure with your debugger and try retrieving the values you are looking for by chaining getProperty(“somename”) and getAttribute(“someothername”) the way you need. You will often need to access parts of the structure by getting some property as a SoapObject and then e.g. looping through its properties and retrieving the attributes from each.</p>
+</div>
 
 ## Comments
 

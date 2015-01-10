@@ -1,35 +1,19 @@
 ---
 layout: post
 header-img: img/default-blog-pic.jpg
+author: sohil
+description: 
+post_id: 7483
+created: 2011/01/12 07:00:07
+created_gmt: 2011/01/12 02:00:07
+comment_status: open
 ---
 
 # Swiz Framework 1.0 
 
-Swiz framework just announce 1.0 release , I have worked on other frameworks available in the market for development in Adobe Flex , after some research i found swiz the simplest , easiest and solves my purpose of using a framework without much hassle ,In this blog we are going to see two things why should i use Swiz framework and how to use it.
+<p>Swiz framework just announce 1.0 release , I have worked on other frameworks available in the market for development in Adobe Flex , after some research i found swiz the simplest , easiest and solves my purpose of using a framework without much hassle ,In this blog we are going to see two things why should i use Swiz framework and how to use it.</p>
 
-Following are the reasons that interest me for using the framework.
-
-  * You don't need to extend the framework specific classed
-  * Framework doesn't impose any design patterns
-  * No Boilerplate code
-
-**You don't need to extend the framework specific classed**  
-I think this is a major reason why I would use swiz over the others. A lot of time while i m writing components i had to extend the events from my custom components. This made my custom components unusable for other projects. I had to often rewrite the events while reusing the components in another project. With Swiz while you are designing the custom components, events can be core flex event that extends Event class. Swiz provides a great flexibility of Event handling as well as Mediating. We will see in the code later how to handle events using Swiz
-
-**Framework doesn't impose any design patterns**  
-This gives me a lot of flexibility in designing the application as I want. Earlier in one of the frameworks I had to implement the command pattern , etc. That did restrict me while designing the application. As whenever i had to design a functionality I had to take care of how I have to integrate with the underlying framework.
-
-**No Boilerplate code**  
-Yet another added advantage. No more writing the same boiler plate code to add a new functionality every time. Actually this comes packaged when you have to impose the design patterns by the framework.
-
-A lot will be clearer in the video below. We are going to see the following things in the Video
-
-1\. Swiz Framework  
-2\. Configuring Swiz  
-2\. How to use [Inject]  
-3\. How to process events using Swiz  
-4\. How to call server side service with one line of code  
-5\. Dispatching the event without have to extend EventDispacher for non UI components.
+<p><p><!--more--></p> <p>Following are the reasons that interest me for using the framework.</p> <ul> <li>You don't need to extend the framework specific classed</li> <li>Framework doesn't impose any design patterns</li> <li>No Boilerplate code</li> </ul> <p><strong>You don't need to extend the framework specific classed</strong><br /> I think this is a major reason why I would use swiz over the others. A lot of time while i m writing components i had to extend the events from my custom components. This made my custom components unusable for other projects. I had to often rewrite the events while reusing the components in another project. With Swiz while you are designing the custom components, events can be core flex event that extends Event class. Swiz provides a great flexibility of Event handling as well as Mediating. We will see in the code later how to handle events using Swiz</p> <p><strong>Framework doesn't impose any design patterns</strong><br /> This gives me a lot of flexibility in designing the application as I want. Earlier in one of the frameworks I had to implement the command pattern , etc. That did restrict me while designing the application. As whenever i had to design a functionality I had to take care of how I have to integrate with the underlying framework.</p> <p><strong>No Boilerplate code</strong><br /> Yet another added advantage. No more writing the same boiler plate code to add a new functionality every time. Actually this comes packaged when you have to impose the design patterns by the framework.</p> <p>A lot will be clearer in the video below. We are going to see the following things in the Video</p> <p>1. Swiz Framework<br /> 2. Configuring Swiz<br /> 2. How to use [Inject]<br /> 3. How to process events using Swiz<br /> 4. How to call server side service with one line of code<br /> 5. Dispatching the event without have to extend EventDispacher for non UI components.</p><object width="640" height="385"><param name="movie" value="http://www.youtube.com/v/FDVygVijpv8?fs=1&amp;hl=en_US"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/FDVygVijpv8?fs=1&amp;hl=en_US" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="640" height="385"></embed></object></p>
 
 ## Comments
 

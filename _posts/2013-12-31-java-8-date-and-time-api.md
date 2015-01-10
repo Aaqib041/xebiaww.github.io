@@ -1,18 +1,102 @@
 ---
 layout: post
 header-img: img/default-blog-pic.jpg
+author: abhisheksharma
+description: 
+post_id: 17839
+created: 2013/12/31 20:31:18
+created_gmt: 2013/12/31 15:31:18
+comment_status: open
 ---
 
 # Java 8: Date and Time API
 
-Date and Time manipulations is a day to day programming utility. This universally applies to all programming languages, and Java stays no exception. Java initially had the system's instance utility to serve the purpose. Then Java evolved to a formal Date API, which had many issues including inconsistent values on creation, precision issues, memory issues, timezones complexity, the Y2K and many more. Following the legacy Date we witnessed the Calendar API of Java. Despite of the efforts put in, the Calendar still had issues and was much much complex to use by "Not so user friendly" constants to set up values of the calendar instance. And by this time, the developer friendly Date API was more or less deprecated and we were left with no option to use other than Gregorian Calendar. To summarize we can say that the original Date API and Calender misbehaved in a lot of ways. In Java's upcoming version 8, they have completely rewritten the Date-Time API inspired by the JodaTime API and introduced a new package "java.time" with a handful of Classes to solve the programming needs. Some quickie details on the new API are follows: _**Lets Segregate the concerns:**_ The Date is not a time instant and neither it can qualify into a human referable Date-Time. A Human would read a clock like "five-thirty" or a date like "1st of November, 2013". Also a system identifies a date as a long value of milliseconds from the epoch time. This is easier in processing and calculations internally. Both are quite different in their representations and use. Considering the above stated difference, the new Java 8 Date-Time has two kinds of date representations: → Human referable Date-Time These are the classes of the new API which represent the Date/Time how humans represent the same. Some examples are LocalDate, LocalTime, LocalDateTime. They hold the specific details related to the date/time the same way humans do. output of _            System.out.println(localDate.toString());_ will be 2013-11-01 This can further be formatted as per the requirement. → Machine referable Date-Time Machines have one view - a single, ever increasing number. For example an Instant represents a fixed point in time as an offset from the standard Java epoch (1st Jan 1970). The instant is stored to nanosecond resolution.
+<p style="text-align: justify">Date and Time manipulations is a day to day programming utility. This universally applies to all programming languages, and Java stays no exception.
 
-Apart from these the differences or units like 6hours 30 seconds or 9 months have specific classes like Duration(for smaller time frame) and Period(for bigger time frame).
+Java initially had the system's instance utility to serve the purpose. Then Java evolved to a formal Date API, which had many issues including inconsistent values on creation, precision issues, memory issues, timezones complexity, the Y2K and many more.
 
-_**Ohh God, Save us from Mutants:**_ Mutation of instances can be a worst debugging nightmare of a programmer. _Suppose you send a "Bag object full of Chocolate instances" to a friend's method countMyChocolates() but on return you find nothing in the Bag because your friend took each Chocolate out of the bag to count and when the Bag got empty he returned the count. This happened because the Bag was mutable and your friend modified you original Bag._ :( :(
+Following the legacy Date we witnessed the Calendar API of Java. Despite of the efforts put in, the Calendar still had issues and was much much complex to use by "Not so user friendly" constants to set up values of the calendar instance. And by this time, the developer friendly Date API was more or less deprecated and we were left with no option to use other than Gregorian Calendar.
 
-This was a BIG issue in the previous Calendar API because of which programmers had to use the clone instead of the original instance. Due to this reason, most of the classes of the new API are immutable. We do not have a public constructor to create the Instances, rather each class provides a static factory utility to create its instance.
+To summarize we can say that the original Date API and Calender misbehaved in a lot of ways. In Java's upcoming version 8, they have completely rewritten the Date-Time API inspired by the JodaTime API and introduced a new package "java.time" with a handful of Classes to solve the programming needs.
 
-So you can create instances of your LocalDate or LocalDateTime as below: _    // using now()_ _    LocalDate localDate = LocalDate.now();_ _    _ _    // using of()_ _    LocalDate newDate = LocalDate.of(2005, 12, 4);_ _    _ _    // using now()_ _    LocalDateTime localDateTime = LocalDateTime.now();_ This gives an advantage to the programmer under complex scenarios as one can never create an instance from its own. Upon every manipulation on a LocalDate(or other type) a new object is created and returned as a reference. The original instance stays unchanged. _**300 Threads at a Time.. aahooo :**_ One can easily guess that the immutability of the new Date-Time API classes is implicitly thread safe. As multiple thread working on single LocalDate or LocalTime instance can never modify the instance being referred by other threads. Programmers/Testing Engineers will now be happier working with Date-Time without taking care of the number of threads in the environment. _**Don't call right now, Its still Dark in USA:**_ World is divided into various time zones. Time in a location defined by political rules and rules define changes in the offset. For example – "In the winter, France will be 1 hour ahead of UTC, while in the summer it will be 2 hours ahead. The cutover is on the last day of March and October" Multiple groups provide rules – eg: "Timezone database" (TZDB). Each group defines own id – TZDB uses 'Europe/London' for UK.  Rules include DST and permanent changes and it define how and when offset changes. Java8 will take care of these with ZonedDateTime and related classes. _    System.out.println(ZoneRules.of(ZoneOffset.of("+02:00")).isDaylightSavings(Instant.now()));_ _    System.out.println(ZoneRules.of(ZoneOffset.of("+02:00")).isFixedOffset());_ One can also set a ZoneID corresponding to the Time/Date. The API gives methods that makes it easy to know the DayLight time saving, zone offset, time gaps, and time overlaps. ZonedDateTime stores LocalDateTime, ZoneId and ZoneOffset.
+Some quickie details on the new API are follows:
 
-For example – 11th Sept 2013 at 13:30, 1 hour ahead of GMT in London Closest equivalent to java.util.GregorianCalendar zone = ZoneId.of("Europe/London"); dt2 = ZonedDateTime.of(2013,SEPTEMBER,11, 13,30,0,0, zone); _**Keep it Simple, silly:**_ Yes..!! we want to keep things simple. So is the new Date-Time API from Java8. It has English like meaningful method structure. We have already seen the methods(now, of) to create a LocalDate or LocalTime. _date1 = LocalDate.now(); _ _    date2 = LocalDate.of(2013,Month.SEPTEMBER,10); _ Now lets do some manipulations and some meaningful calculation. _    // Compare Dates - isAfter() and isBefore()_ _    if (date2.isAfter(date1))_ _    _ _    // Is the Date from a Leap year - Don't worry, the Date knows it_ _    boolean leap = date.isLeapYear(); _ _    _ _    // The length of month is ??_ _    int monthLen = date.lengthOfMonth()_ _    // The next project's release is due exactly 3 months minus 1 day. The new date should be:_ _    date = date.plusMonths(3).minusDays(1); _ _    _ _    // create Date with a new Day_ _    date3 = date.withDayOfMonth(1); _ _    _
+<em><strong><span style="color: #ff0000">Lets Segregate the concerns:</span></strong></em>
+The Date is not a time instant and neither it can qualify into a human referable Date-Time. A Human would read a clock like "five-thirty" or a date like "1st of November, 2013". Also a system identifies a date as a long value of milliseconds from the epoch time. This is easier in processing and calculations internally. Both are quite different in their representations and use.
+
+Considering the above stated difference, the new Java 8 Date-Time has two kinds of date representations:
+→ Human referable Date-Time
+These are the classes of the new API which represent the Date/Time how humans represent the same. Some examples are LocalDate, LocalTime, LocalDateTime.
+They hold the specific details related to the date/time the same way humans do.
+output of
+<span style="color: #3366ff"><em>            System.out.println(localDate.toString());</em></span>
+will be
+2013-11-01
+This can further be formatted as per the requirement.
+
+→ Machine referable Date-Time
+Machines have one view - a single, ever increasing number. For example an Instant represents a fixed point in time as an offset from the standard Java epoch (1st Jan 1970). The instant is stored to nanosecond resolution.</p>
+
+<p style="text-align: justify">Apart from these the differences or units like 6hours 30 seconds or 9 months have specific classes like Duration(for smaller time frame) and Period(for bigger time frame).</p>
+
+<p style="text-align: justify"><em><strong><span style="color: #ff0000">Ohh God, Save us from Mutants:</span></strong></em>
+Mutation of instances can be a worst debugging nightmare of a programmer.
+<em>Suppose you send a "Bag object full of Chocolate instances" to a friend's method countMyChocolates() but on return you find nothing in the Bag because your friend took each Chocolate out of the bag to count and when the Bag got empty he returned the count. This happened because the Bag was mutable and your friend modified you original Bag.</em> :( :(</p>
+
+<p style="text-align: justify">This was a BIG issue in the previous Calendar API because of which programmers had to use the clone instead of the original instance. Due to this reason, most of the classes of the new API are immutable. We do not have a public constructor to create the Instances, rather each class provides a static factory utility to create its instance.</p>
+
+<p style="text-align: justify">So you can create instances of your LocalDate or LocalDateTime as below:
+
+<span style="color: #3366ff"><em>    // using now()</em></span>
+<span style="color: #3366ff"><em>    LocalDate localDate = LocalDate.now();</em></span>
+<span style="color: #3366ff"><em>    </em></span>
+<span style="color: #3366ff"><em>    // using of()</em></span>
+<span style="color: #3366ff"><em>    LocalDate newDate = LocalDate.of(2005, 12, 4);</em></span>
+<span style="color: #3366ff"><em>    </em></span>
+<span style="color: #3366ff"><em>    // using now()</em></span>
+<span style="color: #3366ff"><em>    LocalDateTime localDateTime = LocalDateTime.now();</em></span>
+
+This gives an advantage to the programmer under complex scenarios as one can never create an instance from its own. Upon every manipulation on a LocalDate(or other type) a new object is created and returned as a reference. The original instance stays unchanged.
+
+<span style="color: #ff0000"><em><strong>300 Threads at a Time.. aahooo :</strong></em></span>
+One can easily guess that the immutability of the new Date-Time API classes is implicitly thread safe.
+As multiple thread working on single LocalDate or LocalTime instance can never modify the instance being referred by other threads. Programmers/Testing Engineers will now be happier working with Date-Time without taking care of the number of threads in the environment.
+
+<span style="color: #ff0000"><em><strong>Don't call right now, Its still Dark in USA:</strong></em></span>
+World is divided into various time zones. Time in a location defined by political rules and rules define changes in the offset.
+For example – "In the winter, France will be 1 hour ahead of UTC, while in the summer it will be 2 hours ahead. The cutover is on the last day of March and October"
+
+Multiple groups provide rules – eg: "Timezone database" (TZDB). Each group defines own id – TZDB uses 'Europe/London' for UK.  Rules include DST and permanent changes and it define how and when offset changes.
+Java8 will take care of these with ZonedDateTime and related classes.
+
+<span style="color: #3366ff"><em>    System.out.println(ZoneRules.of(ZoneOffset.of("+02:00")).isDaylightSavings(Instant.now()));</em></span>
+<span style="color: #3366ff"><em>    System.out.println(ZoneRules.of(ZoneOffset.of("+02:00")).isFixedOffset());</em></span>
+
+One can also set a ZoneID corresponding to the Time/Date. The API gives methods that makes it easy to know the DayLight time saving, zone offset, time gaps, and time overlaps. ZonedDateTime stores LocalDateTime, ZoneId and ZoneOffset.</p>
+
+<p style="text-align: justify">For example – 11th Sept 2013 at 13:30, 1 hour ahead of GMT in London
+Closest equivalent to java.util.GregorianCalendar zone = ZoneId.of("Europe/London");
+dt2 = ZonedDateTime.of(2013,SEPTEMBER,11, 13,30,0,0, zone);
+
+<span style="color: #ff0000"><em><strong>Keep it Simple, silly:</strong></em></span>
+Yes..!! we want to keep things simple. So is the new Date-Time API from Java8. It has English like meaningful method structure. We have already seen the methods(now, of) to create a LocalDate or LocalTime.
+<span style="color: #3366ff"><em>date1 = LocalDate.now(); </em></span>
+<span style="color: #3366ff"><em>    date2 = LocalDate.of(2013,Month.SEPTEMBER,10); </em></span>
+
+Now lets do some manipulations and some meaningful calculation.
+
+<em><span style="color: #3366ff">    // Compare Dates - isAfter() and isBefore()</span></em>
+<em><span style="color: #3366ff">    if (date2.isAfter(date1))</span></em>
+<em><span style="color: #3366ff">    </span></em>
+<em><span style="color: #3366ff">    // Is the Date from a Leap year - Don't worry, the Date knows it</span></em>
+<em><span style="color: #3366ff">    boolean leap = date.isLeapYear(); </span></em>
+<em><span style="color: #3366ff">    </span></em>
+<em><span style="color: #3366ff">    // The length of month is ??</span></em>
+<em><span style="color: #3366ff">    int monthLen = date.lengthOfMonth()</span></em>
+
+<em><span style="color: #3366ff">    // The next project's release is due exactly 3 months minus 1 day. The new date should be:</span></em>
+<em><span style="color: #3366ff">    date = date.plusMonths(3).minusDays(1); </span></em>
+<em><span style="color: #3366ff">    </span></em>
+<em><span style="color: #3366ff">    // create Date with a new Day</span></em>
+<em><span style="color: #3366ff">    date3 = date.withDayOfMonth(1); </span></em>
+<em><span style="color: #3366ff">    </span></em>
