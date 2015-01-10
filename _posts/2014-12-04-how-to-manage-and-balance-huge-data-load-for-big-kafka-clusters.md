@@ -16,8 +16,6 @@ comment_status: open
 Partitions act as unit of parallelism. Messages of a single topic are distributed to multiple partitions that can be stored and served on different servers. Upon creation of a topic, the number of partitions for this topic has to be specified. Later on more partitions may be needed for this topic when the volume of this topic increases. This tool helps to add more partitions for a specific topic and also allow manual replica assignment of the added partitions. You can refer to the previous blog [Quick steps : Have a Kafka Cluster Up & Running in 3 minutes][1] to setup kafka cluster and create topics.
 
 ``` 
-
-
 bin/kafka-add-partitions.sh
 
 Option                                                    Description \------                                                       ----------- \--partition <Integer: # of partitions>      REQUIRED: Number of partitions to add to the topic
@@ -27,8 +25,6 @@ Option                                         
 \--topic <topic>                                      REQUIRED: The topic for which partitions need to be added.
 
 \--zookeeper <urls>                               REQUIRED: The connection string for the zookeeper connection in the form host:port. Multiple URLS can be given to allow fail-over.
-
-
  ``` 
 
 ## 
@@ -48,8 +44,6 @@ A summary of the steps that the tool does is shown below -
 ### How to use the tool?
 
 ``` 
-
-
 bin/kafka-reassign-partitions.sh
 
 bin/kafka-reassign-partitions.sh
@@ -64,12 +58,9 @@ Cluster expansion involves including brokers with new broker ids in a Kafka 08 c
 The following example moves 2 topics (foo1, foo2) to newly added brokers in a cluster (5,6,7).
 
 ``` 
-
-
 > ./bin/kafka-reassign-partitions.sh --topics-to-move-json-file topics-to-move.json --broker-list "5,6,7" \--execute
 
 >  cat topics-to-move.json {"topics": [{"topic": "foo1"},{"topic": "foo2"}], "version":1 }
-
 
  ``` 
 
@@ -80,13 +71,9 @@ The partition movement tool can also be moved to selectively move some replicas 
 The following example moves 1 partition (foo-1) from replicas 1,2,3 to 1,2,4
 
 ``` 
-
-
 > ./bin/kafka-reassign-partitions.sh --manual-assignment-json-file partitions-to-move.json --execute
 
 > cat partitions-to-move.json {"partitions": [{"topic": "foo", "partition": 1, "replicas": [1,2,4] }], }], "version":1 }
-
-
  ```
 
 **Note**** : **These tools are available in version 0.8 , not prior versions.
