@@ -25,9 +25,11 @@ For now, we want to keep the existing code to match OS, browser and version as i
 
 **Writing code to extend DefaultCapabilityMatcher**
 
-[code language="java"] import org.openqa.grid.internal.utils.DefaultCapabilityMatcher; import java.util.Map;
+``` 
+ import org.openqa.grid.internal.utils.DefaultCapabilityMatcher; import java.util.Map;
 
-public class MyCapabilityMatcher extends DefaultCapabilityMatcher { private final String nodeOS = "nodeOS"; boolean allCapabilitiesAvailability = false; @Override public boolean matches(Map<String, Object> nodeCapability, Map<String, Object> requestedCapability) { boolean defaultCapabilitiesAvailability = super.matches(nodeCapability, requestedCapability); if (! requestedCapability.containsKey(nodeOS)){ return defaultCapabilitiesAvailability; } else{ boolean nodeOSAvailability = nodeCapability.get(nodeOS).equals(requestedCapability.get(nodeOS)); allCapabilitiesAvailability = (defaultCapabilitiesAvailability && nodeOSAvailability); return allCapabilitiesAvailability; } } } [/code]
+public class MyCapabilityMatcher extends DefaultCapabilityMatcher { private final String nodeOS = "nodeOS"; boolean allCapabilitiesAvailability = false; @Override public boolean matches(Map<String, Object> nodeCapability, Map<String, Object> requestedCapability) { boolean defaultCapabilitiesAvailability = super.matches(nodeCapability, requestedCapability); if (! requestedCapability.containsKey(nodeOS)){ return defaultCapabilitiesAvailability; } else{ boolean nodeOSAvailability = nodeCapability.get(nodeOS).equals(requestedCapability.get(nodeOS)); allCapabilitiesAvailability = (defaultCapabilitiesAvailability && nodeOSAvailability); return allCapabilitiesAvailability; } } } 
+ ```
 
 **How it works:**
 
@@ -35,9 +37,11 @@ This class will first get the result of matching the original default capabiliti
 
 **Writing Selenium Webdriver Test requesting 64-bit OS**
 
-[code language="java"] import java.net.MalformedURLException; import java.net.URL; import org.openqa.selenium.remote.DesiredCapabilities; import org.openqa.selenium.remote.RemoteWebDriver;
+``` 
+ import java.net.MalformedURLException; import java.net.URL; import org.openqa.selenium.remote.DesiredCapabilities; import org.openqa.selenium.remote.RemoteWebDriver;
 
-public class sampleTest { public static void main ( String [] args){ DesiredCapabilities capabilities = new DesiredCapabilities(); capabilities.setBrowserName("firefox"); capabilities.setCapability("nodeOS", "64-bit"); RemoteWebDriver remoteWD = null; try{ remoteWD = new RemoteWebDriver( new URL("http://127.0.0.1:4444/wd/hub"), capabilities); }catch(MalformedURLException e){ e.printStackTrace(); } remoteWD.get("http://www.xebia.com"); //Add your code to test different things remoteWD.quit(); } } [/code]
+public class sampleTest { public static void main ( String [] args){ DesiredCapabilities capabilities = new DesiredCapabilities(); capabilities.setBrowserName("firefox"); capabilities.setCapability("nodeOS", "64-bit"); RemoteWebDriver remoteWD = null; try{ remoteWD = new RemoteWebDriver( new URL("http://127.0.0.1:4444/wd/hub"), capabilities); }catch(MalformedURLException e){ e.printStackTrace(); } remoteWD.get("http://www.xebia.com"); //Add your code to test different things remoteWD.quit(); } } 
+ ```
 
 **Steps to run the test**
 

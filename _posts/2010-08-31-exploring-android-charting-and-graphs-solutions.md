@@ -27,19 +27,24 @@ Using Google charting API, we can create charts and graphs directly by providing
 
 The call to the Google's charting API looks like below:
 
-[code language="xml"]http://chart.apis.google.com/chart?cht=&amp;chd=&amp;chs=&amp;...additional_parameters...[/code]
+[code language="xml"]http://chart.apis.google.com/chart?cht=&amp;chd=&amp;chs=&amp;...additional_parameters...
+ ```
 
 More on Google charting API can be found [here][4]
 
 For creating a pie chart using Google charting solution, I created the following URI
 
-[code language="xml"]http://chart.apis.google.com/chart?cht=p3&amp;chd=t:30,60,10&amp;chs=250x100&amp;chl=cars|bikes|trucks[/code]
+[code language="xml"]http://chart.apis.google.com/chart?cht=p3&amp;chd=t:30,60,10&amp;chs=250x100&amp;chl=cars|bikes|trucks
+ ```
 
 Within my activity's onCreate() I included the code below
 
-[code language="java"]@Override public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); WebView googleChartView = new WebView(this); setContentView(googleChartView); String mUrl = "http://chart.apis.google.com/chart?cht=p3&amp;chd=t:30,60,10&amp;chs=250x100&amp;chl=cars|bikes|trucks"; googleChartView.loadUrl(mUrl); }[/code]
+``` 
+@Override public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); WebView googleChartView = new WebView(this); setContentView(googleChartView); String mUrl = "http://chart.apis.google.com/chart?cht=p3&amp;chd=t:30,60,10&amp;chs=250x100&amp;chl=cars|bikes|trucks"; googleChartView.loadUrl(mUrl); }
+ ```
 
-In the onCreate() method, I am creating a WebView and just loading it with the URL response. It needs an internet access so I included the code below within AndroidManifest.xml [code language="xml"] <uses-permission android:name="android.permission.INTERNET" /> [/code]
+In the onCreate() method, I am creating a WebView and just loading it with the URL response. It needs an internet access so I included the code below within AndroidManifest.xml [code language="xml"] <uses-permission android:name="android.permission.INTERNET" /> 
+ ```
 
 That's it!!! we are done with the first approach. The screen shot for the application I build using Google chart API looks like below:
 
@@ -57,7 +62,8 @@ I added this into the lib folder of my application.
 
 I created a class with a method that gives out a Pie chart intent as below
 
-[code language="java"] public class AChartExample {
+``` 
+ public class AChartExample {
 
 public Intent execute(Context context) { int[] colors = new int[] { Color.RED, Color.YELLOW, Color.BLUE }; DefaultRenderer renderer = buildCategoryRenderer(colors);
 
@@ -65,7 +71,8 @@ CategorySeries categorySeries = new CategorySeries("Vehicles Chart"); categorySe
 
 return ChartFactory.getPieChartIntent(context, categorySeries, renderer); }
 
-protected DefaultRenderer buildCategoryRenderer(int[] colors) { DefaultRenderer renderer = new DefaultRenderer(); for (int color : colors) { SimpleSeriesRenderer r = new SimpleSeriesRenderer(); r.setColor(color); renderer.addSeriesRenderer(r); } return renderer; } } [/code]
+protected DefaultRenderer buildCategoryRenderer(int[] colors) { DefaultRenderer renderer = new DefaultRenderer(); for (int color : colors) { SimpleSeriesRenderer r = new SimpleSeriesRenderer(); r.setColor(color); renderer.addSeriesRenderer(r); } return renderer; } } 
+ ```
 
 Within the execute method a SimpleSeriesRender is created with the required color that is required in the pie chart. These renderers are then added to the DefaultRender.
 
@@ -73,7 +80,9 @@ Next step is to create a CategorySeries with the appropriate data. Once this is 
 
 With this intent we launch our activity and the code goes as below
 
-[code language="java"] Intent achartIntent = new AChartExample().execute(this); startActivity(achartIntent); [/code] The screen shot below shows the generated PIE chart using Achart library
+``` 
+ Intent achartIntent = new AChartExample().execute(this); startActivity(achartIntent); 
+ ``` The screen shot below shows the generated PIE chart using Achart library
 
 [caption id="attachment_4697" align="alignleft" width="223" caption="Achart"]![][8][/caption] The other charting solution I explored is [chartDroid ][3]
 
@@ -85,7 +94,8 @@ Although, we can install the application programmaticly from the Android apps ma
 
 The Chartdroid's charting solution requires a content provider to be created. Below is the content provider's code that I created
 
-[code language="java"] public class ChartDroidDataProvider extends ContentProvider {
+``` 
+ public class ChartDroidDataProvider extends ContentProvider {
 
 static final String AUTHORITY = "com.xyz.contentprovider.chardroid";
 

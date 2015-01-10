@@ -49,7 +49,8 @@ So you can easily specify the transition and navigation type between the source 
 
 When you create a segue between views, choose Custom from the options and specify your custom class in the Attributes Inspector (CMD+OPT+4) under Segue Class. In your custom segue class you can write something like below:
 
-[code] \- (void) perform {
+``` 
+ \- (void) perform {
     
     
     UIViewController *src = (UIViewController *) self.sourceViewController;
@@ -62,7 +63,8 @@ When you create a segue between views, choose Custom from the options and specif
                     completion:NULL];
     
 
-} [/code]
+} 
+ ```
 
 As you can see i am popping out the current view controller. So now when i perform a navigation between my views using this custom segue, i will be popping out the current view. With this, i am not filling my navigationController with unnecessary view controllers, and i am also able to use the power of prepareForSegue method.
 

@@ -15,7 +15,8 @@ comment_status: open
 
 Partitions act as unit of parallelism. Messages of a single topic are distributed to multiple partitions that can be stored and served on different servers. Upon creation of a topic, the number of partitions for this topic has to be specified. Later on more partitions may be needed for this topic when the volume of this topic increases. This tool helps to add more partitions for a specific topic and also allow manual replica assignment of the added partitions. You can refer to the previous blog [Quick steps : Have a Kafka Cluster Up & Running in 3 minutes][1] to setup kafka cluster and create topics.
 
-[code]
+``` 
+
 
 bin/kafka-add-partitions.sh
 
@@ -27,7 +28,8 @@ Option                                         
 
 \--zookeeper <urls>                               REQUIRED: The connection string for the zookeeper connection in the form host:port. Multiple URLS can be given to allow fail-over.
 
-[/code] 
+
+ ``` 
 
 ## 
 
@@ -45,13 +47,15 @@ A summary of the steps that the tool does is shown below -
 
 ### How to use the tool?
 
-[code]
+``` 
+
 
 bin/kafka-reassign-partitions.sh
 
 bin/kafka-reassign-partitions.sh
 
-Option                                                        Description \------                                                           ----------- \--broker-list <brokerlist>                            The list of brokers to which the partitions need to be reassigned in the form "0,1,2". This is required for automatic topic reassignment. \--execute [execute]                                   This option does the actual reassignment. By default, the tool does a dry run \--manual-assignment-json-file <manual    The JSON file with the list of manual assignment json file path>                       reassignmentsThis option or topics- to-move-json-file needs to be specified. The format to use is - {"partitions": [{"topic": "foo", "partition": 1, "replicas": [1,2,3] }], "version":1 } \--topics-to-move-json-file <topics to        The JSON file with the list of topics reassign json file path>                         to reassign.This option or manual- assignment-json-file needs to be specified. The format to use is - {"topics": [{"topic": "foo"},{"topic": "foo1"}], "version":1 } \--zookeeper <urls>                                REQUIRED: The connection string for the zookeeper connection in the form host:port. Multiple URLS can be given to allow fail-over. [/code] 
+Option                                                        Description \------                                                           ----------- \--broker-list <brokerlist>                            The list of brokers to which the partitions need to be reassigned in the form "0,1,2". This is required for automatic topic reassignment. \--execute [execute]                                   This option does the actual reassignment. By default, the tool does a dry run \--manual-assignment-json-file <manual    The JSON file with the list of manual assignment json file path>                       reassignmentsThis option or topics- to-move-json-file needs to be specified. The format to use is - {"partitions": [{"topic": "foo", "partition": 1, "replicas": [1,2,3] }], "version":1 } \--topics-to-move-json-file <topics to        The JSON file with the list of topics reassign json file path>                         to reassign.This option or manual- assignment-json-file needs to be specified. The format to use is - {"topics": [{"topic": "foo"},{"topic": "foo1"}], "version":1 } \--zookeeper <urls>                                REQUIRED: The connection string for the zookeeper connection in the form host:port. Multiple URLS can be given to allow fail-over. 
+ ``` 
 
 ## 3.  Add Brokers(Cluster Expansion)
 
@@ -59,13 +63,15 @@ Cluster expansion involves including brokers with new broker ids in a Kafka 08 c
 
 The following example moves 2 topics (foo1, foo2) to newly added brokers in a cluster (5,6,7).
 
-[code]
+``` 
+
 
 > ./bin/kafka-reassign-partitions.sh --topics-to-move-json-file topics-to-move.json --broker-list "5,6,7" \--execute
 
 >  cat topics-to-move.json {"topics": [{"topic": "foo1"},{"topic": "foo2"}], "version":1 }
 
-[/code] 
+
+ ``` 
 
 ### **Selectively moving some partitions to a broker**
 
@@ -73,13 +79,15 @@ The partition movement tool can also be moved to selectively move some replicas 
 
 The following example moves 1 partition (foo-1) from replicas 1,2,3 to 1,2,4
 
-[code]
+``` 
+
 
 > ./bin/kafka-reassign-partitions.sh --manual-assignment-json-file partitions-to-move.json --execute
 
 > cat partitions-to-move.json {"partitions": [{"topic": "foo", "partition": 1, "replicas": [1,2,4] }], }], "version":1 }
 
-[/code]
+
+ ```
 
 **Note**** : **These tools are available in version 0.8 , not prior versions.
 

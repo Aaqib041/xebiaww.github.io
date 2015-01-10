@@ -27,9 +27,12 @@ I deployed a simple Spring App in two Tomcat instances. [Apache Webserver][1] as
 
 I used this [guide ][5]to load-balance my application using Apache Webserver and mod_jk. Below is my config:
 
-[code] LoadModule jk_module modules/mod_jk.so JkWorkersFile conf/jkworkers.properties JkLogFile logs/mod_jk.log JkLogLevel "info" JkLogStampFormat "[%a %b %d %H:%M:%S %Y]" JkMount /app* loadbalancer [/code]
+``` 
+ LoadModule jk_module modules/mod_jk.so JkWorkersFile conf/jkworkers.properties JkLogFile logs/mod_jk.log JkLogLevel "info" JkLogStampFormat "[%a %b %d %H:%M:%S %Y]" JkMount /app* loadbalancer 
+ ```
 
-And below is the content of my jkworkers.properties file: [code]
+And below is the content of my jkworkers.properties file: ``` 
+
 
 # Define list of workers that will be used for mapping requests
 
@@ -53,7 +56,8 @@ worker.loadbalancer.type=lb worker.loadbalancer.balance_workers=node1,node2 work
 
 # Status worker for managing load balancer
 
-worker.status.type=status [/code]
+worker.status.type=status 
+ ```
 
 ### Managing Sessions:
 
@@ -93,14 +97,20 @@ Now lets see some code. [code language="java" highlight="14,15,22"] package in.x
     }
     
 
-} [/code]
+} 
+ ```
 
 The lines to note in above code are **14,15 and 22**: 
 
-  * In line **14**, I am adding the current user to session using **SessionService**. Point to note is that instead of doing something like : [code language="java"]sessionService.set("user", user, session);[/code] I have written : [code language="java"]sessionService.set(session.getId()+SEPARATOR+"user", user, session);[/code] I am "deliberately" appending the SessionId just to ensure that if a particular tomcat node fails, the other tomcat can retrieve failed node's sessions using the cookie **JSESSIONID** stored in the client header. 
+  * In line **14**, I am adding the current user to session using **SessionService**. Point to note is that instead of doing something like : ``` 
+sessionService.set("user", user, session);
+ ``` I have written : ``` 
+sessionService.set(session.getId()+SEPARATOR+"user", user, session);
+ ``` I am "deliberately" appending the SessionId just to ensure that if a particular tomcat node fails, the other tomcat can retrieve failed node's sessions using the cookie **JSESSIONID** stored in the client header. 
   * And that is the reason, in lines **15** as well as **22**, I am fetching session attribute from the **SessionService **using the **JSESSIONID** retrieved from the cookie. 
 
-All the other code is quite self explanatory. Now lets have a look at the **SessionServiceImpl.java** [code language="java"] package in.xebia.vijay.impl; //import statements @Service public class SessionServiceImpl implements SessionService {
+All the other code is quite self explanatory. Now lets have a look at the **SessionServiceImpl.java** ``` 
+ package in.xebia.vijay.impl; //import statements @Service public class SessionServiceImpl implements SessionService {
     
     
     @Autowired
@@ -148,10 +158,15 @@ All the other code is quite self explanatory. Now lets have a look at the **Sess
     }
     
 
-} [/code] Points to be noted : 
+} 
+ ``` Points to be noted : 
 
-  * In the implementation of method [code language="java"]public void set(String key, T value, HttpSession session); [/code] we add the attribute to HttpSession as well as the Memcahced Server, so that in case of any node failure the other node can fetch the values from Memcached Server. 
-  * In the implementation of method [code language="java"]public T get(String key, HttpSession session); [/code]
+  * In the implementation of method ``` 
+public void set(String key, T value, HttpSession session); 
+ ``` we add the attribute to HttpSession as well as the Memcahced Server, so that in case of any node failure the other node can fetch the values from Memcached Server. 
+  * In the implementation of method ``` 
+public T get(String key, HttpSession session); 
+ ```
 
    [1]: http://httpd.apache.org/
    [2]: http://tomcat.apache.org/tomcat-3.3-doc/mod_jk-howto.html

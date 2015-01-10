@@ -49,7 +49,8 @@ The most important prerequisite of this step is to_ identify the **implementatio
 
 Once this is done, next task is to **inject a new method in the implementation class** that adds an error with supplied ‘errorType’. The signature of new overloaded method will be very much similar to that of existing methods for adding error, with only difference that it will accept an **additional argument of type _ErrorType_**.
 
-[sourcecode lang="groovy"] BeanPropertyBindingResult.metaClass.rejectValue = { String field, String code, Object[] args, String defaultMsg, ErrorType errorType-> String[] codes = [code] FieldError fieldError = new FieldError(delegate.objectName,field, null,false,codes,args,defaultMsg) fieldError.errorType = errorType delegate.addError(fieldError) } [/sourcecode]
+[sourcecode lang="groovy"] BeanPropertyBindingResult.metaClass.rejectValue = { String field, String code, Object[] args, String defaultMsg, ErrorType errorType-> String[] codes = ``` 
+ FieldError fieldError = new FieldError(delegate.objectName,field, null,false,codes,args,defaultMsg) fieldError.errorType = errorType delegate.addError(fieldError) } [/sourcecode]
 
 *For injecting this new overloaded method, we have again used Grails Metaclass Injection mechanism.
 

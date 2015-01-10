@@ -27,7 +27,8 @@ You might feel relaxed to see that GIT is offering couple of tools for identifyi
 
 You might get a hint that we need to override the ‘mergetool’ so go ahead and open your .gitconfig file present in C:\Users{user-name}\ (That’s for Windows 7 by the way). You will find tags like [gui], [user], etc. Add following lines to it:
 
-[code]
+``` 
+
 
 [merge]
 
@@ -37,7 +38,8 @@ tool = diffmerge
 
 cmd = git-merge-diffmerge-wrapper.sh "$PWD/$LOCAL" "$PWD/$REMOTE" "$PWD/$BASE"
 
-[/code]
+
+ ```
 
 You can specify the name of the mergetool you are using inside the [mergetool] tag, but make sure it matches the ‘tool’ property of [merge] tag. You can see [mergetool] requires git-merge-diffmerge-wrapper.sh. [Download it][4] and paste it inside {GIT_INSTALLATION_FOLDER}\cmd. Please change the extension of the file to .sh. You should have something like below:
 

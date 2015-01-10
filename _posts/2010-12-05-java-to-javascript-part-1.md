@@ -23,7 +23,8 @@ First things first. Developer consoles in IE 8/ Chrome/ Firefox are great, you c
 
 [code language="Javascript"]
 
-(function($){ if(console) { $.log = function(obj) { console.log(obj); } } })(jQuery); [/code]
+(function($){ if(console) { $.log = function(obj) { console.log(obj); } } })(jQuery); 
+ ```
 
 You can look at the [Firebug console API][1] for other methods available on the console.
 
@@ -43,7 +44,8 @@ _getClosure: function(dep) { return function() {return com.framework.DIEngine.ge
 
 get: function(name) { $.log('Asked DI for:' + name); return this._objCache[name]; } };
 
-[/code]
+
+ ```
 
 **Packaging**
 
@@ -53,7 +55,8 @@ A sample namespace can be declared as below and then you define all your objects
 
 [code language="Javascript"] var com = { framework:{}, app:{} };
 
-// define objects in namespace. com.app.Mapper = { // foo bar } [/code]
+// define objects in namespace. com.app.Mapper = { // foo bar } 
+ ```
 
 **Object Orientation**
 
@@ -70,7 +73,8 @@ OO.register('baseClass', { hello: function() { $.log("Base class invoked."); ret
 
 OO.register('subClass','baseClass', { hello: function() { $.log("Sub class invoked."); $.log("Invoking super"); this._super.hello(); return "Wazz up."; } });
 
-[/code]
+
+ ```
 
 **Unit Testing**
 
@@ -86,7 +90,8 @@ test("OO get test", function() { var base = OO.get('baseClass').hello(); var sub
 
 module("DI tests.", { setup: function() { com.framework.DIEngine.init({ reducer: {instance:com.app.Reducer}, mapper:{instance:com.app.Mapper}, service:{instance:com.app.Service, dependencies: ['reducer', 'mapper']} }); }, teardown: function() { // tear down.. } });
 
-test("DI get test", function() { expect(2); // 2 assertions in the test var mapper = com.framework.DIEngine.get('mapper'); ok(mapper && typeof mapper == 'object', 'Mapper is defined & is an object.'); ok(mapper.name == 'mapper', 'It is indeed mapper.'); }); }); [/code]
+test("DI get test", function() { expect(2); // 2 assertions in the test var mapper = com.framework.DIEngine.get('mapper'); ok(mapper && typeof mapper == 'object', 'Mapper is defined & is an object.'); ok(mapper.name == 'mapper', 'It is indeed mapper.'); }); }); 
+ ```
 
 QUnit can be integrated with the continuous integration systems which launch browsers and the collect test results from the DOM. QUnit documentation explains how this can be done. QUnit provides nice callbacks for various events in the test lifecycle. I find QUnit.done of particular interest as it can be used to inform you of test failures by posting back to a URL ( an app there could trigger a message to your team's instant messaging system).  Other callbacks can be used to collect the data on individual tests and then send it on 'done' callback.
 

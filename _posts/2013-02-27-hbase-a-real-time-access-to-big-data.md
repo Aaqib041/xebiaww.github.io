@@ -61,17 +61,24 @@ Let us try some hands on HBase.
   1. To install HBase please refer to this [link][2].
   2. Start Habse using ./start-hbase.sh
   3. Start Hbase shell using command “hbase shell”
-  4. Let's create one table with name 'my_table' and column family name 'my_cf1'. [code] create 'my_table', 'my_cf1' [/code]
+  4. Let's create one table with name 'my_table' and column family name 'my_cf1'. ``` 
+ create 'my_table', 'my_cf1' 
+ ```
 
 We can list all tables in Hbase using list command.
 
-[code] list hbase(main):013:0> list TABLE my_table 1 row(s) in 0.0090 seconds [/code]
+``` 
+ list hbase(main):013:0> list TABLE my_table 1 row(s) in 0.0090 seconds 
+ ```
 
 Here Table is the default table of HBase that we discussed above and my_table is the one that we created in this example.
-  5. Let's put some data in newly created table. [code] put 'my_table', 'row1', 'my_cf1:column1', 'value11',1 put 'my_table', 'row1', 'my_cf1:column2', 'value12',2 put 'my_table', 'row2', 'my_cf1:column1', 'value21',3 put 'my_table', 'row2', 'my_cf1:column2', 'value22',4 put 'my_table', 'row1', 'my_cf1:column1', 'value13',5 [/code]
+  5. Let's put some data in newly created table. ``` 
+ put 'my_table', 'row1', 'my_cf1:column1', 'value11',1 put 'my_table', 'row1', 'my_cf1:column2', 'value12',2 put 'my_table', 'row2', 'my_cf1:column1', 'value21',3 put 'my_table', 'row2', 'my_cf1:column2', 'value22',4 put 'my_table', 'row1', 'my_cf1:column1', 'value13',5 
+ ```
 
 Here first parameter is table name, second is row key, third is column of particular column family, fourth is value for that column and finally the time stamp. In case we don't pass the time stamp system will take default values.
-  6. We can see the content of table using scan command. [code] scan 'my_table'
+  6. We can see the content of table using scan command. ``` 
+ scan 'my_table'
 
 Output is:
 

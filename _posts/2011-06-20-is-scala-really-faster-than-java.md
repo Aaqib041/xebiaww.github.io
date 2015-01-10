@@ -19,7 +19,8 @@ My basic ( starter) understanding of Functional programming tells me that there 
 
 This debate seems a familiar one of whether Java is faster than C/C++. Thinking logically if some language is built on some other language then the derived language can be at most as fast as the underlying language. So how can Scala be faster than Java (after all Scala runs on JVM)? Going back to Java/C/C++ debate, it may sometimes be possible that the Hotspot generated code is faster as compared to hand written native code. So this brings in the human factor, a Scala program may perform as good as a Java program purely because of the programming model offered by Scala or Under the Hood optimizations.
 
-I checked out the [code][3] for the benchmark , removed the -X UseCompressedOops setting as it was not available on my machine. I created a script to record -gcutil data from jstat utility and added it to run _target_ in the MakeFiles. Data from jstat was then plotted using gnuplot.
+I checked out the ``` 
+[3] for the benchmark , removed the -X UseCompressedOops setting as it was not available on my machine. I created a script to record -gcutil data from jstat utility and added it to run _target_ in the MakeFiles. Data from jstat was then plotted using gnuplot.
 
 A few basic assumptions/notes first: 1\. Programs were run using no special GC settings. So given equivalent type of code (Basic and Pro versions) and same environment which one would run fast. 2\. Comparisions are purely from a Garbage collection point of view, they do not account for implementation differences(Martin's point on pro versions). 3\. Observations do not discount the warm up period of the benchmark (but observations here are not absolute anyway).
 

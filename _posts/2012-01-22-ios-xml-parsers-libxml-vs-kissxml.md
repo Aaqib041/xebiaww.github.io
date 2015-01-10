@@ -26,7 +26,8 @@ I will show and compare the basic parsing logic provided by both the APIs.
 
 **libXML:**
 
-[code] NSString _path = [[NSBundle mainBundle] pathForResource:@"Employee" ofType:@"xml"]; NSData _xmlData = [NSData dataWithContentsOfFile:path]; xmlTextReaderPtr reader = xmlReaderForMemory([xmlData bytes], [xmlData length], [path UTF8String], nil, (XML_PARSE_NOBLANKS | XML_PARSE_NOCDATA | XML_PARSE_NOERROR | XML_PARSE_NOWARNING));
+``` 
+ NSString _path = [[NSBundle mainBundle] pathForResource:@"Employee" ofType:@"xml"]; NSData _xmlData = [NSData dataWithContentsOfFile:path]; xmlTextReaderPtr reader = xmlReaderForMemory([xmlData bytes], [xmlData length], [path UTF8String], nil, (XML_PARSE_NOBLANKS | XML_PARSE_NOCDATA | XML_PARSE_NOERROR | XML_PARSE_NOWARNING));
     
     
     if(!reader) {
@@ -68,11 +69,13 @@ I will show and compare the basic parsing logic provided by both the APIs.
     }
     
 
-[/code]
+
+ ```
 
 **KissXML:** (using XPath)
 
-[code] NSString _source = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"employee" ofType:@"xml"] encoding:NSUTF8StringEncoding error:&error]; DDXMLDocument _theDocument = [[DDXMLDocument alloc] initWithXMLString:source options:0 error:&error]; NSMutableArray *employeeList = [[NSMutableArray alloc] init];
+``` 
+ NSString _source = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"employee" ofType:@"xml"] encoding:NSUTF8StringEncoding error:&error]; DDXMLDocument _theDocument = [[DDXMLDocument alloc] initWithXMLString:source options:0 error:&error]; NSMutableArray *employeeList = [[NSMutableArray alloc] init];
     
     
     NSArray *employeeXmlResult = [theDocument nodesForXPath:@&quot;/xml/employees/employee&quot; error:&amp;error];
@@ -87,7 +90,8 @@ I will show and compare the basic parsing logic provided by both the APIs.
     }
     
 
-[/code]
+
+ ```
 
 So was there something in both the code snippets that comes into mind at first? May be the developer-friendliness i was talking above? One of the reason i preferred KissXML was this.
 

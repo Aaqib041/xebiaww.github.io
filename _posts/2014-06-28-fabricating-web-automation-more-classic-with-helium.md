@@ -66,9 +66,11 @@ To start an instance of a browser, you need to write start along with the name o
 
 And then write the test steps you want to follow. For example, I have automated Xebia India first with Helium, here is the code for the same:
 
-[code language="java"] package com.xebia.web.pages; import static com.heliumhq.API.*;
+``` 
+ package com.xebia.web.pages; import static com.heliumhq.API.*;
 
-public class XebiaIndia { public static void main(String args[]) { startChrome("http://xebia.in/"); click("About Us"); click("Services"); click("Products"); click("Trainings"); click("Knowledge"); click("Careers"); click("Events"); killBrowser(); } }[/code] 
+public class XebiaIndia { public static void main(String args[]) { startChrome("http://xebia.in/"); click("About Us"); click("Services"); click("Products"); click("Trainings"); click("Knowledge"); click("Careers"); click("Events"); killBrowser(); } }
+ ``` 
 
 **Why Helium over Selenium?**
 

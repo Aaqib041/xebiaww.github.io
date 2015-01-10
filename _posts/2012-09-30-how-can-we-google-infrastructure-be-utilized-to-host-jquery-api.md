@@ -17,23 +17,31 @@ The content that you are going to come across in this blog can help you speed up
 
 **How to access Google API's** The libraries can be accessed in two ways: 1\. Method 1: Static reference to the desired jquery file/version)- put
 
-[code]<script><!--mce:0--></script>[/code]
+``` 
+<script><!--mce:0--></script>
+ ```
 
   1. Method 2: Dynamic reference using Google AJAX api
 
-[code]<script type="text/javascript"><!--mce:1--></script> <script type="text/javascript"><!--mce:2--></script>[/code]
+``` 
+<script type="text/javascript"><!--mce:1--></script> <script type="text/javascript"><!--mce:2--></script>
+ ```
 
 **To set value to any element-**
 
-[code]<!--
+``` 
+<!--
 
 <head> <mce:script _mce_src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></mce:script> </head> <body> <div> values are <span></span> and <span></span></div> <mce:script type="text/javascript"><! $("div").data("value", { first: "first", second: "second" }); $("span:first").text($("div").data("value").first); $("span:second").text($("div").data("value").second); // -->
 
-\--!>[/code]
+\--!>
+ ```
 
 To handle any event (like keydown)-
 
-[code] <form> <input value="test value" type="text" id="target" /> </form> $('#target').keydown(function() { // handle key press }); [/code]
+``` 
+ <form> <input value="test value" type="text" id="target" /> </form> $('#target').keydown(function() { // handle key press }); 
+ ```
 
 For either method you choose, the things that irked, like hosting the libraries, correctly setting up the cache headers, finding tweaks to make gzip work, preventing cookies and other verbose data that is not required, saving bandwidth, staying up to date with the latest release and so on. 
 

@@ -89,7 +89,8 @@ comment_status: open
     }
     
 
-} [/code]
+} 
+ ```
 
 The above job is triggered using Spring's TaskScheduling framework([applicationContext.xml][3]). You can see in **line 13** I'm providing the interval in which job should be repeated. From lines **15 through 43** I'm first reading all the jobs data from database. Then for each job's data a Quartz Job is created with a corresponding trigger. Now there are three cases, 
 
@@ -97,7 +98,8 @@ The above job is triggered using Spring's TaskScheduling framework([applicationC
   * If job is active, check if it exists and if it does, simply update the trigger and reschedule the job.
   * If job is active, check if it exists and if it does not, simply schedule the job.
 
-Lets see the code for **MailSenderJob.java** [code language="java"] public class MailSenderJob implements Job {
+Lets see the code for **MailSenderJob.java** ``` 
+ public class MailSenderJob implements Job {
     
     
     private static Logger logger = Logger.getLogger(&quot;MailSenderJob&quot;);
@@ -114,7 +116,8 @@ Lets see the code for **MailSenderJob.java** [code language="java"] public class
     }
     
 
-} [/code]
+} 
+ ```
 
 This is a pretty straight forward Quartz Job nothing new here. I am simply using the mailService and calling the send method. You can obviously run any logic you want.
 

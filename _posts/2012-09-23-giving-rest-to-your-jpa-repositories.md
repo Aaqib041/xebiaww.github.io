@@ -33,9 +33,12 @@ Basically it allows you to expose your JPA Repositories over HTTP as a REST laye
 
 } [/sourcecode]
 
-**User Repository** [code language="java"] package in.xebia.datarest.repository; public interface UserRepository extends JpaRepository<User, Long> { } [/code]
+**User Repository** ``` 
+ package in.xebia.datarest.repository; public interface UserRepository extends JpaRepository<User, Long> { } 
+ ```
 
-**Post Class** [code language="java"] package in.xebia.datarest.domain; @Entity public class Post {
+**Post Class** ``` 
+ package in.xebia.datarest.domain; @Entity public class Post {
     
     
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -49,9 +52,11 @@ Basically it allows you to expose your JPA Repositories over HTTP as a REST laye
     //getters and setters
     
 
-} [/code]
+} 
+ ```
 
-**Post Repository** [code language="java"] package in.xebia.datarest.repository; public interface PostRepository extends JpaRepository<Post, Long> {
+**Post Repository** ``` 
+ package in.xebia.datarest.repository; public interface PostRepository extends JpaRepository<Post, Long> {
     
     
     public Post findByUserUserName(@Param(&quot;userName&quot;) String userName);
@@ -59,13 +64,15 @@ Basically it allows you to expose your JPA Repositories over HTTP as a REST laye
     public Post findByTitle(@Param(&quot;title&quot;) String title);
     
 
-} [/code] Please note in User class I have used **@RestResource(exported = false)** this is used so that password is not exported when requesting for a user. It Can be used with Repositories and query methods also.
+} 
+ ``` Please note in User class I have used **@RestResource(exported = false)** this is used so that password is not exported when requesting for a user. It Can be used with Repositories and query methods also.
 
 Here is how I have configured my repositories : [hibernate-context.xml][6] and a minimal [applicationContext.xml][7]
 
 **REST Export** Now in order to export your JPA Repositories you just add a custom **"RepositoryRestExporterServlet"** provided by spring in your **web.xml**. Below is the code snippet. [code language="xml"] <servlet> <servlet-name>exporter</servlet-name> <servlet-class>org.springframework.data.rest.webmvc.RepositoryRestExporterServlet</servlet-class> <load-on-startup>1</load-on-startup> </servlet>
 
-<servlet-mapping> <servlet-name>exporter</servlet-name> <url-pattern>/*</url-pattern> </servlet-mapping> [/code]
+<servlet-mapping> <servlet-name>exporter</servlet-name> <url-pattern>/*</url-pattern> </servlet-mapping> 
+ ```
 
 In the above code I have used **RepositoryRestExporterServlet **to map all incoming requests. You can also use RepositoryRestExporterServlet along with DispatcherServlet in case you want to add Spring Data Rest to your existing Spring MVC project.
 
@@ -73,21 +80,28 @@ In example application there are two repositories **PostRepository** and **UserR
 
 **CRUD using Data REST** Lets start with the following : **Request** [code language="css"]
 
-curl localhost:8080/datarest [/code]
+curl localhost:8080/datarest 
+ ```
 
-**Response** [code language="css"] { "links" : [ { "rel" : "post", "href" : "http://localhost:8080/datarest/post" }, { "rel" : "user", "href" : "http://localhost:8080/datarest/user" } ], "content" : [ ] } [/code] The above response shows how many repositories are exposed and under which urls. 
+**Response** [code language="css"] { "links" : [ { "rel" : "post", "href" : "http://localhost:8080/datarest/post" }, { "rel" : "user", "href" : "http://localhost:8080/datarest/user" } ], "content" : [ ] } 
+ ``` The above response shows how many repositories are exposed and under which urls. 
 
 Lets create a user. **Request** [sourcecode language="css" wraplines="true"] curl -v -d '{"userName" : "Vijay", "password":"123"}' -H "Content-Type: application/json" http://localhost:8080/datarest/user [/sourcecode]
 
 This will create a user with userName as Vijay and password as 123. Now lets see how a post can be created(**Embedded Types**).
 
-**Request** [code language="css"] curl -v -X POST -H "Content-type: application/json" -d '{"title":"Spring Data Rest", "content":"Spring data rest is cool", "user":{ "rel" : "user.User", "href" : "http://localhost:8080/datarest/user/1" } }' http://localhost:8080/datarest/post [/code]
+**Request** [code language="css"] curl -v -X POST -H "Content-type: application/json" -d '{"title":"Spring Data Rest", "content":"Spring data rest is cool", "user":{ "rel" : "user.User", "href" : "http://localhost:8080/datarest/user/1" } }' http://localhost:8080/datarest/post 
+ ```
 
-And now if we request for [code language="css"]http://localhost:8080/datarest/post[/code] output will be [code language="css"] { "links" : [ ], "content" : [ { "links" : [ { "rel" : "self", "href" : "http://localhost:8080/datarest/post/1" }, { "rel" : "post.Post.user", "href" : "http://localhost:8080/datarest/post/1/user" } ], "content" : "Spring data rest is cool", "title" : "Spring Data Rest" } ], "page" : { "size" : 20, "totalElements" : 1, "totalPages" : 1, "number" : 1 } } [/code]
+And now if we request for [code language="css"]http://localhost:8080/datarest/post
+ ``` output will be [code language="css"] { "links" : [ ], "content" : [ { "links" : [ { "rel" : "self", "href" : "http://localhost:8080/datarest/post/1" }, { "rel" : "post.Post.user", "href" : "http://localhost:8080/datarest/post/1/user" } ], "content" : "Spring data rest is cool", "title" : "Spring Data Rest" } ], "page" : { "size" : 20, "totalElements" : 1, "totalPages" : 1, "number" : 1 } } 
+ ```
 
-For querying on custom methods like **findByUserUserName(String userName)** defined in our postRepository. We can write a query like this: [code language="css"] curl -v http://localhost:8080/datarest/post/search/findByUserUserName?userName=Vijay [/code]
+For querying on custom methods like **findByUserUserName(String userName)** defined in our postRepository. We can write a query like this: [code language="css"] curl -v http://localhost:8080/datarest/post/search/findByUserUserName?userName=Vijay 
+ ```
 
-Finally deleting a post using the following request: [code language="css"] curl -i -H -X DELETE http://localhost:8080/datarest/post/1 [/code] This will delete the post with id equal to 1. 
+Finally deleting a post using the following request: [code language="css"] curl -i -H -X DELETE http://localhost:8080/datarest/post/1 
+ ``` This will delete the post with id equal to 1. 
 
 Thats it for now guys. Hope you like it. 
 

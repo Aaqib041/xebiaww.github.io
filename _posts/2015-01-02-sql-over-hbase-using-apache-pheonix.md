@@ -47,33 +47,45 @@ Once the Apache Phoenix is downloaded, unzip the tar file and you have to includ
 
 Note: If your Hbase is not compatible with Phoenix version, we will get an exception saying Client and Server jars are not compatible.
 
-[code language="java"]
+``` 
 
-$wget http://apache.mirrors.hoobly.com/phoenix/phoenix-3.2.2/bin/phoenix-3.2.2-bin.tar.gz $ tar -xvf phoenix-3.2.2-bin.tar.gz $ cd phoenix-3.2.2-bin/common $ cp phoenix-3.2.2-client-minimal.jar /usr/lib/hbase/lib/ $ cp phoenix-core-3.2.2.jar /usr/lib/hbase/lib</span>[/code]
+
+$wget http://apache.mirrors.hoobly.com/phoenix/phoenix-3.2.2/bin/phoenix-3.2.2-bin.tar.gz $ tar -xvf phoenix-3.2.2-bin.tar.gz $ cd phoenix-3.2.2-bin/common $ cp phoenix-3.2.2-client-minimal.jar /usr/lib/hbase/lib/ $ cp phoenix-core-3.2.2.jar /usr/lib/hbase/lib</span>
+ ```
 
 Phoenix comes up with a command line tool: sqlline (written in python).
 
-[code language="java"] $ cd ~/phoenix/phoenix-core-3.2.2/bin $ ./psql.py localhost <sql-script A> <argument for the scrit A> <second-sql script B> <arguments forscript B> [/code]
+``` 
+ $ cd ~/phoenix/phoenix-core-3.2.2/bin $ ./psql.py localhost <sql-script A> <argument for the scrit A> <second-sql script B> <arguments forscript B> 
+ ```
 
 For example: 
 
 Script A:
 
-[code language="java"] CREATE TABLE IF NOT EXISTS EMPLOYEE (NAME VARCHAR NOT NULL,LOCATION VARCHAR NOT NULL,DOB DATE NOT NULL,EMPLOYEEID INTEGER CONSTRAINT PK PRIMARY KEY (EMPLOYEEID)); [/code] 
+``` 
+ CREATE TABLE IF NOT EXISTS EMPLOYEE (NAME VARCHAR NOT NULL,LOCATION VARCHAR NOT NULL,DOB DATE NOT NULL,EMPLOYEEID INTEGER CONSTRAINT PK PRIMARY KEY (EMPLOYEEID)); 
+ ``` 
 
 Arguments for A:
 
-[code language="java"] Abhishek,Delhi,1984-01-01 01:01:01,1 Rakesh,Kolkata,1983-06-25 01:01:01,2 Jemin,Chennai,1990-11-25 01:01:01,3 [/code] 
+``` 
+ Abhishek,Delhi,1984-01-01 01:01:01,1 Rakesh,Kolkata,1983-06-25 01:01:01,2 Jemin,Chennai,1990-11-25 01:01:01,3 
+ ``` 
 
 Script B:
 
 Running Sample queries:
 
-[code language="java"] SELECT NAME from EMPLOYEE where EMPLOYEEID=’1’[/code] 
+``` 
+ SELECT NAME from EMPLOYEE where EMPLOYEEID=’1’
+ ``` 
 
 Now using sqlline we can connect to Hbase:
 
-[code language="java"] $ ./sqlline.py localhost [cloudera@localhost bin]$ ./sqlline.py localhost .. Connecting to jdbc:phoenix:localhost Driver: org.apache.phoenix.jdbc.PhoenixDriver (version 3.0) Autocommit status: true Transaction isolation: TRANSACTION_READ_COMMITTED .. Done sqlline version 1.1.2 0: jdbc:phoenix:localhost> select count(*) from EMPLOYEE; +------------+ |  COUNT(1)  | +------------+ | 3          | +------------+ 1 row selected (0.112 seconds) 0: jdbc:phoenix:localhost>[/code] 
+``` 
+ $ ./sqlline.py localhost [cloudera@localhost bin]$ ./sqlline.py localhost .. Connecting to jdbc:phoenix:localhost Driver: org.apache.phoenix.jdbc.PhoenixDriver (version 3.0) Autocommit status: true Transaction isolation: TRANSACTION_READ_COMMITTED .. Done sqlline version 1.1.2 0: jdbc:phoenix:localhost> select count(*) from EMPLOYEE; +------------+ |  COUNT(1)  | +------------+ | 3          | +------------+ 1 row selected (0.112 seconds) 0: jdbc:phoenix:localhost>
+ ``` 
 
 **Running Phoenix on AWS:**
 

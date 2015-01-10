@@ -15,7 +15,8 @@ The other day I was playing with Spring MVC to create some demo app. For writing
 
 For the lazy readers and code addicts here is the link to [GitHub Repo][2].  Now lets get back, below is the Controller class I will be testing in this blog : 
 
-[code language="java"] package in.xebia.mvc.controller;
+``` 
+ package in.xebia.mvc.controller;
 
 //all the imports 
 
@@ -62,11 +63,13 @@ For the lazy readers and code addicts here is the link to [GitHub Repo][2].  Now
     }
     
 
-} [/code]
+} 
+ ```
 
 I have tried to test most of the use cases like, GET, POST with parameters, GET with parameters, **@ResponseBody**, **@RequestParam**, **@Valid** , **@PathVariable**, Model Attributes, View Names, etc. 
 
-Below are the Test Cases I wrote earlier(before I knew about spring-test-mvc): [code language="java"] package in.xebia.mvc.controllers.test;
+Below are the Test Cases I wrote earlier(before I knew about spring-test-mvc): ``` 
+ package in.xebia.mvc.controllers.test;
 
 @SuppressWarnings("unused") public class MainControllerTest extends AbstractTest {
     
@@ -194,9 +197,11 @@ Below are the Test Cases I wrote earlier(before I knew about spring-test-mvc): [
     }
     
 
-} [/code]
+} 
+ ```
 
-Lets compare the above code with the new test cases written below(after learning about spring-test-mvc): [code language="java"] package in.xebia.mvc.controllers.test; //important imports @SuppressWarnings("unused") @RunWith(SpringJUnit4ClassRunner.class) 
+Lets compare the above code with the new test cases written below(after learning about spring-test-mvc): ``` 
+ package in.xebia.mvc.controllers.test; //important imports @SuppressWarnings("unused") @RunWith(SpringJUnit4ClassRunner.class) 
 
    [1]: https://github.com/SpringSource/spring-test-mvc
    [2]: https://github.com/vijayrawatsan/spring-mvc-test

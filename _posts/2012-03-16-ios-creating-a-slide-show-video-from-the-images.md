@@ -20,13 +20,16 @@ Lets say i have a list of images and I would like to create a slideshow video , 
   * Once done close the stream and finally close the video writer.
 The first step here is pretty simple. Loop through all the images and find out the maxHeight and maxWidth of all the image.For the second step we need to define the kind of media file we want to make. AVFoundation provides us with a class named AVAssetWriter, which we can initialize with the path where we want to create the file and the type of file. It can be a audio / video,etc . We are going to initialize the writer to create a video file
 
-[code] AVAssetWriter *videoWriter = [[AVAssetWriter alloc] initWithURL:
+``` 
+ AVAssetWriter *videoWriter = [[AVAssetWriter alloc] initWithURL:
 
-[NSURL fileURLWithPath:filePath] fileType:AVFileTypeQuickTimeMovie error:&error]; [/code]
+[NSURL fileURLWithPath:filePath] fileType:AVFileTypeQuickTimeMovie error:&error]; 
+ ```
 
 The next step is to create a video stream for this we need to figure out what is the video codec that we need to use and what id the height & width of video stream. We have already calculated the maxHeight and maxWidth for the video stream and we are going to use H264 as the codec for the video. AVFoundation has a class named AVAssetWriterInput which can be used to create audio video stream. We will be initializing the stream with videosettings as shown
 
-[code]
+``` 
+
 
 NSDictionary *videoSettings = [NSDictionary dictionaryWithObjectsAndKeys: AVVideoCodecH264, AVVideoCodecKey,
 
@@ -36,11 +39,13 @@ NSDictionary *videoSettings = [NSDictionary dictionaryWithObjectsAndKeys: AVVi
 
 nil];
 
-AVAssetWriterInput* videoStream = [[AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo  outputSettings:videoSettings] retain]; [/code]
+AVAssetWriterInput* videoStream = [[AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo  outputSettings:videoSettings] retain]; 
+ ```
 
 Life would have been every simple if we have to only create the stream and write the images to the buffer.However we cannot do so. One was of doing this is creating the PixelBuffer adaptor and initalize it to the stream and write using the adaptor.This is what we are going to do.
 
-[code]
+``` 
+
 
 AVAssetWriterInputPixelBufferAdaptor *adaptor = [AVAssetWriterInputPixelBufferAdaptor
 
@@ -48,33 +53,41 @@ assetWriterInputPixelBufferAdaptorWithAssetWriterInput: videoStream
 
 sourcePixelBufferAttributes:nil];
 
-[/code]
+
+ ```
 
 Once done add the stream to the video writer
 
-[code]
+``` 
+
 
 [videoWriter addInput: videoStream];
 
-[/code]
+
+ ```
 
 Using the asset writer start creating the video now.
 
-[code]
+``` 
+
 
 [videoWriter startWriting];
 
-[videoWriter startSessionAtSourceTime:kCMTimeZero]; [/code]
+[videoWriter startSessionAtSourceTime:kCMTimeZero]; 
+ ```
 
 Moving forward we are going to create convert every image into a pixel buffer and add this buffer as a frame for the video at nth time. frameCount is the one that keeps the seconds at which we want the image to be displayed currently it is absolute.I have found a simple function from internet that converts the UIImage to pixel buffer. This takes a Image as a input and converts it to pixel buffer
 
-[code]
+``` 
 
-  * (CVPixelBufferRef) pixelBufferFromCGImage: (CGImageRef) image andSize:(CGSize) size { NSDictionary _options = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], kCVPixelBufferCGImageCompatibilityKey, [NSNumber numberWithBool:YES], kCVPixelBufferCGBitmapContextCompatibilityKey,nil]; CVPixelBufferRef pxbuffer = NULL; CVReturn status = CVPixelBufferCreate(kCFAllocatorDefault, size.width, size.height, kCVPixelFormatType_32ARGB, (CFDictionaryRef) options,&pxbuffer); NSParameterAssert(status == kCVReturnSuccess && pxbuffer != NULL); CVPixelBufferLockBaseAddress(pxbuffer, 0); void _pxdata = CVPixelBufferGetBaseAddress(pxbuffer); NSParameterAssert(pxdata != NULL); CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB(); CGContextRef context = CGBitmapContextCreate(pxdata, size.width, size.height, 8, 4*size.width, rgbColorSpace, kCGImageAlphaNoneSkipFirst); NSParameterAssert(context); CGContextConcatCTM(context, CGAffineTransformMakeRotation(0)); CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(image), CGImageGetHeight(image)), image); CGColorSpaceRelease(rgbColorSpace); CGContextRelease(context); CVPixelBufferUnlockBaseAddress(pxbuffer, 0); return pxbuffer; } [/code]
+
+  * (CVPixelBufferRef) pixelBufferFromCGImage: (CGImageRef) image andSize:(CGSize) size { NSDictionary _options = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], kCVPixelBufferCGImageCompatibilityKey, [NSNumber numberWithBool:YES], kCVPixelBufferCGBitmapContextCompatibilityKey,nil]; CVPixelBufferRef pxbuffer = NULL; CVReturn status = CVPixelBufferCreate(kCFAllocatorDefault, size.width, size.height, kCVPixelFormatType_32ARGB, (CFDictionaryRef) options,&pxbuffer); NSParameterAssert(status == kCVReturnSuccess && pxbuffer != NULL); CVPixelBufferLockBaseAddress(pxbuffer, 0); void _pxdata = CVPixelBufferGetBaseAddress(pxbuffer); NSParameterAssert(pxdata != NULL); CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB(); CGContextRef context = CGBitmapContextCreate(pxdata, size.width, size.height, 8, 4*size.width, rgbColorSpace, kCGImageAlphaNoneSkipFirst); NSParameterAssert(context); CGContextConcatCTM(context, CGAffineTransformMakeRotation(0)); CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(image), CGImageGetHeight(image)), image); CGColorSpaceRelease(rgbColorSpace); CGContextRelease(context); CVPixelBufferUnlockBaseAddress(pxbuffer, 0); return pxbuffer; } 
+ ```
 
 Now that we have everything ready we start fromt the first image and loop through each image convert the UIImage to pixels and add to the video stream. In this example we are showing only one image everysecond, hence we are incrementing the framecount after every. Note that after adding the buffer for every image we are waiting for the adapter stream to be ready. Hence adding a sleep time after every write. Once you are done writing all the images close the session for the stream and video writer to produce a slideshow video at desired url.
 
-[code] CVPixelBufferRef buffer = NULL; int frameCount = 1;
+``` 
+ CVPixelBufferRef buffer = NULL; int frameCount = 1;
 
 for(UIImage *img in images) {
 
@@ -84,7 +97,8 @@ while (!append_ok){ if (adaptor.assetWriterInput.readyForMoreMediaData){ CMTime 
 
 [videoStream markAsFinished]; [videoWriter finishWriting];
 
-[/code]
+
+ ```
 
 So that was it to create a video from UIImages in iOS using AVFoundation. Unfortunately its a little lengthy procedure and could have been more API friend in creating / adding images to the stream , converting image into pixebuffer etc.
 

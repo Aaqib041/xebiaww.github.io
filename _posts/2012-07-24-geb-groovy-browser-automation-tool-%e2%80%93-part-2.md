@@ -17,13 +17,15 @@ In [Part-1][1] we have covered the installation & usage of Geb, JQuery locators 
 
 Pages define their a) location, b) an “at checker” and c) content (among other things). When we define this information as part of the page it allows us to separate the implementation details from the intention. Let’s see an example. We will be creating 2 Page classes here:
 
-[code] import geb.Page
+``` 
+ import geb.Page
 
 class HomePage extends Page{ static url = "http://www.bloomberg.com" static at = { title == "Bloomberg - Business, Financial & Economic News, Stock Quotes" } static content = { moreTopNewsHeading {$("div#more_top > h3 > a")} opinionHeading {$("div#opinion_tetris > h3 > a")} personalFinanceHeading {$("div#personal_finance_tetris > h3 > a")} } }
 
 import geb.Page
 
-class NewsPage extends Page{ static url = "news/" static at = { title == "Top U.S & International News Headlines - Bloomberg" } static content = { exclusiveNewsHeading {$("div#exclusive_news > div > h2 > a")} worldwideNewsHeading {$("div#worldwide_news > div > h2 > a")} regionNewsHeading {$("div#regions_news > div > h2 > a")} } } [/code]
+class NewsPage extends Page{ static url = "news/" static at = { title == "Top U.S & International News Headlines - Bloomberg" } static content = { exclusiveNewsHeading {$("div#exclusive_news > div > h2 > a")} worldwideNewsHeading {$("div#worldwide_news > div > h2 > a")} regionNewsHeading {$("div#regions_news > div > h2 > a")} } } 
+ ```
 
 **Important Considerations:**
 
@@ -32,11 +34,14 @@ class NewsPage extends Page{ static url = "news/" static at = { title == "Top U.
   3. Geb features a DSL for defining page content in a templated fashion, which allows very concise page definitions. Pages define a static closure property called content that describes the page content.
 The structure to the content DSL is…
 
-[code] «name» { «definition» } [/code]
+``` 
+ «name» { «definition» } 
+ ```
 
 Now let’s look at the script:
 
-[code] import geb.Browser
+``` 
+ import geb.Browser
 
 Browser.drive { to HomePage at HomePage
     
@@ -53,7 +58,8 @@ Browser.drive { to HomePage at HomePage
     assert regionNewsHeading.text() == &quot;Regions News&quot;
     
 
-}.quit() [/code]
+}.quit() 
+ ```
 
 The “to” method utilizes the url property of class that navigates browser to that url. This method does not verify that the browser ends up at the given type. So we need something else to assert whether we are on correct page.
 
@@ -63,15 +69,18 @@ The “to” method utilizes the url property of class that navigates browser to
 
 It is very easy to create interim reports with Geb. We just need to use “report <>” command and it will take store the complete HTML and screenshot of current page and save those with report name.
 
-[code] Browser.drive(driver: new FirefoxDriver()) { config.reportsDir = new File("reports/geb") go "http://www.grails.org" $("a", text:"Plugins").click() waitFor {title: "Grails - Plugins Portal"} report "Ex4"
+``` 
+ Browser.drive(driver: new FirefoxDriver()) { config.reportsDir = new File("reports/geb") go "http://www.grails.org" $("a", text:"Plugins").click() waitFor {title: "Grails - Plugins Portal"} report "Ex4"
 
-}.quit() [/code]
+}.quit() 
+ ```
 
 **Screen Scrapping**
 
 Geb can be used for screen scrapping. In case you just want to get some information from web pages and do not want to assert those, it is very much possible in Geb. Usually we need to log search results, left side menu items or top header items on multiple pages. Groovy's collect() method is very helpful in achieving what we want to achieve as it can be used to iterate over collections and transform each element of the collection. Lets see an example where we are capturing plug-in search results from grails.org site.
 
-[code] import geb.Browser import org.openqa.selenium.firefox.FirefoxDriver
+``` 
+ import geb.Browser import org.openqa.selenium.firefox.FirefoxDriver
 
 Browser.drive(driver: new FirefoxDriver()){ go "http://grails.org/plugins/"
     
@@ -92,13 +101,15 @@ Browser.drive(driver: new FirefoxDriver()){ go "http://grails.org/plugins/"
     println pluginSorters
     
 
-}.quit() [/code]
+}.quit() 
+ ```
 
 ** Setting/getting value to/from different html elements via a single method **
 
 Yes!! You read it right..We are going to see how using a single method you can set and get values to/from different html elements so now you need not to remember different ways to deal with different elements. Let's see an example:
 
-[code] import geb.Browser import org.openqa.selenium.firefox.FirefoxDriver
+``` 
+ import geb.Browser import org.openqa.selenium.firefox.FirefoxDriver
 
 Browser.drive(driver: new FirefoxDriver()) { go "http://www.olx.in/" $("div#my_olx > a", text:"Register").click() waitFor(20) {$("div#register > h1", text: "Register")}
 
@@ -125,7 +136,8 @@ Browser.drive(driver: new FirefoxDriver()) { go "http://www.olx.in/" $("div#my_o
     }
     
 
-} [/code]
+} 
+ ```
 
 In last and concluding part (Part 3) we will discuss about dealing with frame/windows, configuration and Geb's integration with different testing framework adapters like Spock, TestNG and JUnit.
 

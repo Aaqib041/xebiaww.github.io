@@ -21,8 +21,10 @@ With prototype models, you are assured that every view has its own model. So the
 
 Talking about simple MVC based applications, there are many ways to manage the scope of models (as singleton or prototype). In our application, we used Spring ActionScript to manage the top level code, where we specified the scope for our controllers/models.
 
-[code] <!-- Model --> <Object id="applicationModel" clazz="{ApplicationModel}" scope="prototype"/>
+``` 
+ <!-- Model --> <Object id="applicationModel" clazz="{ApplicationModel}" scope="prototype"/>
 
-<!-- Controller --> <Object id="applicationController" clazz="{ApplicationController}" scope="prototype"> <ConstructorArg ref="{applicationModel}"/> </Object> [/code]
+<!-- Controller --> <Object id="applicationController" clazz="{ApplicationController}" scope="prototype"> <ConstructorArg ref="{applicationModel}"/> </Object> 
+ ```
 
 Prototype ModelLocator also helps in managing data model while creating Dashboard applications. You may have different views to represent data. Some may be in charts, and some in grids. A dashboard might need to show all these views all-together. And again the same use case, user gesture should update only the intended data model.

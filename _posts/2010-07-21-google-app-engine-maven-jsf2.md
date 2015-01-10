@@ -108,7 +108,8 @@ Below is my pom.xml to make this plugin work -
     &lt;/build&gt;
     
 
-</project> [/code]
+</project> 
+ ```
 
 I have included the whole pom as there is hardly anything I can miss here. The GAE plugin is not in maven central so we need to include the plugin repository, the dependencies are pretty standard except one (which I will explain in a moment) and the plugin itself needs the configuration to know where you have the GAE SDK.
 
@@ -116,11 +117,13 @@ As I mentioned earlier, some classes are blacklisted on the GAE so your default 
 
 To make JSF work you need the following entries in your web.xml -
 
-[code language="xml"] <!-- Seems like GAE 1.2.6 cannot handle server side session management. At least for JSF 2.0.1 --> <context-param> <param-name>javax.faces.STATE_SAVING_METHOD</param-name> <param-value>client</param-value> </context-param> <!-- Recommendation from GAE pages --> <context-param> <param-name>javax.faces.PROJECT_STAGE</param-name> <param-value>Production</param-value> </context-param> <!-- Accommodate Single-Threaded Requirement of Google AppEngine --> <context-param> <param-name>com.sun.faces.enableThreading</param-name> <param-value>false</param-value> </context-param> [/code]
+[code language="xml"] <!-- Seems like GAE 1.2.6 cannot handle server side session management. At least for JSF 2.0.1 --> <context-param> <param-name>javax.faces.STATE_SAVING_METHOD</param-name> <param-value>client</param-value> </context-param> <!-- Recommendation from GAE pages --> <context-param> <param-name>javax.faces.PROJECT_STAGE</param-name> <param-value>Production</param-value> </context-param> <!-- Accommodate Single-Threaded Requirement of Google AppEngine --> <context-param> <param-name>com.sun.faces.enableThreading</param-name> <param-value>false</param-value> </context-param> 
+ ```
 
 Finally, in your appengine-web.xml (the GAE configuration file), you need the following entry - 
 
-[code language="xml"] <sessions-enabled>true</sessions-enabled> [/code]
+[code language="xml"] <sessions-enabled>true</sessions-enabled> 
+ ```
 
 That's it. Now you can work on your JSF2 application. To test, all you need to do is : **mvn clean gae:run**
 

@@ -37,7 +37,8 @@ We can see that I have used a **ManyToOne** mapping for User(i.e. learner) and *
 
 **ScormEngineService : **It is the core service provided by ScormEngine through which we can access all other services like CourseService, RegistrationService, etc. For setting up ScormEngineService as a singleton bean use the following scriptlet in your spring-context.xml (or [Click to view the Complete context][3]):
 
-[code language="xml"] <beans:bean class="com.rusticisoftware.hostedengine.client.ScormEngineService" name="scormEngineService"> <beans:constructor-arg index="0" value="http://yourhost:yourport/EngineWebServices/"></beans:constructor-arg> <beans:constructor-arg index="1" value="appID"></beans:constructor-arg> <beans:constructor-arg index="2" value="password"></beans:constructor-arg> </beans:bean> [/code] The first parameter to the constructor is ScormEngine web-service end point, the second parameter is your ApplicationID and the last parameter is the Secret Key for your application.
+[code language="xml"] <beans:bean class="com.rusticisoftware.hostedengine.client.ScormEngineService" name="scormEngineService"> <beans:constructor-arg index="0" value="http://yourhost:yourport/EngineWebServices/"></beans:constructor-arg> <beans:constructor-arg index="1" value="appID"></beans:constructor-arg> <beans:constructor-arg index="2" value="password"></beans:constructor-arg> </beans:bean> 
+ ``` The first parameter to the constructor is ScormEngine web-service end point, the second parameter is your ApplicationID and the last parameter is the Secret Key for your application.
 
 **So how does this bean(scormEngineService) works?** Basically ScormEngine exposes a list of webServices that we can access using our bean. These web services are of the form : http://host/api?method=[service.prefix].[methodName]&appid=[your app id]&origin=[your origin string][4](&security=params). 
 
@@ -50,7 +51,8 @@ This bean provides us with instances of different services like CourseService, R
 
 **Uploading:** For uploading a course, logic involved is as follows, first of all I will need to create a database entry in my local database and then upload the course to ScormEngine(all this stuff in a single transaction). For that, I created a course detail entry in my local database and then use **ImportCourse(String courseId, String absoluteFilePath)**; method to import the course to ScormEngine. So basically the actual course file gets uploaded on ScormEngine, but not on my local machine. This one was pretty straight-forward. Below is the code snippet:
 
-[code language="java"] public ImportResult uploadCourse(File file, String title, User owner) { CourseService courseService = scormEngineService.getCourseService(); List importResults = null; try { Course course = createCourseLocally(title, owner); importResults = courseService.ImportCourse(course.getCourseId(), file.getAbsolutePath());
+``` 
+ public ImportResult uploadCourse(File file, String title, User owner) { CourseService courseService = scormEngineService.getCourseService(); List importResults = null; try { Course course = createCourseLocally(title, owner); importResults = courseService.ImportCourse(course.getCourseId(), file.getAbsolutePath());
     
     
         }catch (Exception e) {
@@ -71,11 +73,13 @@ This bean provides us with instances of different services like CourseService, R
     }
     
 
-[/code]
+
+ ```
 
 **Difference between previewing and launching:** Previewing means simply viewing the course stored in the ScormEngine without saving any information(usually used to check whether the course is uploaded successfully). On the other hand, Launching allows us to view the course as well as it saves the information like how much time it took, which user played the content, did he/she complete it, etc.
 
-For **Preview** I used **GetPreviewUrl(String courseId, String redirectUrl)**; method to get the preview URLs as follows: [code language="java"]
+For **Preview** I used **GetPreviewUrl(String courseId, String redirectUrl)**; method to get the preview URLs as follows: ``` 
+
 
    [1]: https://github.com/vijayrawatsan/ScormEngineWithSpring
    [2]: http://xebee.xebia.in/wp-content/uploads/2012/01/class.png

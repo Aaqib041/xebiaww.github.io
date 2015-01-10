@@ -17,11 +17,15 @@ This blog is the result of my experience while using the Spring-Android framewor
 
 The sample Webservice in this scenario has a method defined to handle GET requests that return all the Projects presently configured along with certain details and an array of issues. The class is as below:
 
-[code language="java"] public class Project { private String name; private Integer id; private String owner; private Issue[] issues; … //getter and setters for all … } [/code]
+``` 
+ public class Project { private String name; private Integer id; private String owner; private Issue[] issues; … //getter and setters for all … } 
+ ```
 
 On a Web-service _GET_ request, the project data is retrieved in JSON representation. A request to get all projects configured in the system gets back with the response below: 
 
-[code language="java"] [{"class":"com.xyz.Project","id":1,"issues":[],"name":"TestProject0","owner":"Test0"}, {"class":"com.xyz.Project","id":2,"issues":[],"name":"TestProject1","owner":"Test1"}, {"class":"com.xyz.Project","id":3,"issues":[],"name":"TestProject2","owner":"Test2"}] [/code]
+``` 
+ [{"class":"com.xyz.Project","id":1,"issues":[],"name":"TestProject0","owner":"Test0"}, {"class":"com.xyz.Project","id":2,"issues":[],"name":"TestProject1","owner":"Test1"}, {"class":"com.xyz.Project","id":3,"issues":[],"name":"TestProject2","owner":"Test2"}] 
+ ```
 
 That completes the Rest service scenario description. Now let's find out how to access it in an Android application using Spring-Android's RestTemplate.
 
@@ -56,7 +60,8 @@ Let's try to understand the code given above
 
 **Line 10:** It is a rest call to the web-service url. Please notice that it is a HTTP GET request as indicated by the name getForObject(). I have specified the String.class as the second argument to the method which means the data returned is to be interpreted as String data.
 
-The method supported by the **RestTemplate** are listed below [code language="java" light="true"] HTTP RestTemplate DELETE delete(String, String...) GET getForObject(String, Class, String...) HEAD headForHeaders(String, String...) OPTIONS optionsForAllow(String, String...) POST postForLocation(String, Object, String...) PUT put(String, Object, String...) [/code] But, when I try to run this code I get an exception
+The method supported by the **RestTemplate** are listed below [code language="java" light="true"] HTTP RestTemplate DELETE delete(String, String...) GET getForObject(String, Class, String...) HEAD headForHeaders(String, String...) OPTIONS optionsForAllow(String, String...) POST postForLocation(String, Object, String...) PUT put(String, Object, String...) 
+ ``` But, when I try to run this code I get an exception
 
 [sourcecode language="java" light="true"] no suitable HttpMessageConverter found for response type [com.xebia.android.Project] and content type [application/json] [/sourcecode] That's because we are not dealing with text data here but JSON data type
 
@@ -91,7 +96,9 @@ You may have noticed that the second argument to the getForObject method in the 
 
 Here's our **Android client **side class representing Project data
 
-[code language="java"] @JsonIgnoreProperties( {"class" }) public class JSONData { private String name; private Integer id; private String owner; private Issue[] issues; … //getter and setters for all … } [/code]
+``` 
+ @JsonIgnoreProperties( {"class" }) public class JSONData { private String name; private Integer id; private String owner; private Issue[] issues; … //getter and setters for all … } 
+ ```
 
 here, JsonIgnoreProperties annotation conveys the JSON mapper that these are the properties to be excluded. The JSON response contains a class variable which I am ignoring in the code above. [sourcecode language="java"] {"class":"com.xyz.Project","id":1,"issues":[],"name":"TestProject0","owner":"Test0"} [/sourcecode]
 

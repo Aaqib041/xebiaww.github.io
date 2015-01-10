@@ -27,9 +27,11 @@ _**How to use it??**_
 
 To add a simple TCP message handler/ TCP message receiver, the following snippets can be added to the _applicationContext.xml_ file:
 
-[code language="xml"] <ip:inbound-channel-adapter protocol="tcp/udp" channel="outputChannel" close="false" custom-socket-reader-class-name="CustomClass" id="inbound" local-address="localIpAddressForMultiHomeServers" message-format="length-header" pool-size="noOfThreads" port="portNumber" receive-buffer-size="bufferSize" using-direct-buffers="true/false" using-nio="true/false" />[/code]
+[code language="xml"] <ip:inbound-channel-adapter protocol="tcp/udp" channel="outputChannel" close="false" custom-socket-reader-class-name="CustomClass" id="inbound" local-address="localIpAddressForMultiHomeServers" message-format="length-header" pool-size="noOfThreads" port="portNumber" receive-buffer-size="bufferSize" using-direct-buffers="true/false" using-nio="true/false" />
+ ```
 
-[code language="xml"] <ip:outbound-channel-adapter protocol="tcp/udp" channel="inputChannel" custom-socket-writer-class-name="CustomClass" host="hostname" id="outbound" local-address="localIpAddressForMultiHomeServers" message-format="length-header" port="portnumber" using-direct-buffers="true/false" using-nio="true/false"/>[/code]
+[code language="xml"] <ip:outbound-channel-adapter protocol="tcp/udp" channel="inputChannel" custom-socket-writer-class-name="CustomClass" host="hostname" id="outbound" local-address="localIpAddressForMultiHomeServers" message-format="length-header" port="portnumber" using-direct-buffers="true/false" using-nio="true/false"/>
+ ```
 
 _**Description of tags**_
 

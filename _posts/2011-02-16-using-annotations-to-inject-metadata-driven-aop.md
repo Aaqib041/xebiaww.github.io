@@ -23,11 +23,15 @@ By implementing this mechanism, you just change your application context file an
 
 In the sample code below, I would be adding a **SpookyAnnotation** on top of a bean and will allow the **SpookyingInterceptor** to create a proxy of the bean with the injected code. The _SpookyingInterceptor_ does nothing but adds the advice of a _System.out.println_ statement in the methods of the bean which has this annotation present.
 
-_applicationContext.xml_ [code language="xml"] <bean:bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" /> <bean:bean class="test.beans.interceptor.SpookyingInterceptor" /></pre> [/code]
+_applicationContext.xml_ [code language="xml"] <bean:bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" /> <bean:bean class="test.beans.interceptor.SpookyingInterceptor" /></pre> 
+ ```
 
-_Annotation_ [code language="java"] @Retention(value= RetentionPolicy.RUNTIME) public @interface SpookyAnnotation { boolean insertSpookiness() default true; } [/code]
+_Annotation_ ``` 
+ @Retention(value= RetentionPolicy.RUNTIME) public @interface SpookyAnnotation { boolean insertSpookiness() default true; } 
+ ```
 
-_Interceptor class_ [code language="java"] package test.beans.interceptor;
+_Interceptor class_ ``` 
+ package test.beans.interceptor;
 
 import .... import test.annotations.SpookyAnnotation; public class SpookyingInterceptor extends AbstractPointcutAdvisor{
     
@@ -74,15 +78,23 @@ import .... import test.annotations.SpookyAnnotation; public class SpookyingInte
     }
     
 
-} [/code]
+} 
+ ```
 
-_Bean/Service classes_ [code language="java"] package test.beans; import test.annotations.SpookyAnnotation; @SpookyAnnotation(insertSpookiness = false) public class BeanWithNonSpookyCode { public void callMe() { System.out.println("non spooky one has been called"); } } [/code]
+_Bean/Service classes_ ``` 
+ package test.beans; import test.annotations.SpookyAnnotation; @SpookyAnnotation(insertSpookiness = false) public class BeanWithNonSpookyCode { public void callMe() { System.out.println("non spooky one has been called"); } } 
+ ```
 
-[code language="java"] package test.beans; public class AnotherBeanWithNonSpookyCode { public void callMe() { System.out.println("non spooky one has been called"); } } [/code]
+``` 
+ package test.beans; public class AnotherBeanWithNonSpookyCode { public void callMe() { System.out.println("non spooky one has been called"); } } 
+ ```
 
-[code language="java"] package test.beans; import test.annotations.SpookyAnnotation; @SpookyAnnotation public class BeanWithSpookyCode { public void callMe() { System.out.println("spooky one has been called"); } } [/code]
+``` 
+ package test.beans; import test.annotations.SpookyAnnotation; @SpookyAnnotation public class BeanWithSpookyCode { public void callMe() { System.out.println("spooky one has been called"); } } 
+ ```
 
-_Bean definitions_ [code language="xml"] <bean:bean id="beanWithNonSpooky" class="test.beans.BeanWithNonSpookyCode" /> <bean:bean id="anotherBeanWithNonSpooky" class="test.beans.AnotherBeanWithNonSpookyCode" /> <bean:bean id="beanWithSpooky" class="test.beans.BeanWithSpookyCode" /> [/code]
+_Bean definitions_ [code language="xml"] <bean:bean id="beanWithNonSpooky" class="test.beans.BeanWithNonSpookyCode" /> <bean:bean id="anotherBeanWithNonSpooky" class="test.beans.AnotherBeanWithNonSpookyCode" /> <bean:bean id="beanWithSpooky" class="test.beans.BeanWithSpookyCode" /> 
+ ```
 
 [MethodBeforeAdvice][7] is a standard class which instruments the code in before method before the method call.   
 

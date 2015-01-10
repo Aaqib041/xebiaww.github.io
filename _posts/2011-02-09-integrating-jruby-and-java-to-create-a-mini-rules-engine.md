@@ -17,11 +17,15 @@ If this is done in pure Java, you can create these rules in your code but you ca
 
 However, if we implement this logic in JRuby we will have reasonably clean code and logic can be delegated to a clean and dynamic language like Ruby which even a business manager can maintain.
 
-So lets get started. First let us add the JRuby jar to our project (through Maven) - [code language="xml"] <dependency> <groupId>org.jruby</groupId> <artifactId>jruby-complete</artifactId> <version>1.5.6</version> </dependency> [/code]
+So lets get started. First let us add the JRuby jar to our project (through Maven) - [code language="xml"] <dependency> <groupId>org.jruby</groupId> <artifactId>jruby-complete</artifactId> <version>1.5.6</version> </dependency> 
+ ```
 
-Now, let us create a simple Ruby script that will contain the logic - [code language="ruby"] class CustomerClassSelector def choose_class(points) return "BRONZE" if (0..999).include?(points) return "SILVER" if (1000..1999).include?(points) return "GOLD" if (2000..2999).include?(points) return "PLATINUM" end end [/code] Save it as customer_class_selector.rb at a place where your project config lies. The code itself is pretty easy to understand even if you don't know Ruby syntax. The "(0..999)" is a Range in Ruby and it has a method "include?(param)" that returns true if the param lies in the Range.
+Now, let us create a simple Ruby script that will contain the logic - [code language="ruby"] class CustomerClassSelector def choose_class(points) return "BRONZE" if (0..999).include?(points) return "SILVER" if (1000..1999).include?(points) return "GOLD" if (2000..2999).include?(points) return "PLATINUM" end end 
+ ``` Save it as customer_class_selector.rb at a place where your project config lies. The code itself is pretty easy to understand even if you don't know Ruby syntax. The "(0..999)" is a Range in Ruby and it has a method "include?(param)" that returns true if the param lies in the Range.
 
-Now for calling this code from Java - [code language="java"] String getCustomerClass(int loyaltyPoints) { ScriptingContainer container = new ScriptingContainer(LocalContextScope.THREADSAFE); container.setLoadPaths(Arrays.asList("/home/rocky/mysite/config")); container.runScriptlet("require 'customer_class_selector'"); Object greeter = container.runScriptlet("CustomerClassSelector.new"); String customerClass = container.callMethod(greeter, "choose_class", loyaltyPoints, String.class); return customerClass; } [/code]
+Now for calling this code from Java - ``` 
+ String getCustomerClass(int loyaltyPoints) { ScriptingContainer container = new ScriptingContainer(LocalContextScope.THREADSAFE); container.setLoadPaths(Arrays.asList("/home/rocky/mysite/config")); container.runScriptlet("require 'customer_class_selector'"); Object greeter = container.runScriptlet("CustomerClassSelector.new"); String customerClass = container.callMethod(greeter, "choose_class", loyaltyPoints, String.class); return customerClass; } 
+ ```
 
   1. In this method, we initiate a Scripting container (package org.jruby.embed) that is available through our Maven dependency / jar added above. We pass it an argument so that container is not loaded as a singleton and the script is run every time its invoked. 
   2. Then through this container we load the path where JRuby scripts / libraries are (like classpath in Java).

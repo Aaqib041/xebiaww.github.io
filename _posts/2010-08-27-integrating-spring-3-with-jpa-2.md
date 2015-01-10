@@ -17,16 +17,26 @@ I decided to mimic the Grails behavior in a Spring + Hibernate application. To s
 
 **Integrating Hibernate with JPA 2**
 
-As usual, I started with a vanilla maven web project and started adding dependencies, the first being Hibernate - [code language="xml"] <dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-core</artifactId> <version>3.5.4-Final</version> </dependency> [/code] This dependency is found in the repository - <https://repository.jboss.org/nexus/content/groups/public/> as mentioned on the Hibernate site. After a lot of pain I found that this jar did not match the jar you from <http://sourceforge.net/projects/hibernate/files/hibernate3>. So, I had to manually install the jar in my local repository (remember, I found this out after setting up JPA, Spring etc. which I will cover next). Similarly, in the JBoss repository I could not find the JPA 2 specfication jar (again available if you download the Hibernate distribution from sourceforge).I had to install that manually as well. After all this jiggery-pokery and some more, I somehow got Hibernate and JPA working.
+As usual, I started with a vanilla maven web project and started adding dependencies, the first being Hibernate - [code language="xml"] <dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-core</artifactId> <version>3.5.4-Final</version> </dependency> 
+ ``` This dependency is found in the repository - <https://repository.jboss.org/nexus/content/groups/public/> as mentioned on the Hibernate site. After a lot of pain I found that this jar did not match the jar you from <http://sourceforge.net/projects/hibernate/files/hibernate3>. So, I had to manually install the jar in my local repository (remember, I found this out after setting up JPA, Spring etc. which I will cover next). Similarly, in the JBoss repository I could not find the JPA 2 specfication jar (again available if you download the Hibernate distribution from sourceforge).I had to install that manually as well. After all this jiggery-pokery and some more, I somehow got Hibernate and JPA working.
 
-JPA needs a persistence.xml file in META-INF folder in the classpath. I added META-INF folder in source/main/resources with persistence.xml reading as - [code language="xml"] <persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd" version="2.0"> <persistence-unit name="postage" transaction-type="RESOURCE_LOCAL"> <provider>org.hibernate.ejb.HibernatePersistence</provider> </persistence-unit> </persistence> [/code] So, here I basically tell JPA that Hibernate is providing its implementation. Plus I give my persistence-unit a name "postage" (the name of my application).
+JPA needs a persistence.xml file in META-INF folder in the classpath. I added META-INF folder in source/main/resources with persistence.xml reading as - [code language="xml"] <persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd" version="2.0"> <persistence-unit name="postage" transaction-type="RESOURCE_LOCAL"> <provider>org.hibernate.ejb.HibernatePersistence</provider> </persistence-unit> </persistence> 
+ ``` So, here I basically tell JPA that Hibernate is providing its implementation. Plus I give my persistence-unit a name "postage" (the name of my application).
 
 **Integrating Spring with JPA**
 
 Now, I need to get Spring working with JPA and it is not exactly a cakewalk. With a lot of people pointing in different directions and the Spring documentation itself not very helpful in this particular aspect.
 
 The Spring JPA support itself offers three ways of setting up the JPA EntityManagerFactory, so that it can be used by the application to obtain an entity manager. I chose the "LocalContainerEntityManagerFactoryBean" because it gives full control over EntityManagerFactory configuration and is appropriate for fine-grained customization, if required. Below is my config - [code language="xml"] <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" p:dataSource-ref="dataSource"> <property name="jpaProperties"> <props> <prop key="hibernate.dialect">${hibernate.dialect}</prop> <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop> <prop key="hibernate.show_sql">${hibernate.show_sql}</prop> </props> </property>   
-</bean> [/code] As evident, you need a "dataSource" bean defined, which looks like - [code language="xml"] <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" p:driverClassName="${dataSource.driverClassName}" p:url="${dataSource.url}" p:username="${dataSource.username}" p:password="${dataSource.password}" /> [/code] To get the "${}" thingy working, i.e. a properties file lookup, add - [code language="xml"] <context:property-placeholder location="classpath:datasource.properties"/> [/code] datasource.properties can look like - [code language="java"] dataSource.driverClassName=org.hsqldb.jdbcDriver dataSource.url=jdbc:hsqldb:mem:postage dataSource.username=sa dataSource.password= #Hibernate Properties hibernate.hbm2ddl.auto=create-drop hibernate.dialect=org.hibernate.dialect.HSQLDialect hibernate.show_sql=true [/code] To get transactions working, add - [code language="xml"] <tx:annotation-driven/> [/code] And define a transaction manager - [code language="xml"] <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager" p:entityManagerFactory-ref="entityManagerFactory" /> [/code] Now, assuming that you have an Entity "Post", lets create the DAO - [code language="java"] @Repository @Transactional public class PostageDAOImpl implements PostageDAO {
+</bean> 
+ ``` As evident, you need a "dataSource" bean defined, which looks like - [code language="xml"] <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" p:driverClassName="${dataSource.driverClassName}" p:url="${dataSource.url}" p:username="${dataSource.username}" p:password="${dataSource.password}" /> 
+ ``` To get the "${}" thingy working, i.e. a properties file lookup, add - [code language="xml"] <context:property-placeholder location="classpath:datasource.properties"/> 
+ ``` datasource.properties can look like - ``` 
+ dataSource.driverClassName=org.hsqldb.jdbcDriver dataSource.url=jdbc:hsqldb:mem:postage dataSource.username=sa dataSource.password= #Hibernate Properties hibernate.hbm2ddl.auto=create-drop hibernate.dialect=org.hibernate.dialect.HSQLDialect hibernate.show_sql=true 
+ ``` To get transactions working, add - [code language="xml"] <tx:annotation-driven/> 
+ ``` And define a transaction manager - [code language="xml"] <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager" p:entityManagerFactory-ref="entityManagerFactory" /> 
+ ``` Now, assuming that you have an Entity "Post", lets create the DAO - ``` 
+ @Repository @Transactional public class PostageDAOImpl implements PostageDAO {
     
     
         @PersistenceContext
@@ -40,9 +50,12 @@ The Spring JPA support itself offers three ways of setting up the JPA EntityMana
     }
     
 
-[/code] The @Transactional annotation makes the DAO transactional (remember we added ). Let's look at the other Annotations - @Repository annotation is a "stereotype" annotation added in Spring 2.5 which enables Spring to identify Beans for AOP pointcuts. In our case @Repository annotation also enables Spring to automatically convert JPA exceptions to Spring exception hierarchy. Finally, the EntityManager is automatically injected by Spring as it is annotated by @PersistenceContext. Also add - [code language="xml"] <context:component-scan base-package="net.rocky.postage"/> [/code] This tag enables dependency injection with annotations and also auto-detects stereotype classes in the specified package and registers the corresponding beans. 
 
-That's it! We have integrated Spring with JPA 2 and Hibernate. Let's write a test case to verify our setup - [code language="java"] @RunWith(SpringJUnit4ClassRunner.class) @ContextConfiguration("/applicationContext.xml") public class PostageDAOImplTest {
+ ``` The @Transactional annotation makes the DAO transactional (remember we added ). Let's look at the other Annotations - @Repository annotation is a "stereotype" annotation added in Spring 2.5 which enables Spring to identify Beans for AOP pointcuts. In our case @Repository annotation also enables Spring to automatically convert JPA exceptions to Spring exception hierarchy. Finally, the EntityManager is automatically injected by Spring as it is annotated by @PersistenceContext. Also add - [code language="xml"] <context:component-scan base-package="net.rocky.postage"/> 
+ ``` This tag enables dependency injection with annotations and also auto-detects stereotype classes in the specified package and registers the corresponding beans. 
+
+That's it! We have integrated Spring with JPA 2 and Hibernate. Let's write a test case to verify our setup - ``` 
+ @RunWith(SpringJUnit4ClassRunner.class) @ContextConfiguration("/applicationContext.xml") public class PostageDAOImplTest {
     
     
     @Resource
@@ -57,7 +70,8 @@ That's it! We have integrated Spring with JPA 2 and Hibernate. Let's write a tes
     }
     
 
-... [/code]
+... 
+ ```
 
 **Parting thoughts**
 

@@ -15,15 +15,18 @@ Nowadays, automation testers are shifting from selenium1 to selenium web driver 
 
   1. The very first method which is given in their documentation is using windowMaximize() command of selenium instance.
 
-[code language="javascript"]
+``` 
+
 
 selenium = new WebDriverBackedSelenium(driver,url); selenium.windowMaximize();
 
-[/code]
+
+ ```
 
   1. We can use robot class to invoke keyboard action to maximize browser window. Robot class  is used to generate native system input events for the purposes of test automation, self-running demos  and other applications where control of the mouse and keyboard is needed. Robot can be used to facilitate automated testing of Java platform implementations. I used Robot class in my test case to simulate keyboard keys combination ALT+ SPACE and then used down arrows keys to select maximize option in menu.
 
-[code language="javascript"]
+``` 
+
 
 Robot robot = new Robot();
 
@@ -41,29 +44,36 @@ robot.keyPress(KeyEvent.VK_DOWN); robot.keyRelease(KeyEvent.VK_DOWN); Thread.sle
 
 robot.keyPress(KeyEvent.VK_ENTER); robot.keyRelease(KeyEvent.VK_ENTER); }
 
-[/code]
+
+ ```
 
   1. Sikuli is a robust and powerful tool to automate and tests user interfaces screenshots. Sikuli commands can be easily integrated with java code. We just need to download sikul-script jar and configure in build path. After configuring in build path, create and initialize an instance of Screen object.
 
-[code language="javascript"]
+``` 
+
 
 Screen screen = new Screen();
 
-[/code]
+
+ ```
 
 Capture image which you want to get clicked during execution of your test case. For Example:- Take a snapshot of maximize button on browser and save it anywhere on your disk or in any folder of your project and then give its path in click command just like below:-
 
-[code language="javascript"] screen.click("Image Path");
+``` 
+ screen.click("Image Path");
 
-[/code]
+
+ ```
 
   1. Fourth way is to use Toolkit utility which query the native operating system directly and is platform independent. In addition to this, the code below will maximize the browser window according to your system's current resolution.
 
-[code language="javascript"]
+``` 
+
 
 driver.manage().window().setPosition(new Point(0,0)); java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize(); Dimension dim = new Dimension((int) screenSize.getWidth(), (int) screenSize.getHeight()); driver.manage().window().setSize(dim);
 
-[/code]
+
+ ```
 
 I don't say these above are the only ways to maximize browser window . I am sure there are other ways also. I have mentioned all of them in one blog so that it would be helpful for readers to try and know different ways. It would be really helpful to me as well as to other readers if anybody of you can also suggest tried and tested other ways of doing it and  paste your codes in comments.
 

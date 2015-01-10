@@ -27,7 +27,8 @@ In manual testing, we play with our application by running the same tests with d
 
 **Writing code to call the API**
 
-[code language="java"] public class JavaNetURLRESTFulClient { String targetURL; Map map;
+``` 
+ public class JavaNetURLRESTFulClient { String targetURL; Map map;
     
     
     public String getTargetURL(String input){
@@ -69,13 +70,15 @@ In manual testing, we play with our application by running the same tests with d
     }
     
 
-} [/code]
+} 
+ ```
 
 **How it works:** In the above code, we issue a GET request to the end point like “string/en/10” and get 10 character long string. If we want a different length, we just need to modify the length to the desired value.
 
 **Writing Selenium Webdriver Test **
 
-[code language="java"] public class ContactUsTest { public static void main (String[] args) throws InterruptedException{ Map map;
+``` 
+ public class ContactUsTest { public static void main (String[] args) throws InterruptedException{ Map map;
     
     
         WebDriver driver = new FirefoxDriver();
@@ -104,7 +107,8 @@ In manual testing, we play with our application by running the same tests with d
     }
     
 
-} [/code]
+} 
+ ```
 
 **Steps to run the tests ** We just run our selenium test as a Java application. It should spawn a browser and start executing the test with a given set of data. In the second run, it should type a different set of data.
 

@@ -29,11 +29,13 @@ If one has Cassandra installed and running, Open a terminal, you need to go to t
 
 Just e.g. If you have Cassandra setup in** /home/user/cassandra/**, then
 
-[code lang="java"] cd /home/user/cassandra [/code]
+[code lang="java"] cd /home/user/cassandra 
+ ```
 
 And type Command :
 
-[code lang="java"] $ bin/cqlsh [/code]
+[code lang="java"] $ bin/cqlsh 
+ ```
 
 This will open up the CQL Shell like:
 
@@ -45,15 +47,18 @@ Creating a keyspace is the CQL counterpart to creating an SQL database, but a li
 
 1.**Create a keyspace.**
 
-[code lang="SQL"] cqlsh> CREATE KEYSPACE "sampledb" WITH REPLICATION = { 'class' : 'SimpleStrategy' , 'replication_factor' :3 }; [/code]
+[code lang="SQL"] cqlsh> CREATE KEYSPACE "sampledb" WITH REPLICATION = { 'class' : 'SimpleStrategy' , 'replication_factor' :3 }; 
+ ```
 
 **2.  Use the KeySpace.**
 
-[code lang="SQL"] cqlsh>Use sampledb; [/code]
+[code lang="SQL"] cqlsh>Use sampledb; 
+ ```
 
 **3\. Update the replication factor**
 
-[code lang="SQL"] cqlsh> ALTER KEYSPACE "sampledb" WITH REPLICATION = { 'class' : 'SimpleStrategy' , 'replication_factor' :3};[/code] 
+[code lang="SQL"] cqlsh> ALTER KEYSPACE "sampledb" WITH REPLICATION = { 'class' : 'SimpleStrategy' , 'replication_factor' :3};
+ ``` 
 
 ## Create the Column Family
 
@@ -61,29 +66,34 @@ Creating a keyspace is the CQL counterpart to creating an SQL database, but a li
 
 Note --> Use a compound primary key when you want to create columns that you can query to return sorted results.
 
-[code lang="SQL"] CREATE TABLE emp ( empID int, deptID int, first_name varchar, last_name varchar, PRIMARY KEY (empID, deptID)); [/code] 
+[code lang="SQL"] CREATE TABLE emp ( empID int, deptID int, first_name varchar, last_name varchar, PRIMARY KEY (empID, deptID)); 
+ ``` 
 
 ## Inserting Data into Column Family
 
 Similar to SQL Insert Statement.
 
-[code lang="SQL"] INSERT INTO emp (empID, deptID, first_name, last_name) VALUES (104, 15, 'jane', 'smith');[/code] 
+[code lang="SQL"] INSERT INTO emp (empID, deptID, first_name, last_name) VALUES (104, 15, 'jane', 'smith');
+ ``` 
 
 ## Retrieving and sorting results
 
 To retrieve results, use the SELECT command.
 
-[code lang="SQL"] SELECT * FROM users WHERE first_name = 'jane' and last_name='smith'; [/code]
+[code lang="SQL"] SELECT * FROM users WHERE first_name = 'jane' and last_name='smith'; 
+ ```
 
 Similar to a SQL query, use the WHERE clause and then the ORDER BY clause to retrieve and sort results. Procedure
 
 **1\. Retrieve and sort results in descending order.**
 
-[code lang="SQL"] cqlsh:demodb> SELECT * FROM emp WHERE empID IN (130,104) ORDER BY deptID DESC; empid | deptid | first_name | last_name \-------+--------+------------+----------- 104 |     15 |       jane |     smith 130 |      5 |     sughit |     singh (2 rows) [/code]
+[code lang="SQL"] cqlsh:demodb> SELECT * FROM emp WHERE empID IN (130,104) ORDER BY deptID DESC; empid | deptid | first_name | last_name \-------+--------+------------+----------- 104 |     15 |       jane |     smith 130 |      5 |     sughit |     singh (2 rows) 
+ ```
 
 **2\. Retrieve and sort results in ascending order.**
 
-[code lang="SQL"] cqlsh:demodb> SELECT * FROM emp where empID IN (130,104) ORDER BY deptID ASC; empid | deptid | first_name | last_name <p>\-------+--------+------------+----------- 130 |      5 |     sughit |     singh 104 |     15 |       jane |     smith [/code] 
+[code lang="SQL"] cqlsh:demodb> SELECT * FROM emp where empID IN (130,104) ORDER BY deptID ASC; empid | deptid | first_name | last_name <p>\-------+--------+------------+----------- 130 |      5 |     sughit |     singh 104 |     15 |       jane |     smith 
+ ``` 
 
 ## Using a Counter
 
@@ -97,15 +107,18 @@ You load data into a counter column using the UPDATE command instead of INSERT. 
 
 **1\. Create keySpace and table for counter column.**
 
-[code lang="SQL"] CREATE KEYSPACE counterks WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 3 }; CREATE TABLE counterks.page_view_counts (counter_value counter, url_name varchar, page_name varchar, PRIMARY KEY (url_name, page_name) ); [/code]
+[code lang="SQL"] CREATE KEYSPACE counterks WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 3 }; CREATE TABLE counterks.page_view_counts (counter_value counter, url_name varchar, page_name varchar, PRIMARY KEY (url_name, page_name) ); 
+ ```
 
 **2.  Load data into the counter column.**
 
-[code lang="SQL"] UPDATE counterks.page_view_counts SET counter_value = counter_value + 1 WHERE url_name='www.xebee.xebia.in' AND page_name='home'; [/code]
+[code lang="SQL"] UPDATE counterks.page_view_counts SET counter_value = counter_value + 1 WHERE url_name='www.xebee.xebia.in' AND page_name='home'; 
+ ```
 
 **3.  Take a look at the counter value.**
 
-[code lang="SQL"] SELECT * FROM counterks.page_view_counts; [/code]
+[code lang="SQL"] SELECT * FROM counterks.page_view_counts; 
+ ```
 
 **Output is:**
 
@@ -115,11 +128,13 @@ url_name         | page_name | counter_value \------------------+-------
 
 **4.  Increase the value of the counter.**
 
-[code lang="SQL"] UPDATE counterks.page_view_counts SET counter_value = counter_value + 2 WHERE url_name='www.datastax.com' AND page_name='home'; [/code]
+[code lang="SQL"] UPDATE counterks.page_view_counts SET counter_value = counter_value + 2 WHERE url_name='www.datastax.com' AND page_name='home'; 
+ ```
 
 **5\. Take a look at the counter value.**
 
-[code lang="SQL"] SELECT * FROM counterks.page_view_counts; [/code]
+[code lang="SQL"] SELECT * FROM counterks.page_view_counts; 
+ ```
 
 **Output :** url_name         | page_name | counter_value \------------------+-----------+--------------- www.datastax.com |      home |             3 
 
@@ -136,17 +151,20 @@ In a relational database, to allow users to have multiple email addresses, you c
 
 Here we are altering an existing Table Named songs to add a collection to store tags for each Song.
 
-[code lang="SQL"] ALTER TABLE songs ADD tags set<text>; [/code]
+[code lang="SQL"] ALTER TABLE songs ADD tags set<text>; 
+ ```
 
 **2\. Updating a collection**
 
-[code lang="SQL"] UPDATE songs SET tags = tags + {'1973'} WHERE id = a3e64f8f-bd44-4f28-b8d9-6938726e34d4; UPDATE songs SET tags = tags + {'blues'} WHERE id = a3e64f8f-bd44-4f28-b8d9-6938726e34d4; UPDATE songs SET tags = tags + {'rock'} WHERE id = 7db1a490-5878-11e2-bcfd-0800200c9a66; [/code]
+[code lang="SQL"] UPDATE songs SET tags = tags + {'1973'} WHERE id = a3e64f8f-bd44-4f28-b8d9-6938726e34d4; UPDATE songs SET tags = tags + {'blues'} WHERE id = a3e64f8f-bd44-4f28-b8d9-6938726e34d4; UPDATE songs SET tags = tags + {'rock'} WHERE id = 7db1a490-5878-11e2-bcfd-0800200c9a66; 
+ ```
 
 **3\. Querying a Collection** To query a collection, include the name of the collection column in the select expression.
 
 **Example:**
 
-[code lang="SQL"] SELECT id, tags FROM songs; [/code] 
+[code lang="SQL"] SELECT id, tags FROM songs; 
+ ``` 
 
 ## Prepared statements
 

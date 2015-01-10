@@ -21,7 +21,8 @@ Let’s first understand what we mean by modularity, modularity is more or less 
 
 Let’s understand this problem with a simple example
 
-[code] A)
+``` 
+ A)
 
 package com.vinsworld.jungle;
 
@@ -55,7 +56,8 @@ public class AnimalTest {
     }
     
 
-} [/code]
+} 
+ ```
 
 Now here if such a code(A and B) is a part of some API then author will always want the client (C) to interact with the application via Animal interface, but nothing is stopping client from creating a new Lion object using its public constructor as is done in (C).
 
@@ -95,7 +97,8 @@ Keep target platform as “an OSGI framework” standard.
 
 As soon as wizard will be over, Eclipse will create two files Activator and manifest.mf.
 
-[code] com.sample.helloworld.Activator.java package com.sample.date;
+``` 
+ com.sample.helloworld.Activator.java package com.sample.date;
 
 import org.osgi.framework.BundleActivator; import org.osgi.framework.BundleContext;
 
@@ -103,7 +106,8 @@ public class Activator implements BundleActivator {
 
 public void start(BundleContext context) throws Exception { System.out.println("Hello World!!"); }
 
-public void stop(BundleContext context) throws Exception { System.out.println("Goodbye World!!"); } } [/code]
+public void stop(BundleContext context) throws Exception { System.out.println("Goodbye World!!"); } } 
+ ```
 
 If we want the bundle to be notified when the bundle is started or stopped by a container we need to implement BundleActivator interface.
 
@@ -117,7 +121,9 @@ b)      Start and stop method will be called by the container during the st
 
 The MANIFEST.MF file acts as deployment descriptor for your bundle. The format for this file is the same as that of a normal JAR file, so it consists of a set of headers with values. The OSGi specification defines a set of headers that you can use to describe your bundle to the OSGi container. The typical Manifest.mf will look as follows.
 
-[code] Manifest-Version: 1.0 Bundle-ManifestVersion: 2 Bundle-Name: Helloworld Bundle-SymbolicName: com.sample.helloworld Bundle-Version: 1.0.0.qualifier Bundle-Activator: com.sample.helloworld.Activator Bundle-Vendor: SAMPLE Import-Package: org.osgi.framework;version="1.3.0" [/code]
+``` 
+ Manifest-Version: 1.0 Bundle-ManifestVersion: 2 Bundle-Name: Helloworld Bundle-SymbolicName: com.sample.helloworld Bundle-Version: 1.0.0.qualifier Bundle-Activator: com.sample.helloworld.Activator Bundle-Vendor: SAMPLE Import-Package: org.osgi.framework;version="1.3.0" 
+ ```
 
 Let’s take a closer look on each of these headers
 

@@ -34,7 +34,8 @@ Sikuli in itself makes the development of user interface automation quite simple
 
 Another thing that makes Sikuli powerful is that it provides an API for writing the automation in Java. So the above 'Yahoo Search' code can be written and executed through Java as follows:
 
-[code language="java"] //Sikuli code to perform Yahoo Search written and executed in Java.
+``` 
+ //Sikuli code to perform Yahoo Search written and executed in Java.
 
 public class TestSikuli {
 
@@ -65,7 +66,8 @@ public static void main(String[] args) {
     }
     
 
-} } [/code]
+} } 
+ ```
 
 **INTEGRATION WITH OTHER AUTOMATION TOOLS **
 
@@ -75,7 +77,8 @@ As another example, we know that presence of Adobe Flash content would make some
 
 Let’s see an example of how Selenium/Webdriver can be seamlessly integrated with Sikuli code in java:
 
-[code language="java"] // Webdriver code to navigate to a video on youtube and perform Pause and Play actions
+``` 
+ // Webdriver code to navigate to a video on youtube and perform Pause and Play actions
 
 //Launch Firefox and navigate to the desired URL on YouTube using Webdriver. driver = new FirefoxDriver(); driver.get(&quot;http://www.youtube.com/watch?v=LuuUyblJsAo&quot;);
 
@@ -85,7 +88,8 @@ Let’s see an example of how Selenium/Webdriver can be seamlessly integrated wi
 
 //Perform operations on Flash Components try{ //Pause you tube video, switch to full screen mode and Play again. s.click(&quot;imgs/Pause.png&quot;, 0); s.click(&quot;imgs/Full-Screen.png&quot;, 0); s.click(&quot;imgs/Play.png&quot;, 0); } catch(FindFailed e){ e.printStackTrace(); } }
 
-//Back to Webdriver code driver.quit(); [/code]
+//Back to Webdriver code driver.quit(); 
+ ```
 
 In the above example, we see that there are some elements on web pages which are not identified by Webdriver. E.g. Adobe Flash content. These are now easily handled by Sikuli.
 
@@ -93,7 +97,8 @@ In the above example, we see that there are some elements on web pages which are
 
 **Example 3:** Sikuli can be used to deal with File open dialogues which have always been a real pain to automate using Webdriver. Let us see an example of “File download” from a website:
 
-[code language="java"] //Code to deal with file download using Sikuli.
+``` 
+ //Code to deal with file download using Sikuli.
 
 //Launch Firefox and navigate to the desired URL on Teambeachbody.com using Webdriver. driver = new FirefoxDriver(); driver.get(&quot;http://www.teambeachbody.com/get-fit/fitness-tools/workout-sheets&quot;);
 
@@ -111,13 +116,15 @@ In the above example, we see that there are some elements on web pages which are
 
 } catch(FindFailed e){ e.printStackTrace(); }
 
-//Back to Webdriver code driver.quit(); [/code]
+//Back to Webdriver code driver.quit(); 
+ ```
 
 **Example 4:** Sikuli can also be used to handle HTTPS authentication and self-signed certificate exceptions, thus eliminating the need for using specific browser profile each time the browser is started in test automation execution.
 
 **Example 5: **Sikuli manages to do Drag & Drop properly. Another solution to Selenium limitations:
 
-[code language="java"] //Code to deal with Drag and drop using Sikuli
+``` 
+ //Code to deal with Drag and drop using Sikuli
 
 //Navigate to the desired url on Myntra.com using Selenim. selenium.open(&quot;http://www.myntra.com/sales&quot;);
 

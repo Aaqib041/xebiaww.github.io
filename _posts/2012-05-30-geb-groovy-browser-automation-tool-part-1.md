@@ -15,9 +15,11 @@ There are many open source testing tools that claim to be very easy to use but t
 
 Test script creation is brought to a new level thanks to a number of features – Power of WebDriver, elegance of jQuery content selection, robustness of Page Object modelling and the expressiveness of the Groovy language. Awesome combination!!  Now let’s see how a Geb program looks like:
 
-[code] import geb.Browser import org.openqa.selenium.firefox.FirefoxDriver
+``` 
+ import geb.Browser import org.openqa.selenium.firefox.FirefoxDriver
 
-Browser.drive(new Browser(driver: new FirefoxDriver())) { go "http://www.twitter.com" assert title == "Twitter" } }.quit() [/code]
+Browser.drive(new Browser(driver: new FirefoxDriver())) { go "http://www.twitter.com" assert title == "Twitter" } }.quit() 
+ ```
 
 There is a Browser class which has static method called drive(). In case we do not specify any parameter to drive() method then it uses HTMLUnit driver and runs the test cases. Otherwise as shown in the example we can pass required parameter to initialize instance of any of FirefoxDriver, InternetExplorerdriver, ChromeDriver and OperaDriver.
 
@@ -42,7 +44,8 @@ Lets take an example from www.twitter.com. Following is the screenshot and inner
   
 
 
-[code] <form action="https://twitter.com/signup" class="signup" method="post">
+``` 
+ <form action="https://twitter.com/signup" class="signup" method="post">
 
 <div class="placeholding-input"> <input class="text-input" autocomplete="off" name="user[name]" maxlength="20" type="text" /> <span class="placeholder">Full name</span></div>
 
@@ -54,11 +57,13 @@ Lets take an example from www.twitter.com. Following is the screenshot and inner
 
 <button type="submit" class="btn signup-btn"> Sign up for Twitter </button>
 
-</form> [/code]
+</form> 
+ ```
 
 Below are some sample JQuery locators that we can use to access html elements:
 
-[code]
+``` 
+
 
 // match all 'div' elements on the page $("div")
 
@@ -84,13 +89,15 @@ $("input", 0).parent()
 
 $("form").find("input")
 
-// Please note that above-mentioned methods return Navigator objects that can be used to further refine the content. [/code]
+// Please note that above-mentioned methods return Navigator objects that can be used to further refine the content. 
+ ```
 
 **Navigating the content**
 
 Let’s see how we can traverse this html:
 
-[code] import geb.Browser import geb.navigator.Navigator import geb.navigator.NonEmptyNavigator; import geb.spock.* import org.openqa.selenium.WebElement import org.openqa.selenium.firefox.FirefoxDriver
+``` 
+ import geb.Browser import geb.navigator.Navigator import geb.navigator.NonEmptyNavigator; import geb.spock.* import org.openqa.selenium.WebElement import org.openqa.selenium.firefox.FirefoxDriver
 
 Browser.drive(new Browser(driver: new FirefoxDriver())) { go "http://www.twitter.com" assert title == "Twitter"
     
@@ -115,7 +122,8 @@ Browser.drive(new Browser(driver: new FirefoxDriver())) { go "http://www.twitter
     }
     
 
-}.quit() [/code]
+}.quit() 
+ ```
 
 In this example, we have created an instance of Navigator class containing the elements matching the given CSS selector. Now using this Navigator class we traversed from parent to its child Navigator objects to get required WebElement and then printed element’s tag name. See how easy it is and you have complete access each and every html element using Navigator class. You might be tempting to try your hands on Geb and for that here are the set-up instructions: 
 

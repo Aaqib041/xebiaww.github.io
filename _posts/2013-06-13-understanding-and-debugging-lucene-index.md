@@ -25,11 +25,15 @@ In my last project we used lucene for search functionality. Initially we struggl
 
 **Installing Luke** As we discussed above to install Luke we just need to download Luke jar from this [link][1]. The latest version at this time is 4.0.0_ALPHA which works on lucene 4.0.0-ALPHA. Simply go to this link and download lukeall-4.0.0-ALPHA.jar jar file. Run it using below command.
 
-[code] Java -jar lukeall-4.0.0-ALPHA.jar [/code]
+``` 
+ Java -jar lukeall-4.0.0-ALPHA.jar 
+ ```
 
 To illustrate Luke functionality with example let's first create simple lucene index for below documents. Assuming that readers are aware of lucene and can simply add below documents to lucene index.
 
-[code] document 1: {docNumber:”doc-1”, contents:”Gagan works at Xebia.”} document 2: {docNumber:”doc-1”, contents:”There is an IT company in Gurgaon named Xebia , xebia is a good company.”} document 3: {docNumber:”doc-1”, contents:”People in xebia are satisfied with xebia's work culture.”} [/code]
+``` 
+ document 1: {docNumber:”doc-1”, contents:”Gagan works at Xebia.”} document 2: {docNumber:”doc-1”, contents:”There is an IT company in Gurgaon named Xebia , xebia is a good company.”} document 3: {docNumber:”doc-1”, contents:”People in xebia are satisfied with xebia's work culture.”} 
+ ```
 
 **How Luke GUI looks like** When we run Luke using above command it prompts with a below screen. Which asks you for index directory.
 

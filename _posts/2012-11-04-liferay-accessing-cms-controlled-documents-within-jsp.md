@@ -15,9 +15,13 @@ comment_status: open
 
 **What did I do?** Just like any other developer out there I searched google, liferay forums and stackoverflow for the problem but to my surprise I could not find a straight forward solution. Then I looked into Liferay's Document Library source code, just to understand how it works, in the hope of getting a solution. There was a file called [GetFileAction.java][1] , in that file there was a service called **DLFileEntryLocalServiceUtil **which is the key service for my solution below.
 
-**Solution** First of all **ThemeDisplay** can be retrieved using the** req.getAttribute(WebKeys.THEME_DISPLAY)** method and its quite a trivial thing among liferay developers. **ThemeDisplay **can then be used to get the groupId as shown below: [code language="java"] ThemeDisplay themeDisplay = (ThemeDisplay) req.getAttribute(WebKeys.THEME_DISPLAY); long groupId = themeDisplay.getLayout().getGroupId(); [/code]
+**Solution** First of all **ThemeDisplay** can be retrieved using the** req.getAttribute(WebKeys.THEME_DISPLAY)** method and its quite a trivial thing among liferay developers. **ThemeDisplay **can then be used to get the groupId as shown below: ``` 
+ ThemeDisplay themeDisplay = (ThemeDisplay) req.getAttribute(WebKeys.THEME_DISPLAY); long groupId = themeDisplay.getLayout().getGroupId(); 
+ ```
 
-After you have obtained the groupId the easy part is complete. Now **DLFileEntryLocalServiceUtil **has a method called **getGroupFileEntries(long groupId, int start, int end)**. This method returns all the documents of the passed groupId starting from start to end (int parameters). [code language="java"] String documentUrl = null; List<DLFileEntry> fileEntries = DLFileEntryLocalServiceUtil.getGroupFileEntries(groupId , 0, 50); for(DLFileEntry fileEntry : fileEntries) { if(fileEntry.getTitle().equalsIgnoreCase("Uploaded_Document_Name")) { documentUrl = "/c/document_library/get_file?uuid=" \+ fileEntry.getUuid()+ "&groupId=" \+ fileEntry.getGroupId(); } } [/code]
+After you have obtained the groupId the easy part is complete. Now **DLFileEntryLocalServiceUtil **has a method called **getGroupFileEntries(long groupId, int start, int end)**. This method returns all the documents of the passed groupId starting from start to end (int parameters). ``` 
+ String documentUrl = null; List<DLFileEntry> fileEntries = DLFileEntryLocalServiceUtil.getGroupFileEntries(groupId , 0, 50); for(DLFileEntry fileEntry : fileEntries) { if(fileEntry.getTitle().equalsIgnoreCase("Uploaded_Document_Name")) { documentUrl = "/c/document_library/get_file?uuid=" \+ fileEntry.getUuid()+ "&groupId=" \+ fileEntry.getGroupId(); } } 
+ ```
 
 Now after obtaining all the **FileEntries **you can simply loop through the List and check for **title **as I have done above or any other parameter you like. And simply generate the documentUrl. Now this document url can be used on jsp without worrying about the enviournment, since its coming directly from document_library.
 

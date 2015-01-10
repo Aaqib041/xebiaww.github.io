@@ -27,37 +27,49 @@ _1.By clicking on link via name of the link_
 
 **link=Design Thinking and Software Development**
 
-[code]selenium.click("link=Design Thinking and Software Development");[/code] 
+``` 
+selenium.click("link=Design Thinking and Software Development");
+ ``` 
 
 _2.By css ,to use this type you need to write css= in front of the locator_
 
 **css=a..firepath-matching-node**
 
-[code]selenium.click("css=a..firepath-matching-node")[/code] 
+``` 
+selenium.click("css=a..firepath-matching-node")
+ ``` 
 
 _3.By using xpath,in this particular case I have taken the link directly by using contains_
 
 **//a[contains(text(),'Design Thinking and Software Development')]**
 
-[code]selenium.click("//a[contains(text(),'Design Thinking and Software Development')]");[/code] 
+``` 
+selenium.click("//a[contains(text(),'Design Thinking and Software Development')]");
+ ``` 
 
 _4.By using xpath,this is called Xpath:relative i.e by giving the relative path of the HTML page._
 
 **//div[@id='post-15910']/h2/a**
 
-[code]selenium.click("//div[@id='post-15910']/h2/a");[/code] 
+``` 
+selenium.click("//div[@id='post-15910']/h2/a");
+ ``` 
 
 _5.By using xpath and giving the link(href) in reference._
 
 **//a[@href='http://xebee.xebia.in/2013/03/01/design-thinking-and-software-development/']**
 
-[code]selenium.click("//a[@href='http://xebee.xebia.in/2013/03/01/design-thinking-and-software-development/']");[/code] 
+``` 
+selenium.click("//a[@href='http://xebee.xebia.in/2013/03/01/design-thinking-and-software-development/']");
+ ``` 
 
 _6.By giving xpath:postion_
 
 **//h2/a**
 
-[code]selenium.click("//h2/a");[/code] 
+``` 
+selenium.click("//h2/a");
+ ``` 
 
 **How to handle dynamic classes?** You can try with the contains() function.For example:If you have:
 
@@ -69,11 +81,15 @@ If you have the same static text in the ID for different elements, you can add o
 
 with css:
 
-[code]css=li[id*="text"]:contains("xebia")[/code] 
+``` 
+css=li[id*="text"]:contains("xebia")
+ ``` 
 
 With XPath:
 
-[code]//li[contains(@id,"text") and contains (text(),"xebia")][/code] 
+``` 
+//li[contains(@id,"text") and contains (text(),"xebia")]
+ ``` 
 
 **What kind of browser and tools one can use in your strategy for different kinds of locators?**
 

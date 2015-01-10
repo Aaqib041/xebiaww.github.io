@@ -21,9 +21,11 @@ Lets get started and try to understand the code.
 
 Here is the index.html file (landing page):
 
-[code] <html> <head> <link type="text/css" rel="stylesheet" href="css/main.css"> <script type="text/javascript" src="js/libs/jquery.js"></script> <script type="text/javascript" src="js/libs/jquery-tmpl.js"></script> <script type="text/javascript" src="js/libs/underscore.js"></script> <script type="text/javascript" src="js/libs/backbone.js"></script> <script type="text/javascript" src="js/app.js"></script> <title>Infinite Scroll View -- BackBone.js</title> </head> <body> <h1>Infinite Scroll View -- BackBone.js</h1> <h3>Tweets from @XebiaIndia</h3> <div id="tweets"> </div> <div id="footer">Please scroll down inside the upper div to load more tweets</div>
+``` 
+ <html> <head> <link type="text/css" rel="stylesheet" href="css/main.css"> <script type="text/javascript" src="js/libs/jquery.js"></script> <script type="text/javascript" src="js/libs/jquery-tmpl.js"></script> <script type="text/javascript" src="js/libs/underscore.js"></script> <script type="text/javascript" src="js/libs/backbone.js"></script> <script type="text/javascript" src="js/app.js"></script> <title>Infinite Scroll View -- BackBone.js</title> </head> <body> <h1>Infinite Scroll View -- BackBone.js</h1> <h3>Tweets from @XebiaIndia</h3> <div id="tweets"> </div> <div id="footer">Please scroll down inside the upper div to load more tweets</div>
 
-<!-- Template definition for displaying tweets --> <script id="tweet-tmpl" type="text/x-jquery-tmpl"> <div class = "post"> <img class = "img" src = "${user.profile_image_url}" /> <span class = "text">${text}</span> </div>     </script> </body> </html> [/code]
+<!-- Template definition for displaying tweets --> <script id="tweet-tmpl" type="text/x-jquery-tmpl"> <div class = "post"> <img class = "img" src = "${user.profile_image_url}" /> <span class = "text">${text}</span> </div>     </script> </body> </html> 
+ ```
 
 **Javascript libraries used and their significance**
 
@@ -37,14 +39,17 @@ Lets understand the app.js file now one part at a time :
 
 **Collection definition:**
 
-[code] var Tweets = Backbone.Collection.extend({ url : function() { return "tweets/"+this.page; }, nextPage : function() { this.page++; }, page : 1 }); [/code] 
+``` 
+ var Tweets = Backbone.Collection.extend({ url : function() { return "tweets/"+this.page; }, nextPage : function() { this.page++; }, page : 1 }); 
+ ``` 
 
   * The _**url **_property of the Tweets collections defines which URL to hit whenever the collection needs to create, read, update, delete the data inside it. Using this URL property, Backbone automatically creates the corresponding POST, GET, PUT, DELETE request to the server.
   * The _**nextPage **_property simply defines the logic to move to the next page.
   * The _**page **_property holds the current page number to load.
 **View definition:**
 
-[code] var ScrollView = Backbone.View.extend({ el : $('#tweets'), events : { 'scroll' : 'scrollEvent' },
+``` 
+ var ScrollView = Backbone.View.extend({ el : $('#tweets'), events : { 'scroll' : 'scrollEvent' },
     
     
     initialize : function(options) {
@@ -80,7 +85,8 @@ Lets understand the app.js file now one part at a time :
     }
     
 
-}); [/code] 
+}); 
+ ``` 
 
   * The _**el **_property defines the parent or the container tag on which all the DOM manipulations and event listening takes place.
   * The _**initialize **_property is like a constructor of the view. All the required properties like the collection, the template element  etc. are being initialized here. The initial loading of tweets is also taking place here. Another notable thing here is _this.tweetCollection.bind('reset', this.render);_ This is an in-built feature of backbone.js which triggers the 'reset' event of any collection (tweetCollection in this case) whenever we load new results into it and binds the callback to the 2nd parameter i.e. _this.render_ method contained within this view. Thus instead of getting confused between callbacks we can write very manageable and easy to understand code by just responding to events.
@@ -90,12 +96,16 @@ Lets understand the app.js file now one part at a time :
 
 **Finally the code in app.js that acts as the entry point:**
 
-[code] $(document).ready(function(){ var scrollView = new ScrollView({ template : "#tweet-tmpl" }); }); [/code]
+``` 
+ $(document).ready(function(){ var scrollView = new ScrollView({ template : "#tweet-tmpl" }); }); 
+ ```
 
 When the DOM is loaded, it just creates an object of the View we created above and provides it with the Template _#tweet-tmpl_ which was already created the home.html file.
 
 **Below is the back-end code written using Spring which needs no explanation:**
 
-[code] @RequestMapping(value = "/tweets/{page}", method = RequestMethod.GET) public @ResponseBody String getTweetsByPage(@PathVariable int page) { RestTemplate rt = new RestTemplate(); String tweetJson = rt.getForObject("https://api.twitter.com/1/statuses/user_timeline.json?" \+ "screen_name=XebiaIndia&count=10&page=" \+ page, String.class); return tweetJson; } [/code]
+``` 
+ @RequestMapping(value = "/tweets/{page}", method = RequestMethod.GET) public @ResponseBody String getTweetsByPage(@PathVariable int page) { RestTemplate rt = new RestTemplate(); String tweetJson = rt.getForObject("https://api.twitter.com/1/statuses/user_timeline.json?" \+ "screen_name=XebiaIndia&count=10&page=" \+ page, String.class); return tweetJson; } 
+ ```
 
 **Conclusion**

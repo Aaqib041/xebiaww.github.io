@@ -70,7 +70,8 @@ For ease of purpose i have added a  **[FIDDLE][1]   **for your purpose
 
 Also you can simply add the snippet into your html and it will solve the purpose
 
-[code language="html"] <iframe width="100%" height="300" src="http://jsfiddle.net/sunny200745/jj9okqod/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe> [/code]
+[code language="html"] <iframe width="100%" height="300" src="http://jsfiddle.net/sunny200745/jj9okqod/embedded/" allowfullscreen="allowfullscreen" frameborder="0"></iframe> 
+ ```
 
 Explanation : In this fiddle i have provided the problem statement along with the solution. You will see the 5 buttons namely button1 to button5. and a checkbox which states use closure instead. If this checkbox is unchecked it will state the problem statement of classic last value problem, and if its checked then it will state the solution.
 

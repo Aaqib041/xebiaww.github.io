@@ -34,14 +34,16 @@ Already multiple solutions exist in the market that support distributed search l
   * Term lists
 **Blur Data Model** Blur data model is somewhat analogous to RDBMS. Blur stores data in form of rows in tables. Row in blur table must have a unique row id and can contain single or multiple records. Records have a unique record id and a column family. Column family is used to group columns that create a record. Records can contain a name value pairs called columns.
 
-[code] rowid:"row-1", records:[ { recordid:"record-1", family:"purchases", columns:[ {name:”item”, value:”item-1”}, {name:”price”, value:”100”} ] }, { recordid:"record-2", family:"purchases", columns:[ {name:”item”, value:”item-2”}, {name:”price”, value:”200”} ] }, { recordid:”record-2”, family:”details”, columns:[ {name:”name”, value:”John”}, {name:”email”, value:”john@a.com”}, {name:”contact”, value:”123456789”},
+``` 
+ rowid:"row-1", records:[ { recordid:"record-1", family:"purchases", columns:[ {name:”item”, value:”item-1”}, {name:”price”, value:”100”} ] }, { recordid:"record-2", family:"purchases", columns:[ {name:”item”, value:”item-2”}, {name:”price”, value:”200”} ] }, { recordid:”record-2”, family:”details”, columns:[ {name:”name”, value:”John”}, {name:”email”, value:”john@a.com”}, {name:”contact”, value:”123456789”},
     
     
       ]
     }
     
 
-] } [/code]
+] } 
+ ```
 
 **Blur Architecture** Blur uses Hadoop's Map Reduce framework for indexing data, and Hadoop's HDFS file system for storing indexes. Thrift is used for all inter-process communications and Zookeeper is used to know the state of the system and to store Meta data. Blur works on the concept of controller and shards. You just need to send your query to controller server then controller server will fire your query to all the relevant shards for that table and returns the consolidated results. Let’s give a closer look to both controller and shard servers. 
 
@@ -60,14 +62,18 @@ You can download the source of the latest version of Blur form the [website][2].
     1. **Blur Command line interface**
 Blur comes with both CLI (command line interface) and java apis. It’s very handy to play with blur using Blur CLI. Run following command to start Blur CLI.
 
-[code] $BLUR_HOME/bin/blur shell [/code]
+``` 
+ $BLUR_HOME/bin/blur shell 
+ ```
 
  
 
   * **Create a table in blur**
  
 
-[code] // t: table name // c: number of shards. // l: location on hdfs. It can be local file system as well. create -t orders -c 1 -l hdfs://localhost:54310/blur/tables/ [/code]
+``` 
+ // t: table name // c: number of shards. // l: location on hdfs. It can be local file system as well. create -t orders -c 1 -l hdfs://localhost:54310/blur/tables/ 
+ ```
 
  
 
@@ -78,15 +84,19 @@ Blur uses map reduce for bulk upload of data. Single records can be added using 
 
 Let’s upload some sample data using CsvLoader to understand further operations.
 
-[code]
+``` 
 
-row-1,record-1,purchases,item-1,100 row-1,record-2,purchases,item-2,200 row-1,record-3,details,userA,userA@a.com,123456789 row-2,record-1,purchases,item-1,100 row-2,record-2,purchases,item-3,300 row-2,record-3,details,userB,userB@a.com,152346879 row-3,record-1,purchases,item-3,300 row-3,record-2,purchases,item-2,200 row-3,record-3,details,userC,userC@a.com,125317986 [/code]
+
+row-1,record-1,purchases,item-1,100 row-1,record-2,purchases,item-2,200 row-1,record-3,details,userA,userA@a.com,123456789 row-2,record-1,purchases,item-1,100 row-2,record-2,purchases,item-3,300 row-2,record-3,details,userB,userB@a.com,152346879 row-3,record-1,purchases,item-3,300 row-3,record-2,purchases,item-2,200 row-3,record-3,details,userC,userC@a.com,125317986 
+ ```
 
 Above listed data follows the structure that we defined in the Data Model section.
 
 Run following command to execute the CsvLoader Job
 
-[code] //t: table name //c: controller server //d: family definition $BLUR_HOME/bin/blur csvloader -t orders -c localhost:40010 \ -d purchases item price -d details name email contact [/code]
+``` 
+ //t: table name //c: controller server //d: family definition $BLUR_HOME/bin/blur csvloader -t orders -c localhost:40010 \ -d purchases item price -d details name email contact 
+ ```
 
 This job will upload data to blur. To know about other features of csvloader refer to documentation [page][3].
 
@@ -97,7 +107,9 @@ This job will upload data to blur. To know about other features of csvloader ref
 
 Let’s say we want to query all the users have purchased item “item-1”.
 
-[code] // orders is the table name. query orders purchases.item:item-1 [/code]
+``` 
+ // orders is the table name. query orders purchases.item:item-1 
+ ```
 
 The output of this command will be all the rows and records of users who have purchased item-1 like in our case row-1 and row-2.
 
@@ -108,7 +120,9 @@ The output of this command will be all the rows and records of users who have pu
 
 The content of output of above query depends on the setting of the Selector objects. By default selector is set to fetch all the content related to resultant rows. Let’s say now we want to select only the user name of the users who purchased “item-1”, then we need to set this definition in selector.
 
-[code] // add family “details” and column “name” Selector add details name [/code]
+``` 
+ // add family “details” and column “name” Selector add details name 
+ ```
 
 Now the out of query will return only name column.
 

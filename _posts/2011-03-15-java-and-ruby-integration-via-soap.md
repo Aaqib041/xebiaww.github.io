@@ -41,22 +41,26 @@ I am not going to cover this in detail here but for new deployments Apache CXF i
     &lt;/dependencies&gt;
     
 
-[/code]
+
+ ```
 
 The Java code looks like -
 
-[code language="java"] @WebService public interface EmployeeService {
+``` 
+ @WebService public interface EmployeeService {
     
     
     Employee findEmployeeByID(@WebParam(name = &quot;employeeID&quot;)long empID);
     boolean storeEmployee(@WebParam(name = &quot;employee&quot;)Employee emp);
     
 
-} [/code]
+} 
+ ```
 
 And the Implementation looks like -
 
-[code language="java"] @Component("employeeService") @WebService(endpointInterface = "in.mysoapserver.services.EmployeeService") public class EmployeeServiceImpl implements EmployeeService {
+``` 
+ @Component("employeeService") @WebService(endpointInterface = "in.mysoapserver.services.EmployeeService") public class EmployeeServiceImpl implements EmployeeService {
     
     
     @Override
@@ -75,7 +79,8 @@ And the Implementation looks like -
     }
     
 
-} [/code]
+} 
+ ```
 
 After deploying the project in Tomcat you can get the WSDL from a link like - **http://localhost:8080/mysoapserver/soap?wsdl**
 
@@ -97,7 +102,8 @@ This will create a set of Ruby scripts and also create an example client. Since 
 
 Now let us create our own Ruby client -
 
-[code] require 'soap/wsdlDriver' require 'EmployeeServiceImplService.rb'
+``` 
+ require 'soap/wsdlDriver' require 'EmployeeServiceImplService.rb'
 
 wsdl = "mysoapserver.wsdl"
 
@@ -105,17 +111,20 @@ employee_service = SOAP::WSDLDriverFactory.new(wsdl).create_rpc_driver
 
 response = employee_service.findEmployeeByID(FindEmployeeByID.new(10)) puts response.return.name puts response.return.age
 
-response = employee_service.storeEmployee(StoreEmployee.new(Employee.new(30,102,"Tushar"))) puts response.return [/code]
+response = employee_service.storeEmployee(StoreEmployee.new(Employee.new(30,102,"Tushar"))) puts response.return 
+ ```
 
 Lets examine each line in detail. Line 1 - Just loading the required libraries for soap4r Line 2 - The 3rd file that wsdl2ruby.rb script generated. We'll look at it in a minute. Line 4 - Just a variable for the wsdl file name. Change it according to your setup. Line 6 - We create a SOAP RPC driver using the wsdl we saved earlier. Line 8/12 - Next we make the SOAP call. But wait a minute, what is being passed as a parameter here?
 
 The answer to this can be found if we look at the SOAP request we made from SoapUI -
 
-[code language="xml"] <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.mysoapserver.in/"> <soapenv:Header/> <soapenv:Body> <ser:findEmployeeByID> <employeeID>10</employeeID> </ser:findEmployeeByID> </soapenv:Body> </soapenv:Envelope> [/code]
+[code language="xml"] <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.mysoapserver.in/"> <soapenv:Header/> <soapenv:Body> <ser:findEmployeeByID> <employeeID>10</employeeID> </ser:findEmployeeByID> </soapenv:Body> </soapenv:Envelope> 
+ ```
 
 And for storeEmployee call -
 
-[code language="xml"] <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.mysoapserver.in/"> <soapenv:Header/> <soapenv:Body> <ser:storeEmployee> <employee> <age>30</age> <empID>102</empID> <name>Tushar</name> </employee> </ser:storeEmployee> </soapenv:Body> </soapenv:Envelope> [/code]
+[code language="xml"] <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.mysoapserver.in/"> <soapenv:Header/> <soapenv:Body> <ser:storeEmployee> <employee> <age>30</age> <empID>102</empID> <name>Tushar</name> </employee> </ser:storeEmployee> </soapenv:Body> </soapenv:Envelope> 
+ ```
 
 If we ignore the XML namespaces, our request is wrapped in a "findEmployeeByID" tag (for the findEmployeeByID call). Therefore, when we gave the wsdl2ruby.rb scpirt our WSDL reference, it created the equivalent Ruby classes for all wrappers, request and response types and stored it in a file which we referenced at Line 2.
 

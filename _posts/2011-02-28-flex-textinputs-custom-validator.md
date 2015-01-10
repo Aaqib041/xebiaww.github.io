@@ -25,7 +25,8 @@ The highlights of this method are:
   * Contains the logic for validation.
   * The result of validation is stored in _validationResults, which accepts objects of type ValidationResult.
   * ValidationResult contains the error message to be displayed in the tooltip.
-[code] override protected function doValidation(value:Object):Array { var trimmedValue:String = StringUtil.trim(String(value)); _validationResults = super.doValidation(trimmedValue);
+``` 
+ override protected function doValidation(value:Object):Array { var trimmedValue:String = StringUtil.trim(String(value)); _validationResults = super.doValidation(trimmedValue);
     
     
             if(_validationResults.length &gt; 0 || trimmedValue.length == 0)
@@ -45,7 +46,8 @@ The highlights of this method are:
         }
     
 
-[/code]
+
+ ```
 
 CharacterUtil is the class which encapsulates the logic to check for the numeric values in the entered characters. If you want to write your custom validator, just change the method written inside this class, with your checks and conditions.
 

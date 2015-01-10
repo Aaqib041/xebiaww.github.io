@@ -61,6 +61,7 @@ _Multiple browsers and cross browser support:_
 
 This issue is not specifically for automation testing but also valid for manual testing. Testing over multiple browsers is always a head-ache. So as to make automation test out of it,a tester need to add browser compatibility executable in the project , desired capabilities of each browser ,etc. For example:
 
-[code] public void initDriver() { try { if (Property.IsRemoteExecution.equalsIgnoreCase("true")) { String remoteURL; DesiredCapabilities capabilities = new DesiredCapabilities(); if (Property.RemoteURL.toLowerCase().contains("saucelabs")) { // set all saucelab capabilities here. } remoteURL = Property.RemoteURL + "/wd/hub";
+``` 
+ public void initDriver() { try { if (Property.IsRemoteExecution.equalsIgnoreCase("true")) { String remoteURL; DesiredCapabilities capabilities = new DesiredCapabilities(); if (Property.RemoteURL.toLowerCase().contains("saucelabs")) { // set all saucelab capabilities here. } remoteURL = Property.RemoteURL + "/wd/hub";
 
 URL uri = new URL(remoteURL); if (browserName.equalsIgnoreCase("firefox")) { FirefoxProfile remoteProfile = new FirefoxProfile(); remoteProfile.setPreference( "webdriver_assume_untrusted_issuer", false); remoteProfile.setAcceptUntrustedCertificates(true); remoteProfile.setEnableNativeEvents(false); capabilities.setBrowserName("firefox"); capabilities.setCapability("firefox_profile", remoteProfile .toString().toString()); driver = new RemoteWebDriver(uri, capabilities); } else if (browserName.equalsIgnoreCase("internetexplorer")) { capabilities.setBrowserName("internet explorer"); capabilities.setCapability("ignoreProtectedModeSettings", true);

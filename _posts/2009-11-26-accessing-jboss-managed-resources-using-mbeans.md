@@ -29,7 +29,8 @@ Straight away lets start with some code, below is the listing of a Servlet that 
 
 **QBrowser.java**
 
-[code language="java"] package net.rocky.qsoft.web;
+``` 
+ package net.rocky.qsoft.web;
 
 import java.io.IOException; import java.io.PrintWriter; import java.util.ArrayList; import java.util.List; import java.util.Map; import java.util.Set; import java.util.TreeMap;
 
@@ -96,7 +97,8 @@ public class QBrowser extends HttpServlet {
     }
     
 
-} [/code]
+} 
+ ```
 
 The main piece of code here lies in the method getMBeanServer(), here we locate a reference to the main JBoss MBean. Thereafter, using the MBean API we retrieve the ObjectNames that match our filter - "jboss.messaging.destination:*", this helps us retrieve references only to messaging destinations MBeans (you can use some other filter to retrieve other types of MBeans, or leave filter as null to get all the MBeans).
 
@@ -108,7 +110,8 @@ We create 1 helper classes -
 
 **MBeanData.java**
 
-[code language="java"] package net.rocky.qsoft.model;
+``` 
+ package net.rocky.qsoft.model;
 
 import javax.management.MBeanInfo; import javax.management.ObjectName;
 
@@ -216,7 +219,8 @@ import javax.management.MBeanInfo; import javax.management.ObjectName;
     }
     
 
-} [/code]
+} 
+ ```
 
 Here's my **pom.xml**
 
