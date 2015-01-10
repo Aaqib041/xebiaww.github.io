@@ -1,0 +1,22 @@
+---
+layout: post
+header-img: img/default-blog-pic.jpg
+---
+
+# 4th IndicThreads Conference: Turning the Corner
+
+[IndicThreads](http://www.indicthreads.com/) is one of the very few well done [technology conferences](http://j09.indicthreads.com/) in India. The [4th IndicThreads conference ](http://j09.indicthreads.com/)was no exception. It was a clear case of quality over quantity. There were JAVA enthusiasts from around the country, US and Japan who had gathered to attend the event. The event was also a [huge Green IT initiative ](http://j09.indicthreads.com/indicthreads-go-green/)with a strong focus towards environment. Everything ranging from delegate kits ( packed in newspaper bags), saplings for delegates to plant, to the prizes (bicycle) was inline with the underlying theme of green. There were a wide [variety of sessions](http://j09.indicthreads.com/schedule/), all tying to the changing dynamics of JEE and focusing on the fact that JAVA is turning the corner. There was a strong agreement on the fact that JAVA would continue to survive and thrive as a platform, but the language per se was under a lot of threat in the web space. Success of dynamic languages such as Groovy, Ruby, JRuby have made many JAVA enthusiasts to sit up and have a look on what suits their needs the best and still be on the JVM. Emergence of [functional languages](http://www.linuxjournal.com/node/1000217) was also on the radar with discussions about Scala, Erlang, Haskel and web frameworks like Lift. [Session on Scala by Mushtaq Ahmed ](http://j09.indicthreads.com/speakers/#mushtaq)was very informative and well received. Another area which got a lot of attention was the (re)emergence of JAVA on the mobile space after Google decided to introduce Android and the fact that there would be 25 new cell phones which would be launched on the [Android platform](http://developer.android.com/index.html).  While iPhone still enjoys the sleek look and the appstore advantage, 2010 would see the position challenged with better looking smart phones based on the Android platform. A very candid thought shared by [Rohit Nayak](http://j09.indicthreads.com/speakers/#rohit), who spoke about Android, was that mobile applications are another client for the enterprise software. Many new mobile applications would be acting as easy access points for enterprise systems. There would be other 0-2$ applications which would be consumer focussed but then major applications which would be built on mobile would be the ones which would use the enterprise systems. Deployment space and IaaS was also a part of the conference, where there were lively discussions about the benefits and pitfalls for moving to the cloud. 
+
+[Arun Gupta](http://j09.indicthreads.com/speakers/#arun), from Sun Microsystems working on GlassFish Application Server gave very enthusiastic presentations showing the capabilities and ease of GlassFish integration with several dynamic language framworks in particular with JRuby. He also gave a good introduction about NetBeans integration and support for these dynamic languages. Something for us to check out and give GlassFish and NetBeans a try.
+
+In all these discussions, core Java features were not forgotten completely as we had couple of interesting sessions about Best Practices for Concurrent Programming in Java 6 along with How to Optimize Performance of I/O intensive applications from [Pramod](http://j09.indicthreads.com/speakers/#pramod).
+
+[Xebia](http://www.xebia.in/) presented at the conference for the first time, though a few Xebians have attended the conference in the past. [Narinder](http://j09.indicthreads.com/speakers/#narinder) presented on 'Java Support on Google App Engine' and 'Fully Distributed Scrum with no Time Overlap' and [I presented on](http://j09.indicthreads.com/speakers/#vikas) 'Lift Web Framework' and 'Automating JEE Deployment'. The slides from slideshare are attached. 
+
+[Experience Of Fully Distributed Scrum With No Time Overlap](http://www.slideshare.net/xebiaindia/experience-of-fully-distributed-scrum-with-no-time-overlap)
+
+View more [documents](http://www.slideshare.net/) from [Xebia IT Architects](http://www.slideshare.net/xebiaindia).
+
+[Java Support On Google App Engine](http://www.slideshare.net/xebiaindia/java-support-on-google-app-engine)
+
+View more [documents](http://www.slideshare.net/) from [Xebia IT Architects](http://www.slideshare.net/xebiaindia).

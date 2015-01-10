@@ -1,0 +1,16 @@
+# Site settings
+title: Xebia Blog
+email: blogww@xebia.com
+description: "Thoughts on latest technologies"
+baseurl: ""
+url: "http://xebia.com"
+twitter_username: xebiaww
+github_username:  xebiaww
+facebook_username:  XebiaIndia
+
+# Build settings
+markdown: kramdown
+highlighter: pygments
+permalink: pretty
+paginate: 10
+exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
