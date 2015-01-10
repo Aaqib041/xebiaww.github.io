@@ -57,12 +57,13 @@ $ cd phoenix-3.2.2-bin/common
 $ cp phoenix-3.2.2-client-minimal.jar /usr/lib/hbase/lib/ 
 
 $ cp phoenix-core-3.2.2.jar /usr/lib/hbase/lib</span>
- ```
+
+```
 
 Phoenix comes up with a command line tool: sqlline (written in python).
+
 ``` 
- $ cd ~/phoenix/phoenix-core-3.2.2/bin 
- 
+$ cd ~/phoenix/phoenix-core-3.2.2/bin 
  $ ./psql.py localhost <sql-script A> <argument for the scrit A> <second-sql script B> <arguments forscript B> 
  ```
 
@@ -91,9 +92,10 @@ SELECT NAME from EMPLOYEE where EMPLOYEEID=’1’
 Now using sqlline we can connect to Hbase:
 
 ``` 
- $ ./sqlline.py localhost [cloudera@localhost bin]
+
+$ ./sqlline.py localhost [cloudera@localhost bin]
  
- $ ./sqlline.py localhost .. Connecting to jdbc:phoenix:localhost Driver: org.apache.phoenix.jdbc.PhoenixDriver (version 3.0) Autocommit status: true Transaction isolation: TRANSACTION_READ_COMMITTED .. Done sqlline version 1.1.2 0: jdbc:phoenix:localhost> select count(*) from EMPLOYEE; +------------+ |  COUNT(1)  | +------------+ | 3          | +------------+ 1 row selected (0.112 seconds) 0: jdbc:phoenix:localhost>
+$ ./sqlline.py localhost .. Connecting to jdbc:phoenix:localhost Driver: org.apache.phoenix.jdbc.PhoenixDriver (version 3.0) Autocommit status: true Transaction isolation: TRANSACTION_READ_COMMITTED .. Done sqlline version 1.1.2 0: jdbc:phoenix:localhost> select count(*) from EMPLOYEE; +------------+ |  COUNT(1)  | +------------+ | 3          | +------------+ 1 row selected (0.112 seconds) 0: jdbc:phoenix:localhost>
  ``` 
 
 **Running Phoenix on AWS:**
