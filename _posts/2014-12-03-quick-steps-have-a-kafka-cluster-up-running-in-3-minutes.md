@@ -29,13 +29,9 @@ For beginners to understand, kafka is nothing but a messaging system which is di
 Click to [Download][2] from mirror sites.
 
 ``` 
+$ tar -xzf kafka_2.9.2-0.8.1.1.tgz
 
-
-tar -xzf kafka_2.9.2-0.8.1.1.tgz
-
-cd kafka_2.9.2-0.8.1.1
-
-
+$ cd kafka_2.9.2-0.8.1.1
  ``` 
 
 ##### 2.  Start zookeeper server.
@@ -43,11 +39,7 @@ cd kafka_2.9.2-0.8.1.1
 Here we are starting the zookeeper which comes bundled with kafka. you may also use a  standalone zookeeper cluster with odd number of nodes and then point the kafka brokers to this zookeeper cluster. For production environment , do not use the bundled zookeeper.
 
 ``` 
-
-
-bin/zookeeper-server-start.sh config/zookeeper.properties
-
-
+$ bin/zookeeper-server-start.sh config/zookeeper.properties
  ``` 
 
 ##### 3.  Start the kafka servers(brokers).
@@ -59,52 +51,42 @@ you can copy the server.properties file and change the broker ids, log directory
 ######       A. Copy the server.properties files
 
 ``` 
-
-
-cp config/server.properties config/server-1.properties cp config/server.properties config/server-2.properties
-
-
+$ cp config/server.properties config/server-1.properties cp config/server.properties config/server-2.properties
  ```
 
 For server.properties, we already have :
 
 ``` 
- broker.id=0 port=9092 log.dir=/tmp/kafka-logs
- ``` 
+$ broker.id=0 port=9092 log.dir=/tmp/kafka-logs
+``` 
 
 ######       B. Edit the two new files :
 
 config/server-1.properties:
 
 ``` 
- broker.id=1 port=9093 log.dir=/tmp/kafka-logs-1
-
-
+$ broker.id=1 port=9093 log.dir=/tmp/kafka-logs-1
  ```
 
 config/server-2.properties:
 
 ``` 
- broker.id=2 port=9094 log.dir=/tmp/kafka-logs-2
-
-
- ``` 
+$ broker.id=2 port=9094 log.dir=/tmp/kafka-logs-2
+``` 
 
 ######         C. Start all 3 brokers.
 
 ``` 
- bin/kafka-server-start.sh config/server.properties & bin/kafka-server-start.sh config/server-1.properties & bin/kafka-server-start.sh config/server-2.properties & 
- ``` 
+$ bin/kafka-server-start.sh config/server.properties & bin/kafka-server-start.sh config/server-1.properties & bin/kafka-server-start.sh config/server-2.properties & 
+``` 
 
 ##### 4\. Create a topic
 
 You may specify replication factor and partitions per topic, else default values from properties file will be used. Topic name must be there in creation command. Once topic is created as per requirements of partitioning and replication , cluster is ready to receive and send the messages from producers and consumers.
 
 ``` 
- bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 3 --partitions 9 --topic test
-
-
- ```
+$ bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 3 --partitions 9 --topic test
+```
 
 Here we have specified 9 partitions , it will create 9 directories 0-8 numbered on each broker , as replication factor is 3. 
 
@@ -113,12 +95,8 @@ Here we have specified 9 partitions , it will create 9 directories 0-8 numbered 
 ######         A. Run Producer
 
 ``` 
-
-
-bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
-
-
- ```
+$ bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
+```
 
 Here we have specified the one broker , which will be contacted first and further zookeeper will co-ordinate to find out on which broker to put the message , as it has complete list of brokers registered to it. 
 
@@ -137,12 +115,8 @@ We have sent the messages to the broker, which will be stored in partitions for 
 **Note** : Use different terminal for producer and consumer so as to get better understanding.
 
 ``` 
-
-
-bin/kafka-console-consumer.sh --zookeeper localhost:2181 --from-beginning --topic test
-
-
- ```
+$ bin/kafka-console-consumer.sh --zookeeper localhost:2181 --from-beginning --topic test
+```
 
 As and when command executes, it consumes messages from test topic , from beginning . If we do not specify "--from-beginning" parameter, consumer will consume only the messages produced after the consumer is running.
 
