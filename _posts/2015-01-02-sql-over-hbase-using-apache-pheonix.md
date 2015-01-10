@@ -48,15 +48,17 @@ Once the Apache Phoenix is downloaded, unzip the tar file and you have to includ
 Note: If your Hbase is not compatible with Phoenix version, we will get an exception saying Client and Server jars are not compatible.
 
 ``` 
-
-
-$wget http://apache.mirrors.hoobly.com/phoenix/phoenix-3.2.2/bin/phoenix-3.2.2-bin.tar.gz $ tar -xvf phoenix-3.2.2-bin.tar.gz $ cd phoenix-3.2.2-bin/common $ cp phoenix-3.2.2-client-minimal.jar /usr/lib/hbase/lib/ $ cp phoenix-core-3.2.2.jar /usr/lib/hbase/lib</span>
+$wget http://apache.mirrors.hoobly.com/phoenix/phoenix-3.2.2/bin/phoenix-3.2.2-bin.tar.gz 
+$ tar -xvf phoenix-3.2.2-bin.tar.gz 
+$ cd phoenix-3.2.2-bin/common 
+$ cp phoenix-3.2.2-client-minimal.jar /usr/lib/hbase/lib/ 
+$ cp phoenix-core-3.2.2.jar /usr/lib/hbase/lib</span>
  ```
 
 Phoenix comes up with a command line tool: sqlline (written in python).
-
 ``` 
- $ cd ~/phoenix/phoenix-core-3.2.2/bin $ ./psql.py localhost <sql-script A> <argument for the scrit A> <second-sql script B> <arguments forscript B> 
+ $ cd ~/phoenix/phoenix-core-3.2.2/bin 
+ $ ./psql.py localhost <sql-script A> <argument for the scrit A> <second-sql script B> <arguments forscript B> 
  ```
 
 For example: 
@@ -78,13 +80,14 @@ Script B:
 Running Sample queries:
 
 ``` 
- SELECT NAME from EMPLOYEE where EMPLOYEEID=’1’
- ``` 
+SELECT NAME from EMPLOYEE where EMPLOYEEID=’1’
+``` 
 
 Now using sqlline we can connect to Hbase:
 
 ``` 
- $ ./sqlline.py localhost [cloudera@localhost bin]$ ./sqlline.py localhost .. Connecting to jdbc:phoenix:localhost Driver: org.apache.phoenix.jdbc.PhoenixDriver (version 3.0) Autocommit status: true Transaction isolation: TRANSACTION_READ_COMMITTED .. Done sqlline version 1.1.2 0: jdbc:phoenix:localhost> select count(*) from EMPLOYEE; +------------+ |  COUNT(1)  | +------------+ | 3          | +------------+ 1 row selected (0.112 seconds) 0: jdbc:phoenix:localhost>
+ $ ./sqlline.py localhost [cloudera@localhost bin]
+ $ ./sqlline.py localhost .. Connecting to jdbc:phoenix:localhost Driver: org.apache.phoenix.jdbc.PhoenixDriver (version 3.0) Autocommit status: true Transaction isolation: TRANSACTION_READ_COMMITTED .. Done sqlline version 1.1.2 0: jdbc:phoenix:localhost> select count(*) from EMPLOYEE; +------------+ |  COUNT(1)  | +------------+ | 3          | +------------+ 1 row selected (0.112 seconds) 0: jdbc:phoenix:localhost>
  ``` 
 
 **Running Phoenix on AWS:**
@@ -109,13 +112,13 @@ Once the cluster is running, you can login to the master node using ssh and chec
 
   * Transactional support- It does not support and additional transactional capabilities other than what Hbase provides.
 
-We can also integrate Squirrel - SQL pluggin with Apache Phoenix as well.
+We can also integrate Squirrel - SQL plugin with Apache Phoenix as well.
 
 All we need to do is to add appropriate driver on Squirrel client window.Using this we can easily query the Hbase database we use.
 
 **Conclusion:**
 
-****Phoenix is actually been used in places where we want to hit the Hbase database using REST calls and the result of these REST calls are actually to be seen on some UI.
+Phoenix is actually been used in places where we want to hit the Hbase database using REST calls and the result of these REST calls are actually to be seen on some UI.
 
 Widespread knowledge of SQL increases the usefulness of Phoenix and related tools like CQL (in case of Cassandra) and Phoenix(in case of Hbase)
 
