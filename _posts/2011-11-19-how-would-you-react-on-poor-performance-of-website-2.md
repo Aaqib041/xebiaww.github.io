@@ -11,32 +11,40 @@ comment_status: open
 
 # How would you react on Poor performance of website?
 
-<p>As Web users you would always want the website to be up whenever you visit it. In addition, you would want to feel that the access is fast.  But what would happen if you do not get the fast access? Would you like to use that website? What will be your immediate reaction?  Would you:-</p>
-<p><strong>-</strong> Look for other alternative OR
-<strong>-</strong> Temporarily stop accessing the website OR
-<strong>-</strong> Abandon the site permanently</p>
-<p>Its not necessary that everybody would have same type of reaction because a site which is fast for one person might not be fast for others. There are various factors which actually make you to take immediate reaction which can be either  patience level, age group,  your need for the site or your knowledge on internet.</p>
-<p>Just from curiosity, I did one very small survey a few days ago with 100 facebook users of 18-25 age-group to understand  their different reactions on slow performance of website. They were asked two simple questions . Lets check out those questions and their responses :-<!--more--></p>
-<p><em><strong>1. What if facebook becomes slow?</strong></em>
-<img style="margin-left: 5px;" title="What if facebook becomes slow?" src="http://xebee.xebia.in/wp-content/uploads/2011/11/Screen-shot-2011-11-09-at-5.33.10-PM.png" alt="" width="350" height="250" />
-Page load times are very crucial for websites because it not only affects your business, but can leave longer negative effects also. We can see this effect from results of statistical analysis conducted on the data collected from young flock of people who are very active on Facebook. When they were given option of using slower site they had different responses like:-
-<strong> 19% of users said that they will delete their account.</strong></p>
-<p><strong> 63% of users said they will stop using it and would look for alternative  which is faster because they do not  want to get annoyed.</strong></p>
-<p><strong> 18% of users said as they addicted to Facebook , they will not abandon it  completely but may be they stop using it frequently.</strong></p>
-<p><em><strong>2. How much time they can wait for each page to load? Below are three options which they were given :-</strong></em>
-1. 5 Seconds
-2. 7 Seconds
-3. 10 Seconds
-<img title="How much time they can wait for each page to load? " src="http://xebee.xebia.in/wp-content/uploads/2011/11/second-graph.png" alt="" width="350" height="250" />
-Second question was asked  in order to discover what page load time make users so impatient. When they were asked with three options more than 60% of them opted for minimum time which is 5 seconds and 25% of them wanted page load time even lesser than 5 seconds.</p>
-<p><strong>62% of users said they can bear maximum page response time 5 seconds</strong></p>
-<p><strong> 25% said that in today’s world internet  is so fast and they have got faster  internet connections, so they want page response time less than 5 seconds.</strong></p>
-<p><strong>13% of users said they can bear till 7  seconds </strong></p>
-<p><strong> Surprisingly, there was nobody who opted third option</strong></p>
-<p>From above statistics it can be inferred that more than 80% of users are those who do not want to compromise with slowness of Facebook at all and nearly 20% of users will be using Facebook just because they are addicted to it. This seems that majority of users do not want to use slow websites even if it is world’s number 1 social networking site Facebook . Suppose Facebook loses those 80% of its users. What would happen to its business? Definitely it will become outdated and others will capture market.</p>
-<p>So, my question to developers or testers or stakeholders is that do we plan for performance testing of our application from the first day of project? I am sure many of  us think that functionality of our site should not break with load of n number of concurrent users per second but we don’t think what if site becomes slow with that much of load. During my last project, we thought about performance testing at the end and our main focus was that our functionality should work with load of baseline numbers given to us but we never thought about the page response time with that much of load which could have made our users irritate enough to abandon our site which in short means losing out business.</p>
-<p>Just think how would our business be affected even if we loose 5% of users ?</p>
-<p>So, are you ready to let your users go off  your  site just because of its slow performance  which can be improved with little more efforts and right time planning. According to my opinion, we should always think about performance of your site from its beginning because it really plays an important role to stabilize the business value .</p>
+As Web users you would always want the website to be up whenever you visit it. In addition, you would want to feel that the access is fast.  But what would happen if you do not get the fast access? Would you like to use that website? What will be your immediate reaction?  Would you:-
+
+**-** Look for other alternative OR **-** Temporarily stop accessing the website OR **-** Abandon the site permanently
+
+Its not necessary that everybody would have same type of reaction because a site which is fast for one person might not be fast for others. There are various factors which actually make you to take immediate reaction which can be either  patience level, age group,  your need for the site or your knowledge on internet.
+
+Just from curiosity, I did one very small survey a few days ago with 100 facebook users of 18-25 age-group to understand  their different reactions on slow performance of website. They were asked two simple questions . Lets check out those questions and their responses :-
+
+_**1. What if facebook becomes slow?**_ ![][1] Page load times are very crucial for websites because it not only affects your business, but can leave longer negative effects also. We can see this effect from results of statistical analysis conducted on the data collected from young flock of people who are very active on Facebook. When they were given option of using slower site they had different responses like:- ** 19% of users said that they will delete their account.**
+
+** 63% of users said they will stop using it and would look for alternative  which is faster because they do not  want to get annoyed.**
+
+** 18% of users said as they addicted to Facebook , they will not abandon it  completely but may be they stop using it frequently.**
+
+_**2\. How much time they can wait for each page to load? Below are three options which they were given :-**_ 1\. 5 Seconds 2\. 7 Seconds 3\. 10 Seconds ![][2] Second question was asked  in order to discover what page load time make users so impatient. When they were asked with three options more than 60% of them opted for minimum time which is 5 seconds and 25% of them wanted page load time even lesser than 5 seconds.
+
+**62% of users said they can bear maximum page response time 5 seconds**
+
+** 25% said that in today’s world internet  is so fast and they have got faster  internet connections, so they want page response time less than 5 seconds.**
+
+**13% of users said they can bear till 7  seconds **
+
+** Surprisingly, there was nobody who opted third option**
+
+From above statistics it can be inferred that more than 80% of users are those who do not want to compromise with slowness of Facebook at all and nearly 20% of users will be using Facebook just because they are addicted to it. This seems that majority of users do not want to use slow websites even if it is world’s number 1 social networking site Facebook . Suppose Facebook loses those 80% of its users. What would happen to its business? Definitely it will become outdated and others will capture market.
+
+So, my question to developers or testers or stakeholders is that do we plan for performance testing of our application from the first day of project? I am sure many of us think that functionality of our site should not break with load of n number of concurrent users per second but we don’t think what if site becomes slow with that much of load. During my last project, we thought about performance testing at the end and our main focus was that our functionality should work with load of baseline numbers given to us but we never thought about the page response time with that much of load which could have made our users irritate enough to abandon our site which in short means losing out business.
+
+Just think how would our business be affected even if we loose 5% of users ?
+
+So, are you ready to let your users go off your site just because of its slow performance which can be improved with little more efforts and right time planning. According to my opinion, we should always think about performance of your site from its beginning because it really plays an important role to stabilize the business value .
+
+   [1]: http://xebee.xebia.in/wp-content/uploads/2011/11/Screen-shot-2011-11-09-at-5.33.10-PM.png (What if facebook becomes slow?)
+   [2]: http://xebee.xebia.in/wp-content/uploads/2011/11/second-graph.png (How much time they can wait for each page to load? )
 
 ## Comments
 

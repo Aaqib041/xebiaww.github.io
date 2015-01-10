@@ -11,30 +11,7 @@ comment_status: open
 
 # Working with Git
 
-<p>A video blog / screencast to help you get started with Git.</p>
-<div id="media">
-            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="640" height="379" id="csSWF">
-                <param name="movie" value="http://xebee.xebia.in/wp-content/uploads/2010/10/git-1-perfect-1_controller.swf" />
-                <param name="quality" value="best" />
-                <param name="bgcolor" value="#1a1a1a" />
-                <param name="allowfullscreen" value="true" />
-                <param name="scale" value="showall" />
-                <param name="allowscriptaccess" value="always" />
-                <param name="flashvars" value="autostart=false&thumb=http://xebee.xebia.in/wp-content/uploads/2010/10/FirstFrame.png&thumbscale=45&color=0x000000,0x000000" />
-                <!--[if !IE]>-->
-                <object type="application/x-shockwave-flash" data="http://xebee.xebia.in/wp-content/uploads/2010/10/git-1-perfect-1_controller.swf" width="640" height="379">
-                    <param name="quality" value="best" />
-                    <param name="bgcolor" value="#1a1a1a" />
-                    <param name="allowfullscreen" value="true" />
-                    <param name="scale" value="showall" />
-                    <param name="allowscriptaccess" value="always" />
-                    <param name="flashvars" value="autostart=false&thumb=http://xebee.xebia.in/wp-content/uploads/2010/10/FirstFrame.png&thumbscale=45&color=0x000000,0x000000" />
-                <!--<![endif]-->
-                 <!--[if !IE]>-->
-                </object>
-                <!--<![endif]-->
-            </object>
-        </div>
+A video blog / screencast to help you get started with Git.
 
 ## Comments
 

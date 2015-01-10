@@ -11,129 +11,124 @@ comment_status: open
 
 # Google App Engine + Maven + JSF2
 
-<p>I have tried to put all the keywords in the title of this blog, hoping that it will turn some heads. Google App Engine (GAE) provides a great hosting platform for open source apps written in Java/Python. So if you have no qualms about hosting you Java applications on a public server then you have no better choice than GAE.</p>
-<p>The only catch however is, that GAE does not support certain APIs (see the white-list here - <a href="http://code.google.com/intl/de/appengine/docs/java/jrewhitelist.html" target="_blank">http://code.google.com/intl/de/appengine/docs/java/jrewhitelist.html</a>). This restriction makes it difficult to host certain apps / frameworks.</p>
-<p>GAE provides the infrastructure, a modified Jetty server included in the GAE SDK (<a href="http://code.google.com/appengine/downloads.html" target="_blank">http://code.google.com/appengine/downloads.html</a>) though which you can test your app. If it runs on the local GAE Jetty server then it will also run on GAE itself. The project structure that Google asks you to create for uploading an app is also quite typical (unless you use Ant) which brings me to my next point.</p>
-<!--more-->
+I have tried to put all the keywords in the title of this blog, hoping that it will turn some heads. Google App Engine (GAE) provides a great hosting platform for open source apps written in Java/Python. So if you have no qualms about hosting you Java applications on a public server then you have no better choice than GAE.
 
-<p>Maven is my favorite build tool, it would really take something for me to move on to Ant now. So I tried to create my application using Maven and then test it locally on GAE's Jetty and finally upload it to GAE. After a little search I found the Maven GAE plugin (<a href="http://code.google.com/p/maven-gae-plugin/">http://code.google.com/p/maven-gae-plugin/</a>).</p>
-<p>Below is my pom.xml to make this plugin work - </p>
-<p>[code language="xml"]
-&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;</p>
-<pre><code>&amp;lt;modelVersion&amp;gt;4.0.0&amp;lt;/modelVersion&amp;gt;
-&amp;lt;groupId&amp;gt;net.rocky&amp;lt;/groupId&amp;gt;
-&amp;lt;artifactId&amp;gt;rocky-gae-app&amp;lt;/artifactId&amp;gt;
-&amp;lt;packaging&amp;gt;war&amp;lt;/packaging&amp;gt;
-&amp;lt;version&amp;gt;1&amp;lt;/version&amp;gt;
-&amp;lt;name&amp;gt;rocky-gae-app&amp;lt;/name&amp;gt;
-&amp;lt;url&amp;gt;http://maven.apache.org&amp;lt;/url&amp;gt;
+The only catch however is, that GAE does not support certain APIs (see the white-list here - <http://code.google.com/intl/de/appengine/docs/java/jrewhitelist.html>). This restriction makes it difficult to host certain apps / frameworks.
 
-&amp;lt;repositories&amp;gt;
-    &amp;lt;repository&amp;gt;
-        &amp;lt;id&amp;gt;java.net&amp;lt;/id&amp;gt;
-        &amp;lt;url&amp;gt;http://download.java.net/maven/2&amp;lt;/url&amp;gt;
-    &amp;lt;/repository&amp;gt;
-&amp;lt;/repositories&amp;gt;
+GAE provides the infrastructure, a modified Jetty server included in the GAE SDK (<http://code.google.com/appengine/downloads.html>) though which you can test your app. If it runs on the local GAE Jetty server then it will also run on GAE itself. The project structure that Google asks you to create for uploading an app is also quite typical (unless you use Ant) which brings me to my next point.
 
-&amp;lt;pluginRepositories&amp;gt;
-    &amp;lt;pluginRepository&amp;gt;
-        &amp;lt;id&amp;gt;maven-gae-plugin-repo&amp;lt;/id&amp;gt;
-        &amp;lt;name&amp;gt;maven-gae-plugin repository&amp;lt;/name&amp;gt;
-        &amp;lt;url&amp;gt;http://maven-gae-plugin.googlecode.com/svn/repository&amp;lt;/url&amp;gt;
-    &amp;lt;/pluginRepository&amp;gt;
-&amp;lt;/pluginRepositories&amp;gt;
+Maven is my favorite build tool, it would really take something for me to move on to Ant now. So I tried to create my application using Maven and then test it locally on GAE's Jetty and finally upload it to GAE. After a little search I found the Maven GAE plugin (<http://code.google.com/p/maven-gae-plugin/>).
 
-&amp;lt;dependencies&amp;gt;
-    &amp;lt;dependency&amp;gt;
-        &amp;lt;groupId&amp;gt;javax.servlet&amp;lt;/groupId&amp;gt;
-        &amp;lt;artifactId&amp;gt;servlet-api&amp;lt;/artifactId&amp;gt;
-        &amp;lt;version&amp;gt;2.5&amp;lt;/version&amp;gt;
-        &amp;lt;scope&amp;gt;provided&amp;lt;/scope&amp;gt;
-    &amp;lt;/dependency&amp;gt;
-    &amp;lt;dependency&amp;gt;
-        &amp;lt;groupId&amp;gt;javax.servlet.jsp&amp;lt;/groupId&amp;gt;
-        &amp;lt;artifactId&amp;gt;jsp-api&amp;lt;/artifactId&amp;gt;
-        &amp;lt;version&amp;gt;2.1&amp;lt;/version&amp;gt;
-        &amp;lt;scope&amp;gt;provided&amp;lt;/scope&amp;gt;
-    &amp;lt;/dependency&amp;gt;
-    &amp;lt;dependency&amp;gt;
-        &amp;lt;groupId&amp;gt;com.sun.faces&amp;lt;/groupId&amp;gt;
-        &amp;lt;artifactId&amp;gt;jsf-api&amp;lt;/artifactId&amp;gt;
-        &amp;lt;version&amp;gt;2.0.2&amp;lt;/version&amp;gt;
-    &amp;lt;/dependency&amp;gt;
-    &amp;lt;dependency&amp;gt;
-        &amp;lt;groupId&amp;gt;com.sun.faces&amp;lt;/groupId&amp;gt;
-        &amp;lt;artifactId&amp;gt;jsf-impl&amp;lt;/artifactId&amp;gt;
-        &amp;lt;version&amp;gt;2.0.2&amp;lt;/version&amp;gt;
-        &amp;lt;classifier&amp;gt;gae&amp;lt;/classifier&amp;gt;
-    &amp;lt;/dependency&amp;gt;
-    &amp;lt;dependency&amp;gt;
-        &amp;lt;groupId&amp;gt;org.glassfish.web&amp;lt;/groupId&amp;gt;
-        &amp;lt;artifactId&amp;gt;el-impl&amp;lt;/artifactId&amp;gt;
-        &amp;lt;version&amp;gt;2.2&amp;lt;/version&amp;gt;
-    &amp;lt;/dependency&amp;gt;
-    &amp;lt;dependency&amp;gt;
-        &amp;lt;groupId&amp;gt;junit&amp;lt;/groupId&amp;gt;
-        &amp;lt;artifactId&amp;gt;junit&amp;lt;/artifactId&amp;gt;
-        &amp;lt;version&amp;gt;4.8.1&amp;lt;/version&amp;gt;
-        &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt;
-    &amp;lt;/dependency&amp;gt;
-&amp;lt;/dependencies&amp;gt;
+Below is my pom.xml to make this plugin work - 
 
-&amp;lt;build&amp;gt;
-    &amp;lt;plugins&amp;gt;
-        &amp;lt;plugin&amp;gt;
-            &amp;lt;groupId&amp;gt;org.apache.maven.plugins&amp;lt;/groupId&amp;gt;
-            &amp;lt;artifactId&amp;gt;maven-compiler-plugin&amp;lt;/artifactId&amp;gt;
-            &amp;lt;version&amp;gt;2.0.2&amp;lt;/version&amp;gt;
-            &amp;lt;configuration&amp;gt;
-                &amp;lt;source&amp;gt;1.6&amp;lt;/source&amp;gt;
-                &amp;lt;target&amp;gt;1.6&amp;lt;/target&amp;gt;
-            &amp;lt;/configuration&amp;gt;
-        &amp;lt;/plugin&amp;gt;
-        &amp;lt;plugin&amp;gt;
-            &amp;lt;groupId&amp;gt;net.kindleit&amp;lt;/groupId&amp;gt;
-            &amp;lt;artifactId&amp;gt;maven-gae-plugin&amp;lt;/artifactId&amp;gt;
-            &amp;lt;version&amp;gt;0.6.0&amp;lt;/version&amp;gt;
-            &amp;lt;configuration&amp;gt;
-                &amp;lt;sdkDir&amp;gt;/home/rockyj/01rocky/02apps/appengine-java-sdk-1.3.5&amp;lt;/sdkDir&amp;gt;
-            &amp;lt;/configuration&amp;gt;
-        &amp;lt;/plugin&amp;gt;
-    &amp;lt;/plugins&amp;gt;
-    &amp;lt;finalName&amp;gt;rocky-gae-app&amp;lt;/finalName&amp;gt;
-&amp;lt;/build&amp;gt;
-</code></pre>
-<p>&lt;/project&gt;
-[/code]</p>
-<p>I have included the whole pom as there is hardly anything I can miss here. The GAE plugin is not in maven central so we need to include the plugin repository, the dependencies are pretty standard except one (which I will explain in a moment) and the plugin itself needs the configuration to know where you have the GAE SDK.</p>
-<p>As I mentioned earlier, some classes are blacklisted on the GAE so your default jsf-impl.jar (Mojarra) wil not work on GAE. You will need a modified jar which you can download from here (<a href="http://code.google.com/p/joshjcarrier/source/browse/trunk/Sun%20JSF%20GAE/jsf-impl-gae.jar">http://code.google.com/p/joshjcarrier/source/browse/trunk/Sun%20JSF%20GAE/jsf-impl-gae.jar</a>), if you have a Nexus repo you can install the modified jar there or install the jar in you local repository manually. Also as seen in the pom, for resolving EL (Expression Language) you need el-impl.jar, GAE does not support EL unlike Tomcat. </p>
-<p>To make JSF work you need the following entries in your web.xml -</p>
-<p>[code language="xml"]
-    &lt;!-- Seems like GAE 1.2.6 cannot handle server side session management. At least for JSF 2.0.1 --&gt; 
-    &lt;context-param&gt; 
-      &lt;param-name&gt;javax.faces.STATE_SAVING_METHOD&lt;/param-name&gt; 
-      &lt;param-value&gt;client&lt;/param-value&gt; 
-    &lt;/context-param&gt; 
-    &lt;!-- Recommendation from GAE pages  --&gt; 
-    &lt;context-param&gt; 
-      &lt;param-name&gt;javax.faces.PROJECT_STAGE&lt;/param-name&gt; 
-      &lt;param-value&gt;Production&lt;/param-value&gt; 
-    &lt;/context-param&gt;
-    &lt;!-- Accommodate Single-Threaded Requirement of Google AppEngine  --&gt;
-    &lt;context-param&gt;
-      &lt;param-name&gt;com.sun.faces.enableThreading&lt;/param-name&gt;
-      &lt;param-value&gt;false&lt;/param-value&gt;
-    &lt;/context-param&gt;
-[/code]</p>
-<p>Finally, in your appengine-web.xml (the GAE configuration file), you need the following entry - </p>
-<p>[code language="xml"]
-&lt;sessions-enabled&gt;true&lt;/sessions-enabled&gt;
-[/code]</p>
-<p>That's it. Now you can work on your JSF2 application. To test, all you need to do is : <strong>mvn clean gae:run</strong></p>
-<p>For uploading the application, I would still recommend using the SDK provided script (otherwise you need a whole lot of other changes). What I do is - </p>
-<p>$HOME/01rocky/02apps/appengine-java-sdk-1.3.5/bin/appcfg.sh update /home/rockyj/01rocky/03workspace/scbcd/rocky-gae-app/target/rocky-gae-app/</p>
-<p>This means run the GAE script with the param <strong>"update"</strong> and the path to your maven created target folder. If you have signed up for GAE, it will ask your username and password and your app will be uploaded to GAE.</p>
+[code language="xml"] <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    
+    
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    &lt;groupId&gt;net.rocky&lt;/groupId&gt;
+    &lt;artifactId&gt;rocky-gae-app&lt;/artifactId&gt;
+    &lt;packaging&gt;war&lt;/packaging&gt;
+    &lt;version&gt;1&lt;/version&gt;
+    &lt;name&gt;rocky-gae-app&lt;/name&gt;
+    &lt;url&gt;http://maven.apache.org&lt;/url&gt;
+    
+    &lt;repositories&gt;
+        &lt;repository&gt;
+            &lt;id&gt;java.net&lt;/id&gt;
+            &lt;url&gt;http://download.java.net/maven/2&lt;/url&gt;
+        &lt;/repository&gt;
+    &lt;/repositories&gt;
+    
+    &lt;pluginRepositories&gt;
+        &lt;pluginRepository&gt;
+            &lt;id&gt;maven-gae-plugin-repo&lt;/id&gt;
+            &lt;name&gt;maven-gae-plugin repository&lt;/name&gt;
+            &lt;url&gt;http://maven-gae-plugin.googlecode.com/svn/repository&lt;/url&gt;
+        &lt;/pluginRepository&gt;
+    &lt;/pluginRepositories&gt;
+    
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+            &lt;artifactId&gt;servlet-api&lt;/artifactId&gt;
+            &lt;version&gt;2.5&lt;/version&gt;
+            &lt;scope&gt;provided&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;javax.servlet.jsp&lt;/groupId&gt;
+            &lt;artifactId&gt;jsp-api&lt;/artifactId&gt;
+            &lt;version&gt;2.1&lt;/version&gt;
+            &lt;scope&gt;provided&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.sun.faces&lt;/groupId&gt;
+            &lt;artifactId&gt;jsf-api&lt;/artifactId&gt;
+            &lt;version&gt;2.0.2&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.sun.faces&lt;/groupId&gt;
+            &lt;artifactId&gt;jsf-impl&lt;/artifactId&gt;
+            &lt;version&gt;2.0.2&lt;/version&gt;
+            &lt;classifier&gt;gae&lt;/classifier&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.glassfish.web&lt;/groupId&gt;
+            &lt;artifactId&gt;el-impl&lt;/artifactId&gt;
+            &lt;version&gt;2.2&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;junit&lt;/groupId&gt;
+            &lt;artifactId&gt;junit&lt;/artifactId&gt;
+            &lt;version&gt;4.8.1&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+    
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+                &lt;version&gt;2.0.2&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;source&gt;1.6&lt;/source&gt;
+                    &lt;target&gt;1.6&lt;/target&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;net.kindleit&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-gae-plugin&lt;/artifactId&gt;
+                &lt;version&gt;0.6.0&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;sdkDir&gt;/home/rockyj/01rocky/02apps/appengine-java-sdk-1.3.5&lt;/sdkDir&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+        &lt;finalName&gt;rocky-gae-app&lt;/finalName&gt;
+    &lt;/build&gt;
+    
+
+</project> [/code]
+
+I have included the whole pom as there is hardly anything I can miss here. The GAE plugin is not in maven central so we need to include the plugin repository, the dependencies are pretty standard except one (which I will explain in a moment) and the plugin itself needs the configuration to know where you have the GAE SDK.
+
+As I mentioned earlier, some classes are blacklisted on the GAE so your default jsf-impl.jar (Mojarra) wil not work on GAE. You will need a modified jar which you can download from here (<http://code.google.com/p/joshjcarrier/source/browse/trunk/Sun%20JSF%20GAE/jsf-impl-gae.jar>), if you have a Nexus repo you can install the modified jar there or install the jar in you local repository manually. Also as seen in the pom, for resolving EL (Expression Language) you need el-impl.jar, GAE does not support EL unlike Tomcat. 
+
+To make JSF work you need the following entries in your web.xml -
+
+[code language="xml"] <!-- Seems like GAE 1.2.6 cannot handle server side session management. At least for JSF 2.0.1 --> <context-param> <param-name>javax.faces.STATE_SAVING_METHOD</param-name> <param-value>client</param-value> </context-param> <!-- Recommendation from GAE pages --> <context-param> <param-name>javax.faces.PROJECT_STAGE</param-name> <param-value>Production</param-value> </context-param> <!-- Accommodate Single-Threaded Requirement of Google AppEngine --> <context-param> <param-name>com.sun.faces.enableThreading</param-name> <param-value>false</param-value> </context-param> [/code]
+
+Finally, in your appengine-web.xml (the GAE configuration file), you need the following entry - 
+
+[code language="xml"] <sessions-enabled>true</sessions-enabled> [/code]
+
+That's it. Now you can work on your JSF2 application. To test, all you need to do is : **mvn clean gae:run**
+
+For uploading the application, I would still recommend using the SDK provided script (otherwise you need a whole lot of other changes). What I do is - 
+
+$HOME/01rocky/02apps/appengine-java-sdk-1.3.5/bin/appcfg.sh update /home/rockyj/01rocky/03workspace/scbcd/rocky-gae-app/target/rocky-gae-app/
+
+This means run the GAE script with the param **"update"** and the path to your maven created target folder. If you have signed up for GAE, it will ask your username and password and your app will be uploaded to GAE.
 
 ## Comments
 

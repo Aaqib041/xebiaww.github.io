@@ -11,178 +11,77 @@ comment_status: open
 
 # What made me to choose CXF over Axis2
 
-<p>My last assignment required me to expose soap based web service. While exploring I came to know that there are many types of web services, for example  JBossWS, GlassFish Metro, Apache CXF, Axis1, Axis2 and likewise. All of them are widely used and were also promising to fulfill most of my requirements. Since I had to deploy my web service on tomcat web container, I shortlisted Axis2 and Apache CXF for comparison. While working on POC for their comparison, factors mentioned below helped me to choose the appropriate.</p>
-<p><strong>Factors in favor of CXF</strong>
-<!--more-->
-<ol>
-    <li>I do not have to download any soap engine as we do when we use Axis2.</li>
-    <li>Deployment of axis2 is not as easy as CXF because there is no well known plugin available for axis2 which can directly deploy aar file on soap engine.</li>
-    <li>CXF provides nice and simple integration with service component architecture(SCA) container like Tuscany.</li>
-    <li>CXF also gives web service standards support, Frontend programming APIs support, Tools support(like xsd to wsdl, wsdl validator, wsdl to soap, wsdl to xml, wsdl to javascript, wsdl to java, java to web service  etc.) and RESTful services support in very simple fashion.</li>
-    <li>The last but not least is that CXF provides tools to generate java client as well as JavaScript client.</li></p>
-<p></ol>
-Now lets have a glance on the steps which I followed during CXF and Axis2 POCs.</p>
-<p><strong>Axis2 POC</strong>
-Steps followed during POC that describes how to get started with Axis2:-</p>
-<p><strong>Step-1:</strong> Download Axis2, which is required as soap engine to process soap based request.
-<strong>Step-2:</strong> Create a maven based web project with services. Service class and pom configurations are given below.</p>
-<p><strong>service class:</strong></p>
-<p>[code]
-public class StringWebService {
-    public String getMessage(String s) {
-        return s;
-    }
-}
-[/code]</p>
-<p><strong>pom.xml</strong></p>
-<p>[code]
-&lt;dependencies&gt;
-        &lt;!--Axis2 Jars --&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.apache.axis2&lt;/groupId&gt;
-            &lt;artifactId&gt;axis2&lt;/artifactId&gt;
-            &lt;version&gt;1.4&lt;/version&gt;
-        &lt;/dependency&gt;
-    &lt;/dependencies&gt;
-    &lt;build&gt;
-        &lt;plugins&gt;
-            &lt;plugin&gt;
-                &lt;groupId&gt;org.apache.axis2&lt;/groupId&gt;
-                &lt;artifactId&gt;axis2-aar-maven-plugin&lt;/artifactId&gt;
-                &lt;version&gt;1.4.1&lt;/version&gt;
-                &lt;configuration&gt;
-                    &lt;aarName&gt;ws_axis2&lt;/aarName&gt;
-                &lt;/configuration&gt;
-            &lt;/plugin&gt;
-        &lt;/plugins&gt;
-    &lt;/build&gt;
-[/code]</p>
-<p>You can use other dependencies as per your requirement. I have used axis2-aar-maven-plugin to build Apache archive (aar) file, to be deployed on soap engine.</p>
-<p><strong>Step-3:</strong> Create a services.xml file to expose service name and its operations in src/main/resources/META-INF directory. Also add web.xml in WEB-INF directory as we do in normal web project to define AxisServlet and its mapping.</p>
-<p><strong>services.xml</strong></p>
-<p>[code]
-&lt;service name=&quot;WebService&quot;&gt;
-    &lt;parameter name=&quot;ServiceClass&quot; locked=&quot;false&quot;&gt;com.test.ws.StringWebService&lt;/parameter&gt;
-    &lt;operation name=&quot;getMessage&quot;&gt;
-        &lt;messageReceiver class=&quot;org.apache.axis2.rpc.receivers.RPCMessageReceiver&quot;/&gt;
-    &lt;/operation&gt;
-&lt;/service&gt;
-[/code]</p>
-<p><strong>web.xml</strong></p>
-<p>[code]
-&lt;web-app&gt;
-    &lt;display-name&gt;Apache-Axis2&lt;/display-name&gt;
-    &lt;servlet&gt;
-        &lt;servlet-name&gt;AxisServlet&lt;/servlet-name&gt;
-        &lt;display-name&gt;Apache-Axis Servlet&lt;/display-name&gt;
-        &lt;servlet-class&gt;org.apache.axis2.transport.http.AxisServlet&lt;/servlet-class&gt;
-        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
-    &lt;/servlet&gt;
-    &lt;servlet-mapping&gt;
-        &lt;servlet-name&gt;AxisServlet&lt;/servlet-name&gt;
-        &lt;url-pattern&gt;/servlet/AxisServlet&lt;/url-pattern&gt;
-    &lt;/servlet-mapping&gt;
-    &lt;servlet-mapping&gt;
-        &lt;servlet-name&gt;AxisServlet&lt;/servlet-name&gt;
-        &lt;url-pattern&gt;/services/*&lt;/url-pattern&gt;
-    &lt;/servlet-mapping&gt;
-&lt;/web-app&gt;
-[/code]</p>
-<p><strong>Step-4:</strong> Execute below maven command to build web service.
-<strong>mvn clean install axis2-aar:aar</strong>
-(axis2-aar:aar basically generates the .aar file)</p>
-<p><strong>Step-5:</strong> The final step is to deploy .aar file in $CATALINA_HOME/webapps/axis2/WEB-INF/services directory. Now our web service is ready to use.
-After deployment you can access wsdl by hitting this url:- http://localhost:8080/axis2/services/WebService?wsdl</p>
-<p><strong>CXF POC</strong>
-Steps followed during POC which describes how to get started with CXF:-</p>
-<p><strong>Step-1:</strong> Create maven based web project with services</p>
-<p><strong>service class:</strong></p>
-<p>[code]
-@WebService
-public class SampleCXFService {
-    public String getMessage(String s) {
-        return s;
-    }
-}</p>
-<p>[/code]</p>
-<p><strong>pom.xml</strong></p>
-<p>&nbsp;</p>
-<p>[code]
-&lt;build&gt;
-        &lt;plugins&gt;
-            &lt;plugin&gt;
-                &lt;!-- Plugin for compiling Java code --&gt;
-                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
-                &lt;configuration&gt;
-                    &lt;source&gt;1.5&lt;/source&gt;
-                    &lt;target&gt;1.5&lt;/target&gt;
-                &lt;/configuration&gt;
-            &lt;/plugin&gt;
-            &lt;plugin&gt;
-                &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;
-                &lt;version&gt;2.1.1&lt;/version&gt;
-                &lt;configuration&gt;
-                    &lt;warName&gt;ws_cxf&lt;/warName&gt;
-                &lt;/configuration&gt;
-            &lt;/plugin&gt;
-            &lt;plugin&gt;
-                &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
-                &lt;artifactId&gt;tomcat-maven-plugin&lt;/artifactId&gt;
-                &lt;configuration&gt;
-                    &lt;url&gt;http://127.0.0.1:8080/manager&lt;/url&gt;
-                    &lt;server&gt;TomcatServer&lt;/server&gt;
-                    &lt;path&gt;/ws_cxf&lt;/path&gt;
-                    &lt;warFile&gt;target/ws_cxf.war&lt;/warFile&gt;
-                &lt;/configuration&gt;
-            &lt;/plugin&gt;
-        &lt;/plugins&gt;
-    &lt;/build&gt;
-    &lt;dependencies&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.apache.cxf&lt;/groupId&gt;
-            &lt;artifactId&gt;cxf-rt-frontend-jaxws&lt;/artifactId&gt;
-            &lt;version&gt;2.2.3&lt;/version&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.apache.cxf&lt;/groupId&gt;
-            &lt;artifactId&gt;cxf-rt-transports-http&lt;/artifactId&gt;
-            &lt;version&gt;2.2.3&lt;/version&gt;
-        &lt;/dependency&gt;
-    &lt;/dependencies&gt;
-[/code]</p>
-<p>You can use other dependencies as per your requirement and to use tomcat-maven-plugin effectively you will have to add below configuration snippet in settings.xml of maven repository. Make sure that username and password exist in your $CATALINA_HOME/conf/tomcat-users.xml file.</p>
-<p>[code]
-&lt;server&gt;
-    &lt;id&gt;TomcatServer&lt;/id&gt;
-    &lt;username&gt;admin&lt;/username&gt;
-    &lt;password&gt;password&lt;/password&gt;
-&lt;/server&gt;
-[/code]</p>
-<p><strong>Step-2:</strong> Create beans.xml configuration file which is basically used to define service endpoint and few configuration file i.e. cxf.xml, cxf-extension-soap.xml and cxf-servlet.xml. Also add web.xml in WEB-INF directory as we do in normal web project to define CXFServlet and its mapping.</p>
-<p><strong>beans.xml</strong></p>
-<p>[code]
-&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
-    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-    xmlns:jaxws=&quot;http://cxf.apache.org/jaxws&quot;
-    xsi:schemaLocation=&quot;
-http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd&quot;&gt;
-    &lt;import resource=&quot;classpath:META-INF/cxf/cxf.xml&quot; /&gt;
-    &lt;import resource=&quot;classpath:META-INF/cxf/cxf-extension-soap.xml&quot; /&gt;
-    &lt;import resource=&quot;classpath:META-INF/cxf/cxf-servlet.xml&quot; /&gt;
-    &lt;jaxws:endpoint id=&quot;sampleService&quot;
-      implementor=&quot;com.test.SampleCXFService&quot;
-      address=&quot;/sampleService&quot; /&gt;
-&lt;/beans&gt;
-[/code]</p>
-<p><strong>
-web.xml</strong></p>
-<p>&nbsp;</p>
-<p>[code]
-&lt;web-app&gt;
-    &lt;context-param&gt;
-        &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
-        &lt;param-value&gt;WEB-INF/beans.xml&lt;/param-value&gt;</p>
+My last assignment required me to expose soap based web service. While exploring I came to know that there are many types of web services, for example JBossWS, GlassFish Metro, Apache CXF, Axis1, Axis2 and likewise. All of them are widely used and were also promising to fulfill most of my requirements. Since I had to deploy my web service on tomcat web container, I shortlisted Axis2 and Apache CXF for comparison. While working on POC for their comparison, factors mentioned below helped me to choose the appropriate.
+
+**Factors in favor of CXF**
+
+  1. I do not have to download any soap engine as we do when we use Axis2.
+  2. Deployment of axis2 is not as easy as CXF because there is no well known plugin available for axis2 which can directly deploy aar file on soap engine.
+  3. CXF provides nice and simple integration with service component architecture(SCA) container like Tuscany.
+  4. CXF also gives web service standards support, Frontend programming APIs support, Tools support(like xsd to wsdl, wsdl validator, wsdl to soap, wsdl to xml, wsdl to javascript, wsdl to java, java to web service etc.) and RESTful services support in very simple fashion.
+  5. The last but not least is that CXF provides tools to generate java client as well as JavaScript client.
+
+Now lets have a glance on the steps which I followed during CXF and Axis2 POCs.
+
+**Axis2 POC** Steps followed during POC that describes how to get started with Axis2:-
+
+**Step-1:** Download Axis2, which is required as soap engine to process soap based request. **Step-2:** Create a maven based web project with services. Service class and pom configurations are given below.
+
+**service class:**
+
+[code] public class StringWebService { public String getMessage(String s) { return s; } } [/code]
+
+**pom.xml**
+
+[code] <dependencies> <!--Axis2 Jars --> <dependency> <groupId>org.apache.axis2</groupId> <artifactId>axis2</artifactId> <version>1.4</version> </dependency> </dependencies> <build> <plugins> <plugin> <groupId>org.apache.axis2</groupId> <artifactId>axis2-aar-maven-plugin</artifactId> <version>1.4.1</version> <configuration> <aarName>ws_axis2</aarName> </configuration> </plugin> </plugins> </build> [/code]
+
+You can use other dependencies as per your requirement. I have used axis2-aar-maven-plugin to build Apache archive (aar) file, to be deployed on soap engine.
+
+**Step-3:** Create a services.xml file to expose service name and its operations in src/main/resources/META-INF directory. Also add web.xml in WEB-INF directory as we do in normal web project to define AxisServlet and its mapping.
+
+**services.xml**
+
+[code] <service name="WebService"> <parameter name="ServiceClass" locked="false">com.test.ws.StringWebService</parameter> <operation name="getMessage"> <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/> </operation> </service> [/code]
+
+**web.xml**
+
+[code] <web-app> <display-name>Apache-Axis2</display-name> <servlet> <servlet-name>AxisServlet</servlet-name> <display-name>Apache-Axis Servlet</display-name> <servlet-class>org.apache.axis2.transport.http.AxisServlet</servlet-class> <load-on-startup>1</load-on-startup> </servlet> <servlet-mapping> <servlet-name>AxisServlet</servlet-name> <url-pattern>/servlet/AxisServlet</url-pattern> </servlet-mapping> <servlet-mapping> <servlet-name>AxisServlet</servlet-name> <url-pattern>/services/*</url-pattern> </servlet-mapping> </web-app> [/code]
+
+**Step-4:** Execute below maven command to build web service. **mvn clean install axis2-aar:aar** (axis2-aar:aar basically generates the .aar file)
+
+**Step-5:** The final step is to deploy .aar file in $CATALINA_HOME/webapps/axis2/WEB-INF/services directory. Now our web service is ready to use. After deployment you can access wsdl by hitting this url:- http://localhost:8080/axis2/services/WebService?wsdl
+
+**CXF POC** Steps followed during POC which describes how to get started with CXF:-
+
+**Step-1:** Create maven based web project with services
+
+**service class:**
+
+[code] @WebService public class SampleCXFService { public String getMessage(String s) { return s; } }
+
+[/code]
+
+**pom.xml**
+
+ 
+
+[code] <build> <plugins> <plugin> <!-- Plugin for compiling Java code --> <artifactId>maven-compiler-plugin</artifactId> <configuration> <source>1.5</source> <target>1.5</target> </configuration> </plugin> <plugin> <artifactId>maven-war-plugin</artifactId> <version>2.1.1</version> <configuration> <warName>ws_cxf</warName> </configuration> </plugin> <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>tomcat-maven-plugin</artifactId> <configuration> <url>http://127.0.0.1:8080/manager</url> <server>TomcatServer</server> <path>/ws_cxf</path> <warFile>target/ws_cxf.war</warFile> </configuration> </plugin> </plugins> </build> <dependencies> <dependency> <groupId>org.apache.cxf</groupId> <artifactId>cxf-rt-frontend-jaxws</artifactId> <version>2.2.3</version> </dependency> <dependency> <groupId>org.apache.cxf</groupId> <artifactId>cxf-rt-transports-http</artifactId> <version>2.2.3</version> </dependency> </dependencies> [/code]
+
+You can use other dependencies as per your requirement and to use tomcat-maven-plugin effectively you will have to add below configuration snippet in settings.xml of maven repository. Make sure that username and password exist in your $CATALINA_HOME/conf/tomcat-users.xml file.
+
+[code] <server> <id>TomcatServer</id> <username>admin</username> <password>password</password> </server> [/code]
+
+**Step-2:** Create beans.xml configuration file which is basically used to define service endpoint and few configuration file i.e. cxf.xml, cxf-extension-soap.xml and cxf-servlet.xml. Also add web.xml in WEB-INF directory as we do in normal web project to define CXFServlet and its mapping.
+
+**beans.xml**
+
+[code] <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd"> <import resource="classpath:META-INF/cxf/cxf.xml" /> <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" /> <import resource="classpath:META-INF/cxf/cxf-servlet.xml" /> <jaxws:endpoint id="sampleService" implementor="com.test.SampleCXFService" address="/sampleService" /> </beans> [/code]
+
+** web.xml**
+
+ 
+
+[code] <web-app> <context-param> <param-name>contextConfigLocation</param-name> <param-value>WEB-INF/beans.xml</param-value>
 
 ## Comments
 

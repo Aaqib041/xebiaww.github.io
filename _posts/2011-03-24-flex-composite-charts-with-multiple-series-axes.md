@@ -11,77 +11,71 @@ comment_status: open
 
 # Flex: Composite Charts with Multiple Series & Axes
 
-<p>Recently in my project, I came across a requirement to introduce Flex Charting components in the application as a means of <strong>Data Visualization</strong>. The application deals with Business Analysis of tons of raw data in tabular format with various categories &amp; sub-categories, alphabetical &amp; numeric data. That’s why for an end-user Data Visualization is a must feature.</p>
-<p>Flex provides a wide range of charting controls with varied types &amp; configurable properties. Flex supports the most common types of two-dimensional charts (such as bar, column, and pie charts) and gives you a great deal of control over the appearance of charts.</p>
-<p>Creating Simple Charts turned out to be an easy task with the help of <strong><a href="http://help.adobe.com/en_US/flex/using/WS2db454920e96a9e51e63e3d11c0bf69084-7bdf.html" target="_blank">Adobe Help Reference</a></strong> and <strong><a href="http://blog.flexexamples.com/category/charting/" target="_blank">Flex Blog examples</a></strong>, but creating composite charts was not that easy as it appeared to me. So in this blog, I will elaborate on how to create composite charts and will showcase few examples on creating composite charts using multiple chart series and multiple axes.</p>
-<!--more-->
+Recently in my project, I came across a requirement to introduce Flex Charting components in the application as a means of **Data Visualization**. The application deals with Business Analysis of tons of raw data in tabular format with various categories & sub-categories, alphabetical & numeric data. That’s why for an end-user Data Visualization is a must feature.
 
-<p>Creating <strong>Composite chart</strong> accounts for an important consideration that one should keep in mind:
-<ul>
-    <li>Configuring specific chart type with its specific properties &amp; behavior and then clubbing each of them in a composite way such that it suits for each chart type or series in a perfect manner.</li>
-</ul>
-Ok, let’s start exploring this concept with few examples:
-<a name="compositeChartEg1"></a>
-<strong>Example 1 - Composite Chart (Column &amp; Line) with multiple column series</strong></p>
-<p>Let’s consider a problem statement:</p>
-<p>As a sales manager, I want to visualize the Data for the Sales (Bottle &amp; Canned) of few types of Soft Drink (Coke, Pepsi &amp; Sprite) in a City (Delhi) in the form of a Column Chart and a separate Line Chart depicting the Total Sales.</p>
-<p>From the above mentioned statement we could easily make out some basic facts that ‘product’ as soft drink  will serve as the <strong>horizontal axis</strong>, ‘sales’ will serve as the <strong>vertical axis</strong>. Chart will consist of two <strong>column series</strong> (one for ‘bottled sales’ &amp; another for ‘canned sales’) and one<strong> line series</strong> for ‘total sales’.</p>
-<p>The chart may appear like this:
-<div style="width: 100%; align: center;"><img class="aligncenter" title="Single ColumnSet" src="http://xebee.xebia.in/wp-content/uploads/2011/03/SingleColumnSet.jpg" alt="" width="388" height="296" /></div>
-Ok, I think the problem is quite straightforward and the basic fact is to make a <strong>Stacked</strong> Column Chart with two column series and one line Series. So, following is a common approach &amp; unluckily a <strong>common mistake</strong> that we all may commit ..</p>
-<p>[sourcecode language="java"]
-...
-[Bindable]
-private var delhi:ArrayCollection = new ArrayCollection([
-       {productName:&quot;Coke&quot;,bottledSales:200,cannedSales:500,total:700},
-       {productName:&quot;Pepsi&quot;,bottledSales:400,cannedSales:700,total:1100},
-       {productName:&quot;Sprite&quot;,bottledSales:300,cannedSales:600,total:900}
-]);
-...
-&lt;mx:ColumnChart id=&quot;multipleAxisColumn&quot; showDataTips=&quot;true&quot; dataProvider=&quot;{delhi}&quot;
-       type=&quot;stacked&quot;&gt;
-       &lt;mx:horizontalAxis&gt;
-             &lt;mx:CategoryAxis categoryField=&quot;productName&quot; title=&quot;Product&quot;/&gt;
-       &lt;/mx:horizontalAxis&gt;
-       &lt;mx:verticalAxis&gt;
-         &lt;mx:LinearAxis id=&quot;series1Axis&quot; title=&quot;Sales&quot;/&gt;
-       &lt;/mx:verticalAxis&gt;
-       &lt;mx:series&gt;
-             &lt;mx:ColumnSeries yField=&quot;bottledSales&quot; displayName=&quot;Bottled Sales&quot; /&gt;
-             &lt;mx:ColumnSeries yField=&quot;cannedSales&quot; displayName=&quot;Canned Sales&quot; /&gt;
-         &lt;mx:LineSeries yField=&quot;total&quot; displayName=&quot;Total Sales&quot;/&gt;
-       &lt;/mx:series&gt;
-&lt;/mx:ColumnChart&gt;
-[/sourcecode]</p>
-<p>Oops….an exception occurs when we try to run the application</p>
-<p><span style="color: #ff0000;">ReferenceError: Error #1056: Cannot create property offset on mx.charts.series.LineSeries.
-mx.charts::ColumnChart/applySeriesSet()
-[E:\dev\hero_private\frameworks\projects\datavisualization\src\mx\charts\ColumnChart.as:530]
-mx.charts.chartClasses::CartesianChart/http://www.adobe.com/2006/flex/mx/internal::updateSeries()
-[E:\dev\hero_private\frameworks\projects\datavisualization\src\mx\charts\chartClasses\CartesianChart.as:1042]…</span></p>
-<p>As you can see when we try to run the above code, it gives a runtime error implying that the Chart Type ‘Stacked’ cannot be applied to Line Series. So, now the question is how to apply the stacked type to the column series separately, since there is <strong>no property named ‘Type’ in a Column Series</strong>??</p>
-<p>Answer is to exploit the concept of <strong>ColumnSet</strong>. This is what Flex Charting API has to say about Column Set –</p>
-<p>“<em><strong>ColumnSet </strong></em><em>is a grouping set that can be used to stack or cluster column series in any arbitrary chart. A ColumnSet encapsulates the same grouping behavior used in a ColumnChart, but can be used to assemble custom charts based on CartesianChart. ColumnSets can be used to cluster any chart element type that implements the <strong>IColumn interface</strong>. It can stack any chart element type that implements the IColumn and IStackable interfaces. Since <strong>ColumnSet itself implements the IColumn interface</strong>, you can use ColumnSets to cluster other ColumnSets to build more advanced custom charts.”</em></p>
-<p>Summarizing the above statement, we can group the two column series in a column set and in this way we can apply same properties that a Column Chart persists like Chart Type which in our case is ‘stacked’. Similarly in Bar Charts, there is a concept of <strong>BarSet</strong>.
-<div style="width: 100%;"><img class="aligncenter" title="ColumnSet" src="http://xebee.xebia.in/wp-content/uploads/2011/03/ColumnSet-300x253.jpg" alt="Exhibiting Column Set" width="300" height="253" /></div>
-[sourcecode language="java"]
-&lt;mx:series&gt;
-    &lt;mx:ColumnSet type=&quot;stacked&quot;&gt;
-       &lt;mx:ColumnSeries yField=&quot;bottledSales&quot; displayName=&quot;Bottled Sales&quot; /&gt;
-       &lt;mx:ColumnSeries yField=&quot;cannedSales&quot; displayName=&quot;Canned Sales&quot; /&gt;
-    &lt;/mx:ColumnSet&gt;
-    &lt;mx:LineSeries yField=&quot;total&quot; displayName=&quot;Total Sales&quot;/&gt;
-&lt;/mx:series&gt;
-[/sourcecode]</p>
-<p>The only change observed in the code is that now the two column series are wrapped into a column set and the <strong>type = “stacked”</strong> property is removed from the level of Column Chart &amp; is added to the Column Set, instead.</p>
-<p>Now if we run our modified code, it runs successfully showing the desired results.</p>
-<p>[kml_flashembed publishmethod="dynamic" fversion="10.1.0" useexpressinstall="true" movie="http://xebee.xebia.in/wp-content/uploads/2011/03/SingleColumnSet.swf" width="550" height="400" targetclass="flashmovie"]</p>
-<p><a href="http://adobe.com/go/getflashplayer"><img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" /></a></p>
-<p>[/kml_flashembed]</p>
-<p><a href="http://xebee.xebia.in/wp-content/uploads/2011/03/SingleColumnSet.zip" target="_self">Download Source Code</a></p>
-<p><strong>Example 2 – Composite Chart (Column &amp; Line) with multiple axes</strong></p>
-<p><strong> </strong></p>
-<p>Using the same problem as stated above, idea is to create the above mentioned composite chart with the Line Series now representing a separate &amp; distinct measure named ‘<strong>No. of Sales Persons Involved</strong>’ with a <strong>separate vertical axis</strong> for the same.</p>
+Flex provides a wide range of charting controls with varied types & configurable properties. Flex supports the most common types of two-dimensional charts (such as bar, column, and pie charts) and gives you a great deal of control over the appearance of charts.
+
+Creating Simple Charts turned out to be an easy task with the help of **[Adobe Help Reference][1]** and **[Flex Blog examples][2]**, but creating composite charts was not that easy as it appeared to me. So in this blog, I will elaborate on how to create composite charts and will showcase few examples on creating composite charts using multiple chart series and multiple axes.
+
+Creating **Composite chart** accounts for an important consideration that one should keep in mind: 
+
+  * Configuring specific chart type with its specific properties & behavior and then clubbing each of them in a composite way such that it suits for each chart type or series in a perfect manner.
+Ok, let’s start exploring this concept with few examples:  **Example 1 - Composite Chart (Column & Line) with multiple column series**
+
+Let’s consider a problem statement:
+
+As a sales manager, I want to visualize the Data for the Sales (Bottle & Canned) of few types of Soft Drink (Coke, Pepsi & Sprite) in a City (Delhi) in the form of a Column Chart and a separate Line Chart depicting the Total Sales.
+
+From the above mentioned statement we could easily make out some basic facts that ‘product’ as soft drink  will serve as the **horizontal axis**, ‘sales’ will serve as the **vertical axis**. Chart will consist of two **column series** (one for ‘bottled sales’ & another for ‘canned sales’) and one** line series** for ‘total sales’.
+
+The chart may appear like this: 
+
+![][3]
+
+Ok, I think the problem is quite straightforward and the basic fact is to make a **Stacked** Column Chart with two column series and one line Series. So, following is a common approach & unluckily a **common mistake** that we all may commit ..
+
+[sourcecode language="java"] ... [Bindable] private var delhi:ArrayCollection = new ArrayCollection([ {productName:"Coke",bottledSales:200,cannedSales:500,total:700}, {productName:"Pepsi",bottledSales:400,cannedSales:700,total:1100}, {productName:"Sprite",bottledSales:300,cannedSales:600,total:900} ]); ... <mx:ColumnChart id="multipleAxisColumn" showDataTips="true" dataProvider="{delhi}" type="stacked"> <mx:horizontalAxis> <mx:CategoryAxis categoryField="productName" title="Product"/> </mx:horizontalAxis> <mx:verticalAxis> <mx:LinearAxis id="series1Axis" title="Sales"/> </mx:verticalAxis> <mx:series> <mx:ColumnSeries yField="bottledSales" displayName="Bottled Sales" /> <mx:ColumnSeries yField="cannedSales" displayName="Canned Sales" /> <mx:LineSeries yField="total" displayName="Total Sales"/> </mx:series> </mx:ColumnChart> [/sourcecode]
+
+Oops….an exception occurs when we try to run the application
+
+ReferenceError: Error #1056: Cannot create property offset on mx.charts.series.LineSeries. mx.charts::ColumnChart/applySeriesSet() [E:\dev\hero_private\frameworks\projects\datavisualization\src\mx\charts\ColumnChart.as:530] mx.charts.chartClasses::CartesianChart/http://www.adobe.com/2006/flex/mx/internal::updateSeries() [E:\dev\hero_private\frameworks\projects\datavisualization\src\mx\charts\chartClasses\CartesianChart.as:1042]…
+
+As you can see when we try to run the above code, it gives a runtime error implying that the Chart Type ‘Stacked’ cannot be applied to Line Series. So, now the question is how to apply the stacked type to the column series separately, since there is **no property named ‘Type’ in a Column Series**??
+
+Answer is to exploit the concept of **ColumnSet**. This is what Flex Charting API has to say about Column Set –
+
+“_**ColumnSet **__is a grouping set that can be used to stack or cluster column series in any arbitrary chart. A ColumnSet encapsulates the same grouping behavior used in a ColumnChart, but can be used to assemble custom charts based on CartesianChart. ColumnSets can be used to cluster any chart element type that implements the **IColumn interface**. It can stack any chart element type that implements the IColumn and IStackable interfaces. Since **ColumnSet itself implements the IColumn interface**, you can use ColumnSets to cluster other ColumnSets to build more advanced custom charts.”_
+
+Summarizing the above statement, we can group the two column series in a column set and in this way we can apply same properties that a Column Chart persists like Chart Type which in our case is ‘stacked’. Similarly in Bar Charts, there is a concept of **BarSet**. 
+
+![Exhibiting Column Set][4]
+
+[sourcecode language="java"] <mx:series> <mx:ColumnSet type="stacked"> <mx:ColumnSeries yField="bottledSales" displayName="Bottled Sales" /> <mx:ColumnSeries yField="cannedSales" displayName="Canned Sales" /> </mx:ColumnSet> <mx:LineSeries yField="total" displayName="Total Sales"/> </mx:series> [/sourcecode]
+
+The only change observed in the code is that now the two column series are wrapped into a column set and the **type = “stacked”** property is removed from the level of Column Chart & is added to the Column Set, instead.
+
+Now if we run our modified code, it runs successfully showing the desired results.
+
+[kml_flashembed publishmethod="dynamic" fversion="10.1.0" useexpressinstall="true" movie="http://xebee.xebia.in/wp-content/uploads/2011/03/SingleColumnSet.swf" width="550" height="400" targetclass="flashmovie"]
+
+![Get Adobe Flash player][5]
+
+[/kml_flashembed]
+
+[Download Source Code][6]
+
+**Example 2 – Composite Chart (Column & Line) with multiple axes**
+
+** **
+
+Using the same problem as stated above, idea is to create the above mentioned composite chart with the Line Series now representing a separate & distinct measure named ‘**No. of Sales Persons Involved**’ with a **separate vertical axis** for the same.
+
+   [1]: http://help.adobe.com/en_US/flex/using/WS2db454920e96a9e51e63e3d11c0bf69084-7bdf.html
+   [2]: http://blog.flexexamples.com/category/charting/
+   [3]: http://xebee.xebia.in/wp-content/uploads/2011/03/SingleColumnSet.jpg (Single ColumnSet)
+   [4]: http://xebee.xebia.in/wp-content/uploads/2011/03/ColumnSet-300x253.jpg (ColumnSet)
+   [5]: http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif
+   [6]: http://xebee.xebia.in/wp-content/uploads/2011/03/SingleColumnSet.zip
 
 ## Comments
 

@@ -11,67 +11,63 @@ comment_status: open
 
 # Software Development Practices that helped me become better
 
-<p align="JUSTIFY"><span style="color: #000080;" color="#000080"><span style="text-decoration: underline;"><a href="http://xebiaindia.com/" target="_blank">Xebia India</a></span></span> takes great pride in paying high amount of attention to writing QUALITY code. “Doing it Right” is almost a religion here. For us the buck does not stop at showing a demo of working software to the client, but also ensuring the underlying code is written in the best possible manner using best known software development practices.</p>
+[Xebia India][1] takes great pride in paying high amount of attention to writing QUALITY code. “Doing it Right” is almost a religion here. For us the buck does not stop at showing a demo of working software to the client, but also ensuring the underlying code is written in the best possible manner using best known software development practices.
 
-<p align="JUSTIFY">To achieve this, it needs a different kind of a culture in the organization that encourages people to go after Quality. This is a lot more difficult than it sounds. Most developers at Xebia will agree that we have a slightly different approach to work (Some call it our culture). A lot of developers joining Xebia India experience these differences first hand &amp; in due course of time, unknowingly they end up picking up these practices themselves. In this article, I list below some changes &amp; practices that I have picked up in the last 2 odd years of my relatively short stay here that helped me be a better programmer.</p>
+To achieve this, it needs a different kind of a culture in the organization that encourages people to go after Quality. This is a lot more difficult than it sounds. Most developers at Xebia will agree that we have a slightly different approach to work (Some call it our culture). A lot of developers joining Xebia India experience these differences first hand & in due course of time, unknowingly they end up picking up these practices themselves. In this article, I list below some changes & practices that I have picked up in the last 2 odd years of my relatively short stay here that helped me be a better programmer.
 
-<p align="JUSTIFY"><!--more--></p>
+**Time Vs Quality - Quality should win**
 
-<p align="JUSTIFY"><strong>Time Vs Quality - Quality should win</strong></p>
+Here's what I heard from a programmer at a Beer Session once : “Every time I pickup a programming task, a clock starts ticking in my head. It stops (or resets) only after I declare completion of this task”. IMHO this clock is one of the biggest enemy of Quality. The trouble is that if this clock continues ticking for more time then you planned (working on the task), then it gives a very uncomfortable feeling to the programmer; which leads to pressure to complete the task quickly. This usually happens by cutting corners therefore compromising QUALITY.
 
-<p align="JUSTIFY">Here's what I heard from a programmer at a Beer Session once : “Every time I pickup a programming task, a clock starts ticking in my head. It stops (or resets) only after I declare completion of this task”. IMHO this clock is one of the biggest enemy of Quality. The trouble is that if this clock continues ticking for more time then you planned (working on the task), then it gives a very uncomfortable feeling to the programmer; which leads to pressure to complete the task quickly. This usually happens by cutting corners therefore compromising QUALITY.</p>
+For me, I had this clock very loud in my head. I always wanted to declare (task) completion faster than anybody else can imagine (_I guess this is a result of my competitive schooling_). Clearly for me, speed was more important than quality earlier. I have tried to change that in recent months. I wouldn't say I have reversed the situation, but now have a different meaning to the word completion – For me now DONE means DONE. If there is an obvious improvement that can be made, then the task is NOT DONE..
 
-<p align="JUSTIFY">For me, I had this clock very loud in my head. I always wanted to declare (task) completion faster than anybody else can imagine (<i>I guess this is a result of my competitive schooling</i>).  Clearly for me, speed was more important than quality earlier. I have tried to change that in recent months. I wouldn't say I have reversed the situation, but now have a different meaning to the word completion – For me now DONE means DONE. If there is an obvious improvement that can be made, then the task is NOT DONE..</p>
+ 
 
-<p align="JUSTIFY">&nbsp;</p>
+### Test the hell out of your code
 
-<h3>Test the hell out of your code</h3>
+When I was younger, I used to be more confident about new code that I write than I am now. I think the confidence came simply because I hadn't seen enough failures of my code. With Time (and with discovered bugs), I became more careful & started to write more tests around my code – giving me a better sense of security. While I do see people agree with the above, but a lot of developers treat Tests as second class citizens of development practices. Not enough thought on what exactly needs to be tested is given – without that it is highly likely that tests will not be fully beneficial.
 
-<p align="JUSTIFY">When I was younger, I used to be more confident about new code that I write than I am now. I think the confidence came simply because I hadn't seen enough failures of my code. With Time (and with discovered bugs), I became more careful  &amp; started to write more tests around my code – giving me a better sense of security. While I do see people agree with the above, but a lot of developers treat Tests as second class citizens of development practices. Not enough thought on what exactly needs to be tested is given – without that it is highly likely that tests will not be fully beneficial.</p>
+What works for me: a) Every time, I discover a problem or a bug in my code – I almost always go back and think why didn't my tests detect this problem earlier. Improve the tests so that the leak does not go undetected again. b) I spend some time thinking about what exactly needs to tested in a class/module. This sounds easier than it is, but with time & practice I think my tests are getting better at finding problems.
 
-<p align="JUSTIFY"><span style="text-decoration: underline;">What works for me:</span> a) Every time, I discover a problem or a bug in my code – I almost always go back and think why didn't my tests detect this problem earlier. Improve the tests so that the leak does not go undetected again. b) I spend some time thinking about what exactly needs to tested in a class/module. This sounds easier than it is, but with time &amp; practice I think my tests are getting better at finding problems.</p>
+ 
 
-<p align="JUSTIFY">&nbsp;</p>
+### Bug Fixing – Fix the root cause & avoid applying a patch
 
-<h3><span style="font-family: 'Liberation Sans', sans-serif;" face="Liberation Sans, sans-serif">Bug Fixing – Fix the root cause &amp; avoid applying a patch</span></h3>
+I have been in many situations when the first apparent fix turns out to be a patch on the surface of a bigger problem. The root cause can go undetected easily if nobody questions the fix in totality.
 
-<p align="JUSTIFY">I have been in many situations when the first apparent fix turns out to be a patch on the surface of a bigger problem. The root cause can go undetected easily if nobody questions the fix in totality.</p>
+What works for me: a) Questions like “If this was the problem, then why didn't it appear in situation X?” go a long way in improving the probability of discovering the root cause. b) Upon finding the possible cause, talking to the author of the code may shed more light about the nature of the problem and sometimes gives a different perspective of the problem. c) Good testers already know this – I try & play more with the problem (reproduce it under different situations); not only the understanding of the problem improves, but sometimes the solution itself becomes really apparent.
 
-<p align="JUSTIFY"><span style="text-decoration: underline;">What works for me</span>: a) Questions like “If this was the problem, then why didn't it appear in situation X?” go a long way in improving the probability of discovering the root cause. b) Upon finding the possible cause, talking to the author of the code may shed more light about the nature of the problem and sometimes gives a different perspective of the problem. c) Good testers already know this – I try &amp; play more with the problem (reproduce it under different situations); not only the understanding of the problem improves, but sometimes the solution itself becomes really apparent.</p>
+ 
 
-<p align="JUSTIFY">&nbsp;</p>
+### Mistakes are not bad 
 
-<h3 align="LEFT" lang="en-IN"><span style="color: #000000;" color="#000000">Mistakes are not bad </span></h3>
+Mistakes are not bad; but hiding them clearly is. On being pointed out for a possible mistake, my head used to go in the defensive mode and it used to try to come up with either problems in the proposed alternate solution or defend the problem in my code. After having grown some white hair, I have now realized there is no need to do that. It becomes a lot easier if I accept that I goofed up and improve the situation from where it is. That way there is more sense of achievement for everybody involved & the overall environment is geared towards problem solving rather than blaming.
 
-<p align="JUSTIFY">Mistakes are not bad; but hiding them clearly is. On being pointed out for a possible mistake, my head used to go in the defensive mode and it used to try to come up with either problems in the proposed alternate solution or defend the problem in my code. After having grown some white hair, I have now realized there is no need to do that. It becomes a lot easier if I accept that I goofed up and improve the situation from where it is. That way there is more sense of achievement for everybody involved &amp; the overall environment is geared towards problem solving rather than blaming.</p>
+What works for me: a) While there is no easy way to avoid mistakes, I think more collaboration within a team can help. If I'm working on an important piece, I try and get opinion of my team mates on my approach before I start coding. b) If somebody presents an alternate way of solving a problem, I weigh pros & cons of both approaches honestly – without being biased about the code that has already been written or about the author of the code. c) Avoid being emotionally attached to **your** code – there could be better ways to do what your code does.
 
-<p align="JUSTIFY"><span style="text-decoration: underline;">What works for me</span>: a) While there is no easy way to avoid mistakes, I think more collaboration within a team can  help. If I'm working on an important piece, I try and get opinion of my team mates on my approach before I start coding. b) If somebody presents an alternate way of solving a problem, I weigh pros &amp; cons of both approaches honestly – without being biased about the code that has already been written or about the author of the code. c) Avoid being emotionally attached to <b>your</b> code – there could be better ways to do what your code does.</p>
+ 
 
-<p align="JUSTIFY">&nbsp;</p>
+Some other practices that I have picked up & I think are helping me but do not need much explanation are listed below.
 
-<p align="JUSTIFY">Some other practices that I have picked up &amp; I think are helping me but do not need much explanation are listed below.</p>
+### Invest Time in upgrading yourself
 
-<h3 lang="en-IN" align="LEFT">Invest Time in upgrading yourself</h3>
+There is always something new to learn - A programming language, a new framework, a new tool etc. Have some way of adding items to your “To learn/Study” list. For me knowledge sharing sessions at Xebia (XKE) do just that.
 
-<p align="JUSTIFY">There is always something new to learn - A programming language, a new framework, a new tool etc. Have some way of adding items to your “To learn/Study” list. For me knowledge sharing sessions at Xebia (XKE) do just that.</p>
+### 
 
-<h3 align="LEFT" lang="en-IN"></h3>
+### Seek company of better/Senior Programmers
 
-<div>
-<h3 align="LEFT" lang="en-IN">Seek company of better/Senior Programmers</h3>
-</div>
+Things like Pair Programming with somebody senior is a very enriching experience. It provides an opportunity to learn & grow. I try & grab opportunities like these whenever they come my way.
 
-<div>
-<p align="JUSTIFY">Things like Pair Programming with somebody senior is a very enriching experience. It provides an opportunity to learn &amp; grow. I try &amp; grab opportunities like these whenever they come my way.</p>
-<p align="JUSTIFY"><span style="font-size: 15px; font-weight: bold;">Keep company of young software developers</span></p>
+Keep company of young software developers
 
-</div>
+##### Young software developers challenge practices & don't easily accept them unless proven. This forces me to think about practices that I have been following myself & re-evaluate them again. They can keep me on my toes all the time - That drives the need to improve myself. Besides having young people in the team can reflect positively in the burn-down chart :)
 
-<h5><span style="font-size: 13px; font-weight: normal;">Young software developers challenge practices &amp; don't easily accept them unless proven. This  forces me to think about practices that I have been following myself &amp; re-evaluate them again. They can keep me on my toes all the time - That drives the need to improve myself. Besides having young people in the team can reflect positively in the burn-down chart :)</span></h5>
+Hide Nothing & Collaborate more
 
-<div><span style="font-size: 15px; font-weight: bold;">Hide Nothing &amp; Collaborate more</span></div>
+Be Transparent & Hide nothing. This sounds easier than it actually is. However if you are really concerned about quality of your work, then quick feedback (from tests & peer coders) is the only way to find problems early. Seeking peer reviews for an important piece of code is a practice that has helped me a lot. I'm usually asking a lot of questions if there is some ambiguity. If there's anything that I don't know – saying that upfront (even to the client) and asking for help is much better than faking knowledge.
 
-<p align="JUSTIFY">Be Transparent &amp; Hide nothing. This sounds easier than it actually is. However if you are really concerned about quality of your work, then quick feedback (from tests &amp; peer coders) is the only way to find problems early. Seeking peer reviews for an important piece of code is a practice that has helped me a lot. I'm usually asking a lot of questions if there is some ambiguity. If there's anything that I don't know – saying that upfront (even to the client) and asking for help is much better than faking knowledge.</p>
+   [1]: http://xebiaindia.com/
 
 ## Comments
 

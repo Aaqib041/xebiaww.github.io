@@ -11,123 +11,104 @@ comment_status: open
 
 # Speech to Text Conversion in Java
 
-<p>This blog aims at creating a project for Speech-to-text conversion (Speech Recognition) on <strong>JAVA</strong> by using <strong>Eclipse IDE</strong>, <strong>Maven</strong> and a speech recognition system written entirely in Java language called <strong>Sphinx-4</strong>.</p>
-<p>Steps for Speech-to-text converter project setup:
-1. Create a simple Maven project.
-2. Add "<strong>http://repository.opencastproject.org/nexus/content/groups/public/</strong>" to your set of repositories in pom.xml
-3. Add Sphinx-4 dependency in pom.xml of your project.<!--more--></p>
-<p>Your pom.xml should look like the following:</p>
-<p>[sourcecode language="xml"]
-&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
-  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</p>
-<p>&lt;groupId&gt;com.xebia&lt;/groupId&gt;
-  &lt;artifactId&gt;speech-to-text-converter&lt;/artifactId&gt;
-  &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
-  &lt;packaging&gt;jar&lt;/packaging&gt;</p>
-<p>&lt;name&gt;speech-to-text-converter&lt;/name&gt;
-  &lt;url&gt;http://maven.apache.org&lt;/url&gt;</p>
-<p>&lt;properties&gt;
-    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
-  &lt;/properties&gt;</p>
-<p>&lt;repositories&gt;
-    &lt;repository&gt;
-        &lt;id&gt;sphinx-repository&lt;/id&gt;
-        &lt;name&gt;Nexus Repository&lt;/name&gt;
-        &lt;url&gt;http://repository.opencastproject.org/nexus/content/groups/public/&lt;/url&gt;
-    &lt;/repository&gt;
-  &lt;/repositories&gt;</p>
-<p>&lt;dependencies&gt;  <br />
-    &lt;dependency&gt;
-      &lt;groupId&gt;cmu.sphinx&lt;/groupId&gt;
-      &lt;artifactId&gt;sphinx4&lt;/artifactId&gt;
-      &lt;version&gt;4.0&lt;/version&gt;
-    &lt;/dependency&gt;
-  &lt;/dependencies&gt;</p>
-<p>&lt;/project&gt;
-[/sourcecode]</p>
-<p>We will first write the java code for the speech recognizer. Create a class and name it "<strong>HelloWorld.java</strong>".
-Code it as:</p>
-<p>[sourcecode language="java"]
-package com.xebia.speech-to-text-converter;</p>
-<p>import java.io.IOException;
-import java.net.URL;</p>
-<p>import edu.cmu.sphinx.frontend.util.Microphone;
-import edu.cmu.sphinx.recognizer.Recognizer;
-import edu.cmu.sphinx.result.Result;
-import edu.cmu.sphinx.util.props.ConfigurationManager;
-import edu.cmu.sphinx.util.props.PropertyException;</p>
-<p>/*<em>
- * A simple HelloWorld demo showing a simple speech application built using Sphinx-4. This application uses the Sphinx-4
- * endpointer, which automatically segments incoming audio into utterances and silences.
- </em>/
-public class HelloWorld {</p>
-<pre><code>public static void main(String[] args) throws IOException, PropertyException, InstantiationException {
-    ConfigurationManager cm;
+This blog aims at creating a project for Speech-to-text conversion (Speech Recognition) on **JAVA** by using **Eclipse IDE**, **Maven** and a speech recognition system written entirely in Java language called **Sphinx-4**.
 
-    if (args.length &amp;gt; 0) {
-        URL url = new URL(args[0]);
-        cm = new ConfigurationManager(url);
-    } else {
-        cm = new ConfigurationManager(HelloWorld.class.getResource(&amp;quot;helloworld.config.xml&amp;quot;));
-    }
+Steps for Speech-to-text converter project setup: 1\. Create a simple Maven project. 2\. Add "**http://repository.opencastproject.org/nexus/content/groups/public/**" to your set of repositories in pom.xml 3\. Add Sphinx-4 dependency in pom.xml of your project.
 
-    Recognizer recognizer = (Recognizer) cm.lookup(&amp;quot;recognizer&amp;quot;);
-    recognizer.allocate();
+Your pom.xml should look like the following:
 
-    // start the microphone or exit if the program if this is not possible
-    Microphone microphone = (Microphone) cm.lookup(&amp;quot;microphone&amp;quot;);
-    if (!microphone.startRecording()) {
-        System.out.println(&amp;quot;Cannot start microphone.&amp;quot;);
-        recognizer.deallocate();
-        System.exit(1);
-    }
+[sourcecode language="xml"] <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"> <modelVersion>4.0.0</modelVersion>
 
-    System.out.println(&amp;quot;Say: (Good morning | Hello) (( Winfred | Evandro | Paul | Philip | Will )&amp;quot;);
+<groupId>com.xebia</groupId> <artifactId>speech-to-text-converter</artifactId> <version>0.0.1-SNAPSHOT</version> <packaging>jar</packaging>
 
-    // loop the recognition until the program exits.
-    while (true) {
-        System.out.println(&amp;quot;Start speaking. Press Ctrl-C to quit.\n&amp;quot;);
+<name>speech-to-text-converter</name> <url>http://maven.apache.org</url>
 
-        Result result = recognizer.recognize();
+<properties> <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> </properties>
 
-        if (result != null) {
-            String resultText = result.getBestFinalResultNoFiller();
-            System.out.println(&amp;quot;You said: &amp;quot; + resultText + '\n');
+<repositories> <repository> <id>sphinx-repository</id> <name>Nexus Repository</name> <url>http://repository.opencastproject.org/nexus/content/groups/public/</url> </repository> </repositories>
+
+<dependencies>   
+<dependency> <groupId>cmu.sphinx</groupId> <artifactId>sphinx4</artifactId> <version>4.0</version> </dependency> </dependencies>
+
+</project> [/sourcecode]
+
+We will first write the java code for the speech recognizer. Create a class and name it "**HelloWorld.java**". Code it as:
+
+[sourcecode language="java"] package com.xebia.speech-to-text-converter;
+
+import java.io.IOException; import java.net.URL;
+
+import edu.cmu.sphinx.frontend.util.Microphone; import edu.cmu.sphinx.recognizer.Recognizer; import edu.cmu.sphinx.result.Result; import edu.cmu.sphinx.util.props.ConfigurationManager; import edu.cmu.sphinx.util.props.PropertyException;
+
+/*_ * A simple HelloWorld demo showing a simple speech application built using Sphinx-4. This application uses the Sphinx-4 * endpointer, which automatically segments incoming audio into utterances and silences. _/ public class HelloWorld {
+    
+    
+    public static void main(String[] args) throws IOException, PropertyException, InstantiationException {
+        ConfigurationManager cm;
+    
+        if (args.length &gt; 0) {
+            URL url = new URL(args[0]);
+            cm = new ConfigurationManager(url);
         } else {
-            System.out.println(&amp;quot;I can't hear what you said.\n&amp;quot;);
+            cm = new ConfigurationManager(HelloWorld.class.getResource(&quot;helloworld.config.xml&quot;));
+        }
+    
+        Recognizer recognizer = (Recognizer) cm.lookup(&quot;recognizer&quot;);
+        recognizer.allocate();
+    
+        // start the microphone or exit if the program if this is not possible
+        Microphone microphone = (Microphone) cm.lookup(&quot;microphone&quot;);
+        if (!microphone.startRecording()) {
+            System.out.println(&quot;Cannot start microphone.&quot;);
+            recognizer.deallocate();
+            System.exit(1);
+        }
+    
+        System.out.println(&quot;Say: (Good morning | Hello) (( Winfred | Evandro | Paul | Philip | Will )&quot;);
+    
+        // loop the recognition until the program exits.
+        while (true) {
+            System.out.println(&quot;Start speaking. Press Ctrl-C to quit.\n&quot;);
+    
+            Result result = recognizer.recognize();
+    
+            if (result != null) {
+                String resultText = result.getBestFinalResultNoFiller();
+                System.out.println(&quot;You said: &quot; + resultText + '\n');
+            } else {
+                System.out.println(&quot;I can't hear what you said.\n&quot;);
+            }
         }
     }
-}
-</code></pre>
-<p>}
-[/sourcecode]</p>
-<p>To set it, up and running, we will write a grammar file for the input expected by the recognizer.</p>
-<p>Name it "<strong>hello.gram</strong>" and place it in the same package as HelloWorld.java file. Grammar file is always saved with <strong>.gram</strong> extension. The name of this file is used in the configuration file.</p>
-<p>The grammar file will take the following form:</p>
-<p>[sourcecode language="java"]</p>
-<h1>JSGF V1.0;</h1>
-<p>/<em><em>
-</em> JSGF Grammar for Hello World example
-</em>/
-grammar hello;</p>
-<p>public &lt;greet&gt; = (Good morning | Hello) &lt;name&gt;;
-&lt;name&gt; = ( Winfred | Evandro | Paul | Philip | Will );
-[/sourcecode]</p>
-<p>According to this grammar, the system can recognize the following if spoken:
-1. Good morning Winfred
-2. Good morning Will
-3. Hello Winfred
-4. Hello Philip
-or anything starting with a &lt;greet&gt; and followed by a &lt;name&gt; from the options available in grammar.</p>
-<p>We also need to write a configuration file for the recognizer to configure various Sphinx-4 components.
-Name this file as "helloworld.config.xml" and place it in the same package as your HelloWorld.java file.
-Remember that the name of this file will be used in code for HelloWorld.java.
-You can find the code for the configuration file here: <a rel="attachment wp-att-7142" href="http://xebee.xebia.in/2010/12/31/speech-to-text-conversion-in-java-2/helloworld-config/">helloworld.config.xml</a>.</p>
-<p>After performing the above steps, you can simply execute HelloWorld.java as Java Application, speak in the microphone any text in the grammar format and you will find your speech converted to text and displayed on the command prompt.</p>
-<p>Sphinx-4 uses a file <strong>cmudict.0.6d</strong> found in <strong>WSJ_8gau_13dCep_16k_40mel_130Hz_6800Hz.jar</strong> at location
-<strong>/edu.cmu.sphinx.model.acoustic.WSJ_8gau_13dCep_16k_40mel_130Hz_6800Hz.Model!/edu/cmu/sphinx/model/acoustic/WSJ_8gau_13dCep_16k_40mel_130Hz_6800Hz/dict/cmudict.0.6d</strong> as its dictionary. This dictionary file contains words along with their pronounciation e.g. WINFRED  W IH N F R IH D will be the entry for the word Winfred in this file. You can also add your set of words in this file in the same format, i.e. word followed by its pronounciation, package it and replace the original WSJ_8gau_13dCep_16k_40mel_130Hz_6800Hz.jar and you are ready to go!</p>
-<p>These newly added words will now be recognized by Sphinx-4, provided, you also change the grammar for these words.</p>
+    
+
+} [/sourcecode]
+
+To set it, up and running, we will write a grammar file for the input expected by the recognizer.
+
+Name it "**hello.gram**" and place it in the same package as HelloWorld.java file. Grammar file is always saved with **.gram** extension. The name of this file is used in the configuration file.
+
+The grammar file will take the following form:
+
+[sourcecode language="java"]
+
+# JSGF V1.0;
+
+/__ _ JSGF Grammar for Hello World example _/ grammar hello;
+
+public <greet> = (Good morning | Hello) <name>; <name> = ( Winfred | Evandro | Paul | Philip | Will ); [/sourcecode]
+
+According to this grammar, the system can recognize the following if spoken: 1\. Good morning Winfred 2\. Good morning Will 3\. Hello Winfred 4\. Hello Philip or anything starting with a <greet> and followed by a <name> from the options available in grammar.
+
+We also need to write a configuration file for the recognizer to configure various Sphinx-4 components. Name this file as "helloworld.config.xml" and place it in the same package as your HelloWorld.java file. Remember that the name of this file will be used in code for HelloWorld.java. You can find the code for the configuration file here: [helloworld.config.xml][1].
+
+After performing the above steps, you can simply execute HelloWorld.java as Java Application, speak in the microphone any text in the grammar format and you will find your speech converted to text and displayed on the command prompt.
+
+Sphinx-4 uses a file **cmudict.0.6d** found in **WSJ_8gau_13dCep_16k_40mel_130Hz_6800Hz.jar** at location **/edu.cmu.sphinx.model.acoustic.WSJ_8gau_13dCep_16k_40mel_130Hz_6800Hz.Model!/edu/cmu/sphinx/model/acoustic/WSJ_8gau_13dCep_16k_40mel_130Hz_6800Hz/dict/cmudict.0.6d** as its dictionary. This dictionary file contains words along with their pronounciation e.g. WINFRED W IH N F R IH D will be the entry for the word Winfred in this file. You can also add your set of words in this file in the same format, i.e. word followed by its pronounciation, package it and replace the original WSJ_8gau_13dCep_16k_40mel_130Hz_6800Hz.jar and you are ready to go!
+
+These newly added words will now be recognized by Sphinx-4, provided, you also change the grammar for these words.
+
+   [1]: http://xebee.xebia.in/2010/12/31/speech-to-text-conversion-in-java-2/helloworld-config/
 
 ## Comments
 

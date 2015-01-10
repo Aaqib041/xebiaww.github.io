@@ -11,9 +11,56 @@ comment_status: open
 
 # Android UI development tools
 
-<div><span style="font-family: arial; line-height: normal; font-size: small; "> Today I had a pleasure of attending one of Google's Android Developer Conference by Rajdeep Dua ,Thanks to Rajdeep Dua I came to know some of android tools (by Google as well as third party not integrated with IDE)  available in the market to enhance UI application development.</span></div>
+Today I had a pleasure of attending one of Google's Android Developer Conference by Rajdeep Dua ,Thanks to Rajdeep Dua I came to know some of android tools (by Google as well as third party not integrated with IDE)  available in the market to enhance UI application development.
 
-<p><div><span style="font-family: arial; line-height: normal; font-size: small; "><br /></span></div> <div><span style="font-family: arial; line-height: normal; font-size: small; "> Before we start looking through the list of tool. Please do have a look at the  <a title="UI Guidelines" href="http://developer.android.com/guide/practices/ui_guidelines/index.html" target="_blank">Android UI Guidelines</a>. If you publish your application on the android App market and would like your application to appear in the featured list you will have to meet the UI guidelines are drawn by above link.Hence do follow the UI guidelines while making your android application if you want Android market guys to consider your application in features list.<!--more--></span></div> <div><span style="font-family: arial; line-height: normal; font-size: small; "><br /></span></div> <div><span style="font-family: arial; line-height: normal; font-size: small; ">Okay , So lets start exploring the available tools. If you have just started learning android using eclipse IDE making a nice UI is not easy using the basic design mode.<a title="DroidDraw" href="http://www.droiddraw.org/" target="_blank">DroidDraw</a> is the alternative to making good and fast graphical user interfaces. DroidDraw is available for (Windows , Mac , Linux) .It helps you to easily create the UI and generate the required xml file.If you would like to quick test your UI as how it looks on the android phone without integrating the code with you core application use <a title="AnDroidDraw" href="http://www.droiddraw.org/androiddraw.html" target="_blank">Androiddraw </a>application.</span></div> <div><span style="font-family: arial; line-height: normal; font-size: small; "><br /></span></div> <div><span style="font-size: small;">Well that was droid draw to develop the UI faster. If you have gone through the UI Guidelines they are pretty strict to some extend. I will be difficult to cope up with it all the time.However we have a solution to that also. The next thing we are going to talk about is the<a href="http://code.google.com/p/android-ui-utils/" target="_blank"> Android UI Utils</a> . Android UI utils is the project currently present in google code. We are going to discuss two things Android Asset Studio and UI Prototyping Stencils.</span></div> <div><span style="font-size: x-small;"><span style="font-size: x-small;"><br /></span></span></div> <div><span style="font-size: small; "> <a href=" http://android-ui-utils.googlecode.com/hg/asset-studio/dist/index.html " target="_blank">Android Asset Studio</a> is the Utility developed to help programmers create icons easily. Its a pretty handy tool to create different icons with all the variation like (hdpi , ldpi  ,mdpi) .Using this tool you can generate all kind of icons tab, menu launcher and notification icons.</span></div> <div><span style="font-size: small; "><br /></span></div> <div><span style="font-size: small; ">Next is a UI Prototyping Stencil (<a href="http://pencil.evolus.vn/en-US/Home.aspx" target="_blank">Pencil 1.2</a>) , its currently available as a add on in Firefox as well as a standalone .Its a free open source tool used to create quick GUI prototyping images.Pencil provides the rich set of android UI components avaliable for drag and drop to create a fast UI prototyping.</span></div> <div><span style="font-size: small; "><br /></span></div> <div><span style="font-size: small; ">Apart from the above mentioned tools you should also use draw9patch to avoid inappropriate scaling of the images.<a href="http://developer.android.com/guide/developing/tools/draw9patch.html" target="_blank">Draw9Patch</a> program is avaliable in android-sdk-windows\tools directory .A simple png file can be loaded into the application and after applying appropriate patches can be exported to get a NinePatch graphics.</span></div> <div><span style="font-size: x-small;"><br /></span></div> <div><span style="font-size: small; ">Well that is not all, the last one is a Android NDK (<a href="http://developer.android.com/sdk/ndk/index.html" target="_blank">Native Development Kit</a>). Android NDK is a companion tool that you will have to download if you wish to build performance critical portions of the app in native code. Android NDK helps in embedding the components coded in Native code with Android SDK.</span></div> <div><span style="font-size: small; "><br /></span></div> <div>Well these are the few tools that i came across today that i wasn't aware. Please do leave a comment if you know few more.</div></p>
+  
+
+
+Before we start looking through the list of tool. Please do have a look at the  [Android UI Guidelines][1]. If you publish your application on the android App market and would like your application to appear in the featured list you will have to meet the UI guidelines are drawn by above link.Hence do follow the UI guidelines while making your android application if you want Android market guys to consider your application in features list.
+
+  
+
+
+Okay , So lets start exploring the available tools. If you have just started learning android using eclipse IDE making a nice UI is not easy using the basic design mode.[DroidDraw][2] is the alternative to making good and fast graphical user interfaces. DroidDraw is available for (Windows , Mac , Linux) .It helps you to easily create the UI and generate the required xml file.If you would like to quick test your UI as how it looks on the android phone without integrating the code with you core application use [Androiddraw ][3]application.
+
+  
+
+
+Well that was droid draw to develop the UI faster. If you have gone through the UI Guidelines they are pretty strict to some extend. I will be difficult to cope up with it all the time.However we have a solution to that also. The next thing we are going to talk about is the[ Android UI Utils][4] . Android UI utils is the project currently present in google code. We are going to discuss two things Android Asset Studio and UI Prototyping Stencils.
+
+  
+
+
+[Android Asset Studio][5] is the Utility developed to help programmers create icons easily. Its a pretty handy tool to create different icons with all the variation like (hdpi , ldpi  ,mdpi) .Using this tool you can generate all kind of icons tab, menu launcher and notification icons.
+
+  
+
+
+Next is a UI Prototyping Stencil ([Pencil 1.2][6]) , its currently available as a add on in Firefox as well as a standalone .Its a free open source tool used to create quick GUI prototyping images.Pencil provides the rich set of android UI components avaliable for drag and drop to create a fast UI prototyping.
+
+  
+
+
+Apart from the above mentioned tools you should also use draw9patch to avoid inappropriate scaling of the images.[Draw9Patch][7] program is avaliable in android-sdk-windows\tools directory .A simple png file can be loaded into the application and after applying appropriate patches can be exported to get a NinePatch graphics.
+
+  
+
+
+Well that is not all, the last one is a Android NDK ([Native Development Kit][8]). Android NDK is a companion tool that you will have to download if you wish to build performance critical portions of the app in native code. Android NDK helps in embedding the components coded in Native code with Android SDK.
+
+  
+
+
+Well these are the few tools that i came across today that i wasn't aware. Please do leave a comment if you know few more.
+
+   [1]: http://developer.android.com/guide/practices/ui_guidelines/index.html (UI Guidelines)
+   [2]: http://www.droiddraw.org/ (DroidDraw)
+   [3]: http://www.droiddraw.org/androiddraw.html (AnDroidDraw)
+   [4]: http://code.google.com/p/android-ui-utils/
+   [5]:  http://android-ui-utils.googlecode.com/hg/asset-studio/dist/index.html 
+   [6]: http://pencil.evolus.vn/en-US/Home.aspx
+   [7]: http://developer.android.com/guide/developing/tools/draw9patch.html
+   [8]: http://developer.android.com/sdk/ndk/index.html
 
 ## Comments
 

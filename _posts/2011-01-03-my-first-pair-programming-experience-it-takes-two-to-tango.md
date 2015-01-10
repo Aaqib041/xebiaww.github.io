@@ -11,27 +11,34 @@ comment_status: open
 
 # My First Pair Programming Experience- It takes two to tango!!
 
-<p>Yesterday evening, while travelling back to home from office, going over the day's activities, my wandering mind was struck with a thought- Pair Programming proclaims to help us improve not only as a developer but as a craftsman. I have been practicing Pair Programming now for quite some time at Xebia, has it really lived up to its promise, or all these things just exist in theory. The thought led me to revel on my entire Pairing experience, which I would like to share with everybody.</p>
-<p>Two people sitting together, sharing a screen, brainstorming together-Pairing has always sounded like fun.
-<!--more-->
-In my case I was pairing with Yogesh, whose experience and skill levels are much more than mine. So it was quite natural for me to feel apprehensive about it turning more into a  teacher/student kind of a situation. But all such worries were shed as I began pairing up. I was never criticized or put under pressure to speed up, rather always encouraged to give suggestions, think up alternate ways to implement a functionality. We always had good discussions, with both of us explaining our views and ideas and then taking up the best approach. Such conversations really helped open up my mind and improved my thought process.</p>
-<p>To make pairing even more interesting,  we came up with a game where we gave each other points whenever either of us came up with a solution to a problem and deducted points whenever we missed out on (sometimes very obvious ) issues. It kept us both always on our toes while pairing, always pushing for more points. Well, but just don't ask the final scores though!
-<a rel="attachment wp-att-7387" href="http://xebee.xebia.in/2011/01/03/my-first-pair-programming-experience-it-takes-two-to-tango/pairon/"><img class="alignnone size-medium wp-image-7387" title="pairon" src="http://xebee.xebia.in/wp-content/uploads/2011/01/pairon-300x172.jpg" alt="" width="300" height="172" /></a></p>
-<p>A few things that I particularly liked about the whole experience are:
-<ul>
-    <li><strong>Increased Efficiency</strong>- The  constant inflow of ideas, the added brainpower helped us get over   hurdles quickly and we were able to come up with ways to do     everything even better.</li>
-    <li><strong>Better Concentration</strong>- While    pairing, one gets less distracted by the surroundings and there are     less interruptions, so the focus on programming increases.</li>
-    <li><strong>Cleaner Coding</strong>, as there   are an added pair of eyes scanning the code alongside.</li>
-    <li><strong>Good Learning Curve</strong>-   Pairing really helps in thorough understanding and grasping of concepts as there    are discussions and pondering over problems from a wider    perspective.</li>
-    <li><strong>Frequent Knowledge Sharing- </strong>In     our case whenever there was a new problem to solve, we used to split    up, do our own research, study for some time and then again sit     together to share our findings and join heads to brainstorm on  ideas.</li>
-</ul>
-<strong>The Results:</strong> I have benefited a lot by pairing, improving in not only my coding style but also the entire perspective of looking at a problem. As a navigator, I learned to keep a sharp eye on the code, to think up alternatives to every proposed solution, thinking ahead on a problem from all angles, probable problems that may arise and their solutions. On being the driver for the first time my hands shook and I was a bit nervous with a pair of critical eyes watching my every key press, but once I got over that, it proved to be really beneficial, with me getting to know the faster way of coding(read: learning a lot of eclipse shortcuts) and writing cleaner, more readable code.</p>
-<p>To sum up:</p>
-<p>It takes two to tango,</p>
-<p>two to move,</p>
-<p>together the two can see it through</p>
-<p>overcome the hurdles, make their way,</p>
-<p>as the day fades away.</p>
+Yesterday evening, while travelling back to home from office, going over the day's activities, my wandering mind was struck with a thought- Pair Programming proclaims to help us improve not only as a developer but as a craftsman. I have been practicing Pair Programming now for quite some time at Xebia, has it really lived up to its promise, or all these things just exist in theory. The thought led me to revel on my entire Pairing experience, which I would like to share with everybody.
+
+Two people sitting together, sharing a screen, brainstorming together-Pairing has always sounded like fun.  In my case I was pairing with Yogesh, whose experience and skill levels are much more than mine. So it was quite natural for me to feel apprehensive about it turning more into a teacher/student kind of a situation. But all such worries were shed as I began pairing up. I was never criticized or put under pressure to speed up, rather always encouraged to give suggestions, think up alternate ways to implement a functionality. We always had good discussions, with both of us explaining our views and ideas and then taking up the best approach. Such conversations really helped open up my mind and improved my thought process.
+
+To make pairing even more interesting,  we came up with a game where we gave each other points whenever either of us came up with a solution to a problem and deducted points whenever we missed out on (sometimes very obvious ) issues. It kept us both always on our toes while pairing, always pushing for more points. Well, but just don't ask the final scores though! ![][1]
+
+A few things that I particularly liked about the whole experience are: 
+
+  * **Increased Efficiency**\- The constant inflow of ideas, the added brainpower helped us get over hurdles quickly and we were able to come up with ways to do everything even better.
+  * **Better Concentration**\- While pairing, one gets less distracted by the surroundings and there are less interruptions, so the focus on programming increases.
+  * **Cleaner Coding**, as there are an added pair of eyes scanning the code alongside.
+  * **Good Learning Curve**\- Pairing really helps in thorough understanding and grasping of concepts as there are discussions and pondering over problems from a wider perspective.
+  * **Frequent Knowledge Sharing- **In our case whenever there was a new problem to solve, we used to split up, do our own research, study for some time and then again sit together to share our findings and join heads to brainstorm on ideas.
+**The Results:** I have benefited a lot by pairing, improving in not only my coding style but also the entire perspective of looking at a problem. As a navigator, I learned to keep a sharp eye on the code, to think up alternatives to every proposed solution, thinking ahead on a problem from all angles, probable problems that may arise and their solutions. On being the driver for the first time my hands shook and I was a bit nervous with a pair of critical eyes watching my every key press, but once I got over that, it proved to be really beneficial, with me getting to know the faster way of coding(read: learning a lot of eclipse shortcuts) and writing cleaner, more readable code.
+
+To sum up:
+
+It takes two to tango,
+
+two to move,
+
+together the two can see it through
+
+overcome the hurdles, make their way,
+
+as the day fades away.
+
+   [1]: http://xebee.xebia.in/wp-content/uploads/2011/01/pairon-300x172.jpg (pairon)
 
 ## Comments
 

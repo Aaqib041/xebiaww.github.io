@@ -11,95 +11,62 @@ comment_status: open
 
 # Alfresco working with aspects in CMIS
 
-<p>Alfresco is one of the most popular and widely used open source content management system.</p>
-<p>Alfresco comes in both enterprise and community version. At the time of writing this blog latest version for <strong>Enterprise</strong> edition is <strong>4.2.3.1</strong>. At the time of writing this blog latest version for <strong>Community</strong> edition is <strong>5.0.b</strong>.</p>
-<p>Before starting with this blog all should be familiar with CMIS and how to use CMIS along with alfresco. For getting started with CMIS with alfresco and other content repository you must first read our blog on<strong><a href="http://xebee.xebia.in/?p=19243&amp;preview=true"> Alfresco working with CMIS (File, Folder and Search operation)</a>. </strong></p>
-<p><strong>First of all what is aspects?</strong>
-<ul>
-    <li><span style="line-height: 1.5em;">Aspects most likely related to content modeling in Alfresco which itself is one of the biggest feature of the alfresco system. Aspects as the like the additional information that we can dynamically attach to any content within the alfresco repository. Aspects scan be linked to the content individually to add aspect properties to the content or can be called within or used within the types in alfresco content model to add the properties that aspect is holding.</span></li>
-    <li>Alfresco comes with many aspects by default we can create our own aspects as per requirement.</li>
-</ul>
-<strong>Why aspects are used?</strong></p>
-<p>Aspects basically used to add dynamicity to the content modelling in alfresco means aspects can be dynamically added and removed from the content or folder within the alfresco repository. Aspects are much like the super class in java which are used by its sub classes to add all the functionality that super class holding.
-<div>Before starting how to use aspects in alfresco using CMIS we must be aware about how to create aspects in alfresco this we have already done in our previous blog <a href="http://xebee.xebia.in/index.php/2014/11/20/alfresco-custom-field-search-in-cmis-approach/"><strong><strong>Alfresco</strong> custom field search in CMIS approach</strong></a>.<strong>
-</strong></div>
-<div></div>
-<div>For using alfresco aspects in CMIS we have to use alfresco-opencmis-extension-0.3.jar along with CMIS library for content repository access.</div>
-<div></div>
-<div>First we have to create session that can be used to access aspects and apply aspects to the new content if not already having that aspect.</div>
-<div></div>
-<div><strong>1. Creating alfresco session CMIS : </strong></div>
-<div></div>
-<div></p>
-<p><code>// default factory implementation
-SessionFactory factory = SessionFactoryImpl.newInstance();
-// map to contain connection parameter any cmis repository using atom pub
-Map&lt;String, String&gt; parameter = new HashMap&lt;String, String&gt;();
-parameter.put(SessionParameter.USER, "admin");
-parameter.put(SessionParameter.PASSWORD, "admin");
-parameter.put(SessionParameter.ATOMPUB_URL, "http://localhost:9090/alfresco/service/cmis");
-parameter.put(SessionParameter.BINDING_TYPE, BindingType.ATOMPUB.value());
-parameter.put(SessionParameter.REPOSITORY_ID, "6fc907f9-6790-46b5-9c25-d6855ff8ff5c");
-parameter.put(SessionParameter.OBJECT_FACTORY_CLASS, "org.alfresco.cmis.client.impl.AlfrescoObjectFactoryImpl");
-// getting Instance from User Credential
-try
-{
-// create session
-Session session = factory.createSession(parameter);
-} catch (Exception e)
-{
-e.printStackTrace();
-}
-}
-</code></p>
-<p>Here we have passed one more parameter in parameter map during session creation</p>
-<p><code>parameter.put(SessionParameter.OBJECT_FACTORY_CLASS, "org.alfresco.cmis.client.impl.AlfrescoObjectFactoryImpl");</code></p>
-<p>to deal with aspects, alfrescoDocument or AlfrescoFolder etc.</p>
-<p><strong>2. Get the existing folder object it can be AlfrescoFolder or cmis Folder object.</strong></p>
-<p><code>try{
-OperationContext context = session.createOperationContext();
-context.setRenditionFilterString("cmis:thumbnail");
-Folder cmisFolder = (Folder) session.getObjectByPath("/", context);
-}catch (Exception e){
-e.printStackTrace();
-}
-</code></p>
-<p>Now you can either create the new folder and create new document within that folder or use existing folder for document creation. But make sure that user creating document must have access to that particular folder.</p>
-<p><strong>3. Creating document in the existing folder.</strong></p>
-<p><code>// Setting properties for new document to be created within repository
-Map&lt;String, Object&gt; propertiesDocument = new HashMap&lt;String, Object&gt;();
-propertiesDocument.put(PropertyIds.NAME, "test_Aspect.pdf");
-propertiesDocument.put(PropertyIds.OBJECT_TYPE_ID, "cmis:document");
-FileInputStream oInputStream = new FileInputStream("/home/sourabh/Desktop/test_aspects.pdf");
-// Reading the content in Bytes stream and Writing it to new file in
-ContentStream contentStream = new ContentStreamImpl("test_Aspect.pdf", null, "application/pdf", oInputStream);
-// creating document with name title and description
-Document document = folder.createDocument(propertiesDocument, contentStream, VersioningState.MAJOR);
-</code></p>
-<p>Now new document is uploaded with name test_aspects.pdf in the root directory. You  can get complete detail for the document uploaded from the document object.</p>
-<p><strong>4. Check for aspect whether applied to new document or not if no apply custom aspect to document created.</strong></p>
-<p>For this we have to first convert CMIS Document to AlfrescoDocument object then we have add aspect for that document.</p>
-<p><code>// converting cmis document to alfresco document
-AlfrescoDocument alfrescoDocument = (AlfrescoDocument) document;
-if (!alfrescoDocument.hasAspect("P:my:cutomfieldsdata"))
-{
-// adding custom meta data type aspect to document
-alfrescoDocument.addAspect("P:my:cutomfieldsdata");
-// Setting properties for new document to be created within repository
-Map&lt;String, Object&gt; customPropertiesDocument = new HashMap&lt;String, Object&gt;();
-// Set agreement serial number
-customPropertiesDocument.put("my:metadata_custom_serial_number", "serial number");
-customPropertiesDocument.put("my:metadata_custom_status", "status");
-customPropertiesDocument.put("my:metadata_custom_id", "id");
-customPropertiesDocument.put("my:metadata_custom_name", "name");
-customPropertiesDocument.put("my:metadata_custom_code", "code");</code></p>
-<p>// updating the document with the new meta data fields
-CmisObject updatedDoucment = alfrescoDocument.updateProperties(customPropertiesDocument);
-System.out.println("document" + updatedDoucment.getName() + " successfully updated");
-} else{
-System.out.println("document already updated");
-}</p>
-<p>Document is updated with our custom aspect we can add already defined aspects also to the document.</p>
-<p>In this we have checked whether our custom aspects is already linked with document or not if not then add custom aspect to document and then update custom properties for document.</p>
-<p><strong><a href="http://xebee.xebia.in/index.php/tag/alfresco/">For more hacks about alfresco visit</a>..................</strong></p>
-</div>
+Alfresco is one of the most popular and widely used open source content management system.
+
+Alfresco comes in both enterprise and community version. At the time of writing this blog latest version for **Enterprise** edition is **4.2.3.1**. At the time of writing this blog latest version for **Community** edition is **5.0.b**.
+
+Before starting with this blog all should be familiar with CMIS and how to use CMIS along with alfresco. For getting started with CMIS with alfresco and other content repository you must first read our blog on**[ Alfresco working with CMIS (File, Folder and Search operation)][1]. **
+
+**First of all what is aspects?**
+
+  * Aspects most likely related to content modeling in Alfresco which itself is one of the biggest feature of the alfresco system. Aspects as the like the additional information that we can dynamically attach to any content within the alfresco repository. Aspects scan be linked to the content individually to add aspect properties to the content or can be called within or used within the types in alfresco content model to add the properties that aspect is holding.
+  * Alfresco comes with many aspects by default we can create our own aspects as per requirement.
+**Why aspects are used?**
+
+Aspects basically used to add dynamicity to the content modelling in alfresco means aspects can be dynamically added and removed from the content or folder within the alfresco repository. Aspects are much like the super class in java which are used by its sub classes to add all the functionality that super class holding. 
+
+Before starting how to use aspects in alfresco using CMIS we must be aware about how to create aspects in alfresco this we have already done in our previous blog ****[Alfresco** custom field search in CMIS approach**][2].** **
+
+For using alfresco aspects in CMIS we have to use alfresco-opencmis-extension-0.3.jar along with CMIS library for content repository access.
+
+First we have to create session that can be used to access aspects and apply aspects to the new content if not already having that aspect.
+
+**1\. Creating alfresco session CMIS : **
+
+`// default factory implementation SessionFactory factory = SessionFactoryImpl.newInstance(); // map to contain connection parameter any cmis repository using atom pub Map<String, String> parameter = new HashMap<String, String>(); parameter.put(SessionParameter.USER, "admin"); parameter.put(SessionParameter.PASSWORD, "admin"); parameter.put(SessionParameter.ATOMPUB_URL, "http://localhost:9090/alfresco/service/cmis"); parameter.put(SessionParameter.BINDING_TYPE, BindingType.ATOMPUB.value()); parameter.put(SessionParameter.REPOSITORY_ID, "6fc907f9-6790-46b5-9c25-d6855ff8ff5c"); parameter.put(SessionParameter.OBJECT_FACTORY_CLASS, "org.alfresco.cmis.client.impl.AlfrescoObjectFactoryImpl"); // getting Instance from User Credential try { // create session Session session = factory.createSession(parameter); } catch (Exception e) { e.printStackTrace(); } } `
+
+Here we have passed one more parameter in parameter map during session creation
+
+`parameter.put(SessionParameter.OBJECT_FACTORY_CLASS, "org.alfresco.cmis.client.impl.AlfrescoObjectFactoryImpl");`
+
+to deal with aspects, alfrescoDocument or AlfrescoFolder etc.
+
+**2\. Get the existing folder object it can be AlfrescoFolder or cmis Folder object.**
+
+`try{ OperationContext context = session.createOperationContext(); context.setRenditionFilterString("cmis:thumbnail"); Folder cmisFolder = (Folder) session.getObjectByPath("/", context); }catch (Exception e){ e.printStackTrace(); } `
+
+Now you can either create the new folder and create new document within that folder or use existing folder for document creation. But make sure that user creating document must have access to that particular folder.
+
+**3\. Creating document in the existing folder.**
+
+`// Setting properties for new document to be created within repository Map<String, Object> propertiesDocument = new HashMap<String, Object>(); propertiesDocument.put(PropertyIds.NAME, "test_Aspect.pdf"); propertiesDocument.put(PropertyIds.OBJECT_TYPE_ID, "cmis:document"); FileInputStream oInputStream = new FileInputStream("/home/sourabh/Desktop/test_aspects.pdf"); // Reading the content in Bytes stream and Writing it to new file in ContentStream contentStream = new ContentStreamImpl("test_Aspect.pdf", null, "application/pdf", oInputStream); // creating document with name title and description Document document = folder.createDocument(propertiesDocument, contentStream, VersioningState.MAJOR); `
+
+Now new document is uploaded with name test_aspects.pdf in the root directory. You  can get complete detail for the document uploaded from the document object.
+
+**4\. Check for aspect whether applied to new document or not if no apply custom aspect to document created.**
+
+For this we have to first convert CMIS Document to AlfrescoDocument object then we have add aspect for that document.
+
+`// converting cmis document to alfresco document AlfrescoDocument alfrescoDocument = (AlfrescoDocument) document; if (!alfrescoDocument.hasAspect("P:my:cutomfieldsdata")) { // adding custom meta data type aspect to document alfrescoDocument.addAspect("P:my:cutomfieldsdata"); // Setting properties for new document to be created within repository Map<String, Object> customPropertiesDocument = new HashMap<String, Object>(); // Set agreement serial number customPropertiesDocument.put("my:metadata_custom_serial_number", "serial number"); customPropertiesDocument.put("my:metadata_custom_status", "status"); customPropertiesDocument.put("my:metadata_custom_id", "id"); customPropertiesDocument.put("my:metadata_custom_name", "name"); customPropertiesDocument.put("my:metadata_custom_code", "code");`
+
+// updating the document with the new meta data fields CmisObject updatedDoucment = alfrescoDocument.updateProperties(customPropertiesDocument); System.out.println("document" + updatedDoucment.getName() + " successfully updated"); } else{ System.out.println("document already updated"); }
+
+Document is updated with our custom aspect we can add already defined aspects also to the document.
+
+In this we have checked whether our custom aspects is already linked with document or not if not then add custom aspect to document and then update custom properties for document.
+
+**[For more hacks about alfresco visit][3]..................**
+
+   [1]: http://xebee.xebia.in/?p=19243&preview=true
+   [2]: http://xebee.xebia.in/index.php/2014/11/20/alfresco-custom-field-search-in-cmis-approach/
+   [3]: http://xebee.xebia.in/index.php/tag/alfresco/

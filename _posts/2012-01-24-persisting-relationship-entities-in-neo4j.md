@@ -11,70 +11,65 @@ comment_status: open
 
 # Persisting relationship entities in Neo4j
 
-<p><a href="http://neo4j.org/">Neo4j</a> is a high-performance, NOSQL graph database with all the features of a mature and robust database. In Neo4j data gets stored in nodes connected to each other by relationship entities that carry its own properties. These relationships are very important in graphs and helps to traverse the graph and make decisions. This blog discusses the two ways to persist a relationship between nodes and also the scenario's which suits their respective usage. <a href="http://neo4j.org/spring/">Spring-data-neo4j</a> by springsource gives us the flexibility of using the spring programming model when working with neo4j database. The code examples in this blog will be using spring-data-neo4j.
-<!--more-->
-Let's consider a case where we have two NodeEntities Employee and Project. A Employee has a role in a project which is a relationship entity.
-Here is the code snippet for these entities and the relationship between them.
-[sourcecode lang="java"]
-@NodeEntity
-public class Employee {
+[Neo4j][1] is a high-performance, NOSQL graph database with all the features of a mature and robust database. In Neo4j data gets stored in nodes connected to each other by relationship entities that carry its own properties. These relationships are very important in graphs and helps to traverse the graph and make decisions. This blog discusses the two ways to persist a relationship between nodes and also the scenario's which suits their respective usage. [Spring-data-neo4j][2] by springsource gives us the flexibility of using the spring programming model when working with neo4j database. The code examples in this blog will be using spring-data-neo4j.  Let's consider a case where we have two NodeEntities Employee and Project. A Employee has a role in a project which is a relationship entity. Here is the code snippet for these entities and the relationship between them. [sourcecode lang="java"] @NodeEntity public class Employee { @GraphId @Indexed private Long nodeId;
+    
+    
+    @Indexed
+    private String name;
+    
+    @RelatedToVia(elementClass = Role.class, type=&quot;WORKED_IN&quot;, direction=Direction.BOTH)
+    private Set&lt;Role&gt; roles;
+    
+
+}
+
+@NodeEntity public class Project {
+    
+    
     @GraphId
     @Indexed
-    private Long nodeId;</p>
-<pre><code>@Indexed
-private String name;
+    private Long nodeId;
+    
+    @Indexed
+    private String name;
+    
+    @RelatedTo( elementClass=Employee.class, type=&quot;WORKED_IN&quot;, direction=Direction.BOTH)
+    private Set&lt;Employee&gt; teamMembers;
+    
 
-@RelatedToVia(elementClass = Role.class, type=&amp;quot;WORKED_IN&amp;quot;, direction=Direction.BOTH)
-private Set&amp;lt;Role&amp;gt; roles;
-</code></pre>
-<p>}</p>
-<p>@NodeEntity
-public class Project {</p>
-<pre><code>@GraphId
-@Indexed
-private Long nodeId;
+}
 
-@Indexed
-private String name;
+@RelationshipEntity(type="WORKED_IN") public class Role {
+    
+    
+    @GraphId
+    private Long nodeId;
+    
+    @Indexed
+    private String name;
+    
+    @StartNode
+    private Employee employee;
+    
+    @EndNode
+    private Project project;
+    
 
-@RelatedTo( elementClass=Employee.class, type=&amp;quot;WORKED_IN&amp;quot;, direction=Direction.BOTH)
-private Set&amp;lt;Employee&amp;gt; teamMembers;
-</code></pre>
-<p>}</p>
-<p>@RelationshipEntity(type=&quot;WORKED_IN&quot;)
-public class Role {</p>
-<pre><code>@GraphId
-private Long nodeId;
+} [/sourcecode] 1) First way to persist relationship : Using the Neo4jTemplate class to create relationship. For example [sourcecode lang="java"] Role stint = template.createRelationshipBetween(sunil, beachbody, Role.class, "WORKED_IN", false); template.save(stint); [/sourcecode] createRelationship method takes the two node entities and the relationship class and relation type defined by the RelationshipEntity and a boolean value to allow/disallow duplicate relationships.
 
-@Indexed
-private String name;
+2) Second way is to instantiate the role and add it to a employee entity and persist the employee entity. Persisting the entity also persists the Role entity too, thus establishing the link between employee and project nodes. [sourcecode lang="java"] Employee sunil = new Employee("Sunil"); sunil = employeeRepo.save(sunil); Project beachbody = new Project("Beachbody"); Project project = projectRepo.save(beachbody);
+    
+    
+        Role stint = sunil.workedIn(beachbody, &quot;Java developer&quot;);
+        template.save(sunil);
+    
 
-@StartNode
-private Employee employee;
-
-@EndNode
-private Project project;
-</code></pre>
-<p>}
 [/sourcecode]
-1) First way to persist relationship : Using the Neo4jTemplate class to create relationship. For example
-[sourcecode lang="java"]
-Role stint = template.createRelationshipBetween(sunil, beachbody, Role.class,
-                                                                      &quot;WORKED_IN&quot;, false);
-template.save(stint);
- [/sourcecode]
-createRelationship method takes the two node entities and the relationship class and relation type defined by the RelationshipEntity and a boolean value to allow/disallow duplicate relationships.</p>
-<p>2) Second way is to instantiate the role and add it to a employee entity and persist the employee entity. Persisting the entity also persists the Role entity too, thus establishing the link between employee and project nodes.
-[sourcecode lang="java"]
-        Employee sunil = new Employee(&quot;Sunil&quot;);
-        sunil = employeeRepo.save(sunil);
-        Project beachbody = new Project(&quot;Beachbody&quot;);
-        Project project = projectRepo.save(beachbody);</p>
-<pre><code>    Role stint = sunil.workedIn(beachbody, &amp;quot;Java developer&amp;quot;);
-    template.save(sunil);
-</code></pre>
-<p>[/sourcecode]</p>
-<p>It's curious to know by a simple unit test that the second way is performing almost 30 times better than the first way in persisting just the relationship. I looked at the source code for both the ways, I noticed that the first way fetches the persistent state of both the start and the end nodes and then tries to establish a relation between the two. The second option just tries to create the relation directly on the employee which is already persisted. Clearly given a scenario that we have two persisted nodes and we need to create the relationship we must always go with the option2 in my opinion. This can greatly improve the performance. The only scenario that I can think of using the first option can be that we have to allow duplicate relationships between nodes which can generally happen when relationship entities are very rich ie have a lot of properties.</p>
+
+It's curious to know by a simple unit test that the second way is performing almost 30 times better than the first way in persisting just the relationship. I looked at the source code for both the ways, I noticed that the first way fetches the persistent state of both the start and the end nodes and then tries to establish a relation between the two. The second option just tries to create the relation directly on the employee which is already persisted. Clearly given a scenario that we have two persisted nodes and we need to create the relationship we must always go with the option2 in my opinion. This can greatly improve the performance. The only scenario that I can think of using the first option can be that we have to allow duplicate relationships between nodes which can generally happen when relationship entities are very rich ie have a lot of properties.
+
+   [1]: http://neo4j.org/
+   [2]: http://neo4j.org/spring/
 
 ## Comments
 

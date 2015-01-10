@@ -11,9 +11,9 @@ comment_status: open
 
 # LDAP Authentication using Spring Security
 
-<p>Recently, the project I was working on, required implementation of simple login functionality, where users were supposed to be authenticated against a remote Active Directory via LDAP. It was a maven project based on spring framework so we implemented the application security using the spring security framework.<!--more--></p>
-<p><font color=#FF8000><b><u>Problem Statement</u></b></font>
-The Active Directory had users stored in a tree-structure which looked similar to the below example.</p>
+Recently, the project I was working on, required implementation of simple login functionality, where users were supposed to be authenticated against a remote Active Directory via LDAP. It was a maven project based on spring framework so we implemented the application security using the spring security framework.
+
+**_Problem Statement_** The Active Directory had users stored in a tree-structure which looked similar to the below example.
 
 ## Comments
 

@@ -11,37 +11,37 @@ comment_status: open
 
 # JBoss Drools - Performance and Memory Internals
 
-<p style="text-align: justify;">The application I am working on nowadays extensively uses JBoss Drools. The application deals with lots of objects on which complex logic is applied in sequence. This part has been developed using JBoss Drools. The keywords here are "lots of objects" and "complex logic in sequence".</p>
+The application I am working on nowadays extensively uses JBoss Drools. The application deals with lots of objects on which complex logic is applied in sequence. This part has been developed using JBoss Drools. The keywords here are "lots of objects" and "complex logic in sequence".
 
-<p style="text-align: justify;">These two keywords, when found together, often cause menace for developers.</p>
+These two keywords, when found together, often cause menace for developers.
 
-<p style="text-align: justify;">However, few days back, when I profiled the application, I was a bit amazed to see that "complex logic" on "lots of objects" was not taking that much time. And trust me, this is not what I was expecting. Before profiling, I was almost sure that this "logic on lots of objects" thing is the bottleneck in application's performance. So, the discovery of it being efficient was a bit shocking.</p>
+However, few days back, when I profiled the application, I was a bit amazed to see that "complex logic" on "lots of objects" was not taking that much time. And trust me, this is not what I was expecting. Before profiling, I was almost sure that this "logic on lots of objects" thing is the bottleneck in application's performance. So, the discovery of it being efficient was a bit shocking.
 
-<p style="text-align: justify;">Ok, I accept it. Its fast. The profiler can not be wrong. But how is it that fast?</p>
+Ok, I accept it. Its fast. The profiler can not be wrong. But how is it that fast?
 
-<p style="text-align: justify;">To get an answer to this question, I explored JBoss Drools internals. How JBoss Drools actually works? What's the thing that brings in this efficiency in JBoss Drools? I got few answers when I explored how it works. I will share my understanding of its architecture which, I think, makes it memory and performance efficient.</p>
+To get an answer to this question, I explored JBoss Drools internals. How JBoss Drools actually works? What's the thing that brings in this efficiency in JBoss Drools? I got few answers when I explored how it works. I will share my understanding of its architecture which, I think, makes it memory and performance efficient.
 
-<p style="text-align: justify;">JBoss Drools uses Rete's Algorithm to execute rules. Rete's algorithm is an efficient pattern matching algorithm.</p>
+JBoss Drools uses Rete's Algorithm to execute rules. Rete's algorithm is an efficient pattern matching algorithm.
 
-<p style="text-align: justify;">JBoss Drools has its own implementation of Rete's Algorithm. A rule in Drools is represented by a Rete tree.<!--more--> A Rete tree consists of nodes. These nodes are mostly conditional evaluations. Everything in a Drools rule is represented by a Rete tree node. Apart from conditional nodes, the Rete tree also consists of AND nodes, OR nodes and start/end nodes ( and few other types of nodes as well).</p>
+JBoss Drools has its own implementation of Rete's Algorithm. A rule in Drools is represented by a Rete tree. A Rete tree consists of nodes. These nodes are mostly conditional evaluations. Everything in a Drools rule is represented by a Rete tree node. Apart from conditional nodes, the Rete tree also consists of AND nodes, OR nodes and start/end nodes ( and few other types of nodes as well).
 
-<p style="text-align: justify;">The main part of the algorithm is the creation of the Rete tree. Whenever a fact(object) is inserted in the Drools engine, a Rete tree is created. The creation of this Rete tree is done by some intelligent algorithm. The Rete tree, once created executes in almost no time over the facts(objects) and gives the result. Most of the time is went into creating the Rete tree rather than executing it.</p>
+The main part of the algorithm is the creation of the Rete tree. Whenever a fact(object) is inserted in the Drools engine, a Rete tree is created. The creation of this Rete tree is done by some intelligent algorithm. The Rete tree, once created executes in almost no time over the facts(objects) and gives the result. Most of the time is went into creating the Rete tree rather than executing it.
 
-<p style="text-align: justify;">This is something that I have also experienced during debugging. Whenever a fact is inserted into the Drools session, it takes a bit of time. However, the firing of rules is almost instantaneous.</p>
+This is something that I have also experienced during debugging. Whenever a fact is inserted into the Drools session, it takes a bit of time. However, the firing of rules is almost instantaneous.
 
-<p style="text-align: justify;">So, the way this Rete Algorithm has been implemented inside Drools accounts for its efficiency. But, the million dollar question is (a million is too much, but its just a quote), what will happen to the JBoss Drools efficient Rete Algorithm when "LOTS OF OBJECTS" will come into picture?</p>
+So, the way this Rete Algorithm has been implemented inside Drools accounts for its efficiency. But, the million dollar question is (a million is too much, but its just a quote), what will happen to the JBoss Drools efficient Rete Algorithm when "LOTS OF OBJECTS" will come into picture?
 
-<p style="text-align: justify;">The answer, I think, lies in two techniques that Drools uses to store nodes. Node Sharing and Node Indexing.</p>
+The answer, I think, lies in two techniques that Drools uses to store nodes. Node Sharing and Node Indexing.
 
-<p style="text-align: justify;">Drools caches nodes while building Rete’s tree which is known as Node Sharing. Whenever a new node is created, its checked whether there is an equivalend node already present in the cache. If an equivalent node is found in the cache, the cached node is used instead and the new node is discarded. This makes Drools memory efficient.</p>
+Drools caches nodes while building Rete’s tree which is known as Node Sharing. Whenever a new node is created, its checked whether there is an equivalend node already present in the cache. If an equivalent node is found in the cache, the cached node is used instead and the new node is discarded. This makes Drools memory efficient.
 
-<p style="text-align: justify;">Drools keeps a hashtable of the object properties and Rete Tree Nodes .It is known as Node Indexing and is used to avoid evaluating same conditions multiple times. Node Indexing speeds up the propagation of nodes in the Rete Network which accounts for high performance of  the Drools engine.</p>
+Drools keeps a hashtable of the object properties and Rete Tree Nodes .It is known as Node Indexing and is used to avoid evaluating same conditions multiple times. Node Indexing speeds up the propagation of nodes in the Rete Network which accounts for high performance of  the Drools engine.
 
-<p style="text-align: justify;">The in depth analysis of Rete Tree creation and node propagation in the Rete Network tells that the way rules are written might also effect the performance, as it directly impacts the propagation in Rete Tree. Rules, written in intelligent way can drastically reduce the number of nodes in the Rete Tree, thus, further increasing the performance.</p>
+The in depth analysis of Rete Tree creation and node propagation in the Rete Network tells that the way rules are written might also effect the performance, as it directly impacts the propagation in Rete Tree. Rules, written in intelligent way can drastically reduce the number of nodes in the Rete Tree, thus, further increasing the performance.
 
-<p style="text-align: justify;">So, these techniques helps Drools to process large number of objects efficiently. What I have seen, is that, increasing number of objects in Drools hardly effects the total time taken to execute it.</p>
+So, these techniques helps Drools to process large number of objects efficiently. What I have seen, is that, increasing number of objects in Drools hardly effects the total time taken to execute it.
 
-<p style="text-align: justify;">I still need to explore how to write efficient rules, however, it looked very logical and impressive when I saw how it is done. I will try to come out with one more post which explains efficient Rule writing.</p>
+I still need to explore how to write efficient rules, however, it looked very logical and impressive when I saw how it is done. I will try to come out with one more post which explains efficient Rule writing.
 
 ## Comments
 

@@ -11,35 +11,18 @@ comment_status: open
 
 # Search Xebia Blogs : Firefox Plugin
 
-<p>When there is wealth of information available on the Xebia Blogs, would you really like to go elsewhere?</p>
-<p>Using the Firefox plugin mentioned below you can search within the Xebia Blogs using the Firefox searchbar. once you install the search plugin and restart the Xebia option would start appearing in the search bar as an option</p>
-<p>Follow the steps
-<!--more--></p>
-<ol>
-<li>Copy this XML to the Firefox searchplugins folder. for ubuntu it exists under
-/usr/share/firefox/searchplugins</li>
-</ol>
-<p>[xml]
-<searchPlugin xmlns="http://www.mozilla.org/2006/browser/search/">
-<shortName>Xebia</shortName>
-<description>Xebia Blog Search</description>
-<inputEncoding>UTF-8</inputEncoding>
-<image width="16" height="16">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAgCAIAAADxBp3kAAAACXBIWXMAABcSAAAXEgFnn9JSAAAAB3RJTUUH1wkTEBAZvtwF1gAABOZJREFUSMe9V1trXFUU%2Ftbe5zqXTpvMpLnaVKHeUGyh9mKroKCWagvFPyD4JP4B3wrigy%2Fqgw8iiCjWotCqBSnUFAWLYtEWtZfEtDFtZnKfyUwyk3Pfy4dJYubSSQqm6%2B3sdc75zt7fWt%2F6DjEz7m2ImisO4ecBICghcu4JJASH8%2BzNsJsD%2B7UpBeVvACQJsvuIJFk97M3%2Bt1FWvJhFWP5fIOmOXEYuuzmyuiEMuOMsbTLSGwy5jAoQaUmYmQ3isjakCQBRGVr8fyyfO%2B%2BSIzg5aHFocXZyZHVBxjYIkqF8QLA3iRX%2BlLuEShpIgmSTNykfIA7nSU%2BBtPVDMtwpVg7CCpkdMDtWvdHl8g3IGMAU669H9Wc5XEDkQkuS3QPQurlUASuXYtthpCHt2htNyBjFtpHRzlW5WCUgHC5QrJ%2BsTpJma7xm5RNV2J1EVIHQ684DJNmbmhoZuvLzqIrUSqI4Pf%2F7wJ9qcYKDEsgEr79iOWJvEkaGpE1WN4RVz4HVTTIRqC1nPjx3%2BfylKIwAFCYLp947ffNaRZEFI%2BOH5vefnnPKTpWvqxeu3Lp6q6olKwzK48ePAwxmdrLQkmSmIa2GLVYxJaSZTLelezJnP%2FoutimeyqS%2BeOtEPBXfd3T%2Fha8vFiYWNqVTA5%2BdK82URq%2BMbuncMn1rWhqa7%2Fg%2FnvxhcmTCTsYSmxPEzOxNIVwgow162zoLffDi4Ol3T4F5x%2B4HD77y9Mm3T9z%2FxAPjw7n2nvTwb38%2FtPdhqcmx67e3PdqvW%2Fr1X67tfG7XlZ%2F%2B2nN4z%2B7DezQAUB4iB%2BIu2q69u91O2NmhbO%2BO3jAIS7OlSrGiGbqKlGEZe4%2FsE0IMXRyKwiiYD0iIfUf3%2B65PJJabRAXggN0JsnshzDXxitPFr975MtmWfOyZx8988O3BYwfGhsaiIPIcb%2FehJ89%2FPmDGLSFER18m0ZaMp%2BIjf4y4FacwXnjh1Rd3Pr9rVV9GDrvjZPWgVaFzuVj55M2Pt%2FZ3vvz6ETtpD%2F46%2BM37p586diDTl97Unuro3zpze8atOCpS9z2yrTxX1k1dN7TRq6NWwk73pOOpeK0URItcGYG0QJKs3roiqlI%2BfOnmtcvlQ6%2B9ZMbMqnjcuDx86ezAsTeelZpOdkOp%2B3kO5gAmu28pxasj8lTlH1aRcnIczNekWKnyTVZB5Oa9Uq4mEfpeYYhVxF6evRmue6wywpGngpJyxqsrdSNaAzMHBQRFNLa0ctnPUzhnxDfXznWpmyb7efbzzRQ7YH8WfoGWp0KDrHPEQRGkwc%2BT1bUke6zYzZIwQRqk3WykMPsFkIRfILMDWmJp0R0HE6RNQl9ebOUKHPYmyOyCMNidIGnCSK%2Bpn1A%2BOzkyM5Ax9qYIBLMDJNbtCpTLThYQpCVqpsraqFkQQRhkdTd%2BZUtXIExAICxDS96N0TAgdARF0lJNT6WVK2A3RzIOLc5hed1eS7EzQUKD3sbO2Cpe13AFAUDsTZEwl10Wr4dFgNifJRCsrQCBA3ayZLRD2CBasQoNrsCb4qiZK2gd%2FiwHC1ANrkD5vDgC0pelwGzmCiKvuStoEVVXEN9OVle9KxAGyKBYP5mdK16iXgqICFGR2APp67ZsgkhHOIeo3GQqSAvhHMIi3bEvOQT7gGh0BS03GoE9QEA0jISlFEFY1RTd%2B5%2B9fwHTMs%2B8dgguUQAAAABJRU5ErkJggg%3D%3D</image>
-<url type="text/html" method="GET" template="http://blog.xebia.com">
-  <param name="s" value="{searchTerms}"/>
-  <param name="sourceid" value="Mozilla-search"/>
-</url>
-<searchForm>http://blog.xebia.com/</searchForm>
-</searchPlugin>
-[/xml]</p>
-<ol>
-<li>
-<p>Restart Firefox.</p>
-</li>
-<li>
-<p>You should now see the 'Xebia' option available in the searchbar dropdown.</p>
-</li>
-<li>
-<p>Search! :-)</p>
-</li>
-</ol>
+When there is wealth of information available on the Xebia Blogs, would you really like to go elsewhere?
+
+Using the Firefox plugin mentioned below you can search within the Xebia Blogs using the Firefox searchbar. once you install the search plugin and restart the Xebia option would start appearing in the search bar as an option
+
+Follow the steps 
+
+  1. Copy this XML to the Firefox searchplugins folder. for ubuntu it exists under /usr/share/firefox/searchplugins
+
+[xml]  Xebia Xebia Blog Search UTF-8 data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAAgCAIAAADxBp3kAAAACXBIWXMAABcSAAAXEgFnn9JSAAAAB3RJTUUH1wkTEBAZvtwF1gAABOZJREFUSMe9V1trXFUU%2Ftbe5zqXTpvMpLnaVKHeUGyh9mKroKCWagvFPyD4JP4B3wrigy%2Fqgw8iiCjWotCqBSnUFAWLYtEWtZfEtDFtZnKfyUwyk3Pfy4dJYubSSQqm6%2B3sdc75zt7fWt%2F6DjEz7m2ImisO4ecBICghcu4JJASH8%2BzNsJsD%2B7UpBeVvACQJsvuIJFk97M3%2Bt1FWvJhFWP5fIOmOXEYuuzmyuiEMuOMsbTLSGwy5jAoQaUmYmQ3isjakCQBRGVr8fyyfO%2B%2BSIzg5aHFocXZyZHVBxjYIkqF8QLA3iRX%2BlLuEShpIgmSTNykfIA7nSU%2BBtPVDMtwpVg7CCpkdMDtWvdHl8g3IGMAU669H9Wc5XEDkQkuS3QPQurlUASuXYtthpCHt2htNyBjFtpHRzlW5WCUgHC5QrJ%2BsTpJma7xm5RNV2J1EVIHQ684DJNmbmhoZuvLzqIrUSqI4Pf%2F7wJ9qcYKDEsgEr79iOWJvEkaGpE1WN4RVz4HVTTIRqC1nPjx3%2BfylKIwAFCYLp947ffNaRZEFI%2BOH5vefnnPKTpWvqxeu3Lp6q6olKwzK48ePAwxmdrLQkmSmIa2GLVYxJaSZTLelezJnP%2FoutimeyqS%2BeOtEPBXfd3T%2Fha8vFiYWNqVTA5%2BdK82URq%2BMbuncMn1rWhqa7%2Fg%2FnvxhcmTCTsYSmxPEzOxNIVwgow162zoLffDi4Ol3T4F5x%2B4HD77y9Mm3T9z%2FxAPjw7n2nvTwb38%2FtPdhqcmx67e3PdqvW%2Fr1X67tfG7XlZ%2F%2B2nN4z%2B7DezQAUB4iB%2BIu2q69u91O2NmhbO%2BO3jAIS7OlSrGiGbqKlGEZe4%2FsE0IMXRyKwiiYD0iIfUf3%2B65PJJabRAXggN0JsnshzDXxitPFr975MtmWfOyZx8988O3BYwfGhsaiIPIcb%2FehJ89%2FPmDGLSFER18m0ZaMp%2BIjf4y4FacwXnjh1Rd3Pr9rVV9GDrvjZPWgVaFzuVj55M2Pt%2FZ3vvz6ETtpD%2F46%2BM37p586diDTl97Unuro3zpze8atOCpS9z2yrTxX1k1dN7TRq6NWwk73pOOpeK0URItcGYG0QJKs3roiqlI%2BfOnmtcvlQ6%2B9ZMbMqnjcuDx86ezAsTeelZpOdkOp%2B3kO5gAmu28pxasj8lTlH1aRcnIczNekWKnyTVZB5Oa9Uq4mEfpeYYhVxF6evRmue6wywpGngpJyxqsrdSNaAzMHBQRFNLa0ctnPUzhnxDfXznWpmyb7efbzzRQ7YH8WfoGWp0KDrHPEQRGkwc%2BT1bUke6zYzZIwQRqk3WykMPsFkIRfILMDWmJp0R0HE6RNQl9ebOUKHPYmyOyCMNidIGnCSK%2Bpn1A%2BOzkyM5Ax9qYIBLMDJNbtCpTLThYQpCVqpsraqFkQQRhkdTd%2BZUtXIExAICxDS96N0TAgdARF0lJNT6WVK2A3RzIOLc5hed1eS7EzQUKD3sbO2Cpe13AFAUDsTZEwl10Wr4dFgNifJRCsrQCBA3ayZLRD2CBasQoNrsCb4qiZK2gd%2FiwHC1ANrkD5vDgC0pelwGzmCiKvuStoEVVXEN9OVle9KxAGyKBYP5mdK16iXgqICFGR2APp67ZsgkhHOIeo3GQqSAvhHMIi3bEvOQT7gGh0BS03GoE9QEA0jISlFEFY1RTd%2B5%2B9fwHTMs%2B8dgguUQAAAABJRU5ErkJggg%3D%3D http://blog.xebia.com/ [/xml]
+
+  1. Restart Firefox.
+
+  2. You should now see the 'Xebia' option available in the searchbar dropdown.
+
+  3. Search! :-)

@@ -11,7 +11,7 @@ comment_status: open
 
 # My book review appeared on TheServerSide.com
 
-<p>Well, Just a shameless publicity that my review of the book "<a href="http://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882" alt="Clean Code" /> - A Handbook of Agile Software Craftsmanship, Robert C Martin"</a> appeared in the TheServerSide.com site.
-Please click <a href="http://www.theserverside.com/news/thread.tss?thread_id=51743">here</a> if you want to read it. :-)
-<!--more-->
-<img src="http://ecx.images-amazon.com/images/I/419EFaGEGvL._SS500_.jpg" alt="Clean Code Book Image" /></p>
+Well, Just a shameless publicity that my review of the book " \- A Handbook of Agile Software Craftsmanship, Robert C Martin" appeared in the TheServerSide.com site. Please click [here][1] if you want to read it. :-)  ![Clean Code Book Image][2]
+
+   [1]: http://www.theserverside.com/news/thread.tss?thread_id=51743
+   [2]: http://ecx.images-amazon.com/images/I/419EFaGEGvL._SS500_.jpg

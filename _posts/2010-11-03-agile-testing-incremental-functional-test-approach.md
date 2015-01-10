@@ -11,20 +11,31 @@ comment_status: open
 
 # Agile Testing - Incremental Functional Test Approach
 
-<p>Software development is all about incremental functional development.</p>
-<p>However we find a great impedance mismatch between development and testing synchronization. Though we talk about continuous integration and verification, most of the user stories come for verification only at the end of sprint which pose a major challenge in front of the testers just because of mismatch between the time available and amount of work to test.</p>
-<p>To this point, developers may argue that they cannot give unfinished feature to the testers as they broke their work (user-story) according to technical subtasks. So for a developer Controller class has been written but Service still needs to be written. So tester may not be able test the technical tasks. Tester is more interested towards functional part completion instead of unit tests. This results in a impedance mismatch between developers and testers.</p>
-<!--more-->
+Software development is all about incremental functional development.
 
-<pre><a rel="attachment wp-att-9704" href="http://xebee.xebia.in/2010/11/03/agile-testing-incremental-functional-test-approach/tester-at-the-end/"><img class="alignncenter size-medium wp-image-9704 aligncenter" title="tester-at-the-end" src="http://xebee.xebia.in/wp-content/uploads/2010/11/tester-at-the-end-300x225.png" alt="" width="500" height="375" /></a></pre>
+However we find a great impedance mismatch between development and testing synchronization. Though we talk about continuous integration and verification, most of the user stories come for verification only at the end of sprint which pose a major challenge in front of the testers just because of mismatch between the time available and amount of work to test.
 
-<p>In our project, as a team we agreed in retrospectives that we will push the functional features as soon as they are finished but eventually it doesn't happen. We come back to the square one and the same problem is raised again in next retrospective.</p>
-<p>So what do you do in this kind of situation?</p>
-<p>Recently <a title="Vikrant" href="http://in.linkedin.com/pub/vikrant-manchanda/1b/369/8bb" target="_blank">Vikrant</a> our lead tester came out with a very good idea.</p>
-<p>The argument was - why don't we break user-stories into functional subtasks also apart from breaking them into technical tasks. That way it's not either-or case but we'll have both functional and technical tasks. Developers then are also forced to think in terms of functional subtasks and are able to provide functionality in small chunks to testers.</p>
-<p>Let's see how it works in real action.</p>
-<p>As soon as, a developer finishes a functional subtask, he moves it to "Ready for Test" status in JIRA which indicates it's available for tester to test. This way testers are able to to test the user stories in incremental fashion. When team breaks the user stories into functional subtasks, both developer and tester sit together, collaborate and agree upon the functional division of the story.</p>
-<p>This experiment worked pretty well for our team. Though we still see some areas of improvement, it enabled us to fix to the problem we had in our so many projects.</p>
+To this point, developers may argue that they cannot give unfinished feature to the testers as they broke their work (user-story) according to technical subtasks. So for a developer Controller class has been written but Service still needs to be written. So tester may not be able test the technical tasks. Tester is more interested towards functional part completion instead of unit tests. This results in a impedance mismatch between developers and testers.
+    
+    
+    ![][1]
+
+In our project, as a team we agreed in retrospectives that we will push the functional features as soon as they are finished but eventually it doesn't happen. We come back to the square one and the same problem is raised again in next retrospective.
+
+So what do you do in this kind of situation?
+
+Recently [Vikrant][2] our lead tester came out with a very good idea.
+
+The argument was - why don't we break user-stories into functional subtasks also apart from breaking them into technical tasks. That way it's not either-or case but we'll have both functional and technical tasks. Developers then are also forced to think in terms of functional subtasks and are able to provide functionality in small chunks to testers.
+
+Let's see how it works in real action.
+
+As soon as, a developer finishes a functional subtask, he moves it to "Ready for Test" status in JIRA which indicates it's available for tester to test. This way testers are able to to test the user stories in incremental fashion. When team breaks the user stories into functional subtasks, both developer and tester sit together, collaborate and agree upon the functional division of the story.
+
+This experiment worked pretty well for our team. Though we still see some areas of improvement, it enabled us to fix to the problem we had in our so many projects.
+
+   [1]: http://xebee.xebia.in/wp-content/uploads/2010/11/tester-at-the-end-300x225.png (tester-at-the-end)
+   [2]: http://in.linkedin.com/pub/vikrant-manchanda/1b/369/8bb (Vikrant)
 
 ## Comments
 

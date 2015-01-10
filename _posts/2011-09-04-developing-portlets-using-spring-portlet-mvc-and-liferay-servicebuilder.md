@@ -11,29 +11,21 @@ comment_status: open
 
 # Developing portlets using Spring Portlet MVC and Liferay ServiceBuilder
 
-<p>In my current project, I was exploring options to use a framework to develop portlets in Liferay portal. Finally, we decided to use Sprint Portlet MVC. We were successful in developing data driven portlets using Spring Portlet MVC and Hibernate. However, we were told to use Liferay ServiceBuilder to develop services instead of Spring and Hibernate. In the end, the tech stack to develop portlets was Spring Portlet MVC to develop the portlets and Liferay ServiceBuilder to develop services. This post mentions the problem we faced in integrating Spring Portlet MVC with Liferay ServiceBuilder. <!--more--></p>
-<p>Liferay ServiceBuilder generates Spring and Hibernate configuration using ant scripts dynamically and loads them into Portlet Context using PortletContextLoaderListener. Whereas, by default, Spring Portlet MVC loads the Spring Configuration from the file named as portletname-portlet.xml when the portlet is getting deployed. While deploying the portlet, we got the following error</p>
-<p><code>
-21:29:43,468 INFO  [STDOUT] 21:29:43,466 ERROR [PortletHotDeployListener] java.lang.IllegalStateException: Root context attribute is not of type WebApplicationContext: com.liferay.portal.spring.context.PortletApplicationContext@1beaba: display name [Root WebApplicationContext]; startup date [Sun Sep 04 21:29:31 IST 2011]; root of context hierarchy
-java.lang.IllegalStateException: Root context attribute is not of type WebApplicationContext: com.liferay.portal.spring.context.PortletApplicationContext@1beaba
-: display name [Root WebApplicationContext]; startup date [Sun Sep 04 21:29:31 IST 2011]; root of context hierarchy
-        at org.springframework.web.portlet.context.PortletApplicationContextUtils.getWebApplicationContext( PortletApplicationContextUtils.java:79)
-        at org.springframework.web.portlet.FrameworkPortlet.initPortletApplicationContext( FrameworkPortlet.java:295)
-        at org.springframework.web.portlet.FrameworkPortlet.initPortletBean(FrameworkPortlet.java:269)
-        at org.springframework.web.portlet.GenericPortletBean.init(GenericPortletBean.java:116)
-</code>
-It is clear from the error message when spring is initializing the portlet application context, it is expecting that Root ApplicationContext should be of type WebApplicationContext but it is finding root ApplicationContext to be of type PortletApplicationContext, which contains Liferay Services configuration and loaded by the container before Spring Portlet MVC configuration.  A bit more investigation revealed that PortletApplicationContext extended XmlPortletApplicationContext which is not compatible with WebApplicationContext. As I entered into the source code, I found the following line of code were responsible for creating ApplicationContext for Spring Portlet MVC</p>
-<p><code>
-        ApplicationContext parent = PortletApplicationContextUtils.getWebApplicationContext(getPortletContext());
-        ApplicationContext pac     = createPortletApplicationContext(parent);
-</code></p>
-<p>The first line was getting the root applicationContext and second line creates an applicationContext with it's parent as the ServiceBuilder specific applicationcontext. If the execution of the above code was successful, we would have been successful in injecting ServiceBuilder specific beans in Spring Portlet MVC controllers. But, it was not necessary as ServiceBuilder provides utility classes to access ServiceBuilder services. Hence, we did not need to inject ServiceBuilder services inside Spring Portlet MVC controllers. So, we created a custom portlet which extended org.springframework.web.portlet.DispatcherPortlet which further extends org.springframework.web.portlet.FrameworkPortlet and overrided the initPortletApplicationContext changing the above two lines of code to </p>
-<p><code>
-        <strong>ApplicationContext parent = null;</strong>
-        ApplicationContext pac     = createPortletApplicationContext(parent);
-</code></p>
-<p>After making the above, our portlet got deployed successfully.</p>
-<p>As a final note, the above mentioned problem occurred in Liferay 5.2.3 and when I checked the source code of Liferay 6.0, I found that Liferay's PortletContextLoaderListener, after loading ServiceBuilder applicationcontext, removes the applicationcontext from the portlet context. Further investigation of the source code indicates that the above mentioned problem should not occur in Liferay 6.0.</p>
+In my current project, I was exploring options to use a framework to develop portlets in Liferay portal. Finally, we decided to use Sprint Portlet MVC. We were successful in developing data driven portlets using Spring Portlet MVC and Hibernate. However, we were told to use Liferay ServiceBuilder to develop services instead of Spring and Hibernate. In the end, the tech stack to develop portlets was Spring Portlet MVC to develop the portlets and Liferay ServiceBuilder to develop services. This post mentions the problem we faced in integrating Spring Portlet MVC with Liferay ServiceBuilder. 
+
+Liferay ServiceBuilder generates Spring and Hibernate configuration using ant scripts dynamically and loads them into Portlet Context using PortletContextLoaderListener. Whereas, by default, Spring Portlet MVC loads the Spring Configuration from the file named as portletname-portlet.xml when the portlet is getting deployed. While deploying the portlet, we got the following error
+
+` 21:29:43,468 INFO [STDOUT] 21:29:43,466 ERROR [PortletHotDeployListener] java.lang.IllegalStateException: Root context attribute is not of type WebApplicationContext: com.liferay.portal.spring.context.PortletApplicationContext@1beaba: display name [Root WebApplicationContext]; startup date [Sun Sep 04 21:29:31 IST 2011]; root of context hierarchy java.lang.IllegalStateException: Root context attribute is not of type WebApplicationContext: com.liferay.portal.spring.context.PortletApplicationContext@1beaba : display name [Root WebApplicationContext]; startup date [Sun Sep 04 21:29:31 IST 2011]; root of context hierarchy at org.springframework.web.portlet.context.PortletApplicationContextUtils.getWebApplicationContext( PortletApplicationContextUtils.java:79) at org.springframework.web.portlet.FrameworkPortlet.initPortletApplicationContext( FrameworkPortlet.java:295) at org.springframework.web.portlet.FrameworkPortlet.initPortletBean(FrameworkPortlet.java:269) at org.springframework.web.portlet.GenericPortletBean.init(GenericPortletBean.java:116) ` It is clear from the error message when spring is initializing the portlet application context, it is expecting that Root ApplicationContext should be of type WebApplicationContext but it is finding root ApplicationContext to be of type PortletApplicationContext, which contains Liferay Services configuration and loaded by the container before Spring Portlet MVC configuration. A bit more investigation revealed that PortletApplicationContext extended XmlPortletApplicationContext which is not compatible with WebApplicationContext. As I entered into the source code, I found the following line of code were responsible for creating ApplicationContext for Spring Portlet MVC
+
+` ApplicationContext parent = PortletApplicationContextUtils.getWebApplicationContext(getPortletContext()); ApplicationContext pac = createPortletApplicationContext(parent); `
+
+The first line was getting the root applicationContext and second line creates an applicationContext with it's parent as the ServiceBuilder specific applicationcontext. If the execution of the above code was successful, we would have been successful in injecting ServiceBuilder specific beans in Spring Portlet MVC controllers. But, it was not necessary as ServiceBuilder provides utility classes to access ServiceBuilder services. Hence, we did not need to inject ServiceBuilder services inside Spring Portlet MVC controllers. So, we created a custom portlet which extended org.springframework.web.portlet.DispatcherPortlet which further extends org.springframework.web.portlet.FrameworkPortlet and overrided the initPortletApplicationContext changing the above two lines of code to 
+
+` **ApplicationContext parent = null;** ApplicationContext pac = createPortletApplicationContext(parent); `
+
+After making the above, our portlet got deployed successfully.
+
+As a final note, the above mentioned problem occurred in Liferay 5.2.3 and when I checked the source code of Liferay 6.0, I found that Liferay's PortletContextLoaderListener, after loading ServiceBuilder applicationcontext, removes the applicationcontext from the portlet context. Further investigation of the source code indicates that the above mentioned problem should not occur in Liferay 6.0.
 
 ## Comments
 

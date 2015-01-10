@@ -11,16 +11,21 @@ comment_status: open
 
 # Mocking static methods
 
-<p>The blog at <a href="http://blog.xebia.com/2007/06/21/mocking-static-calls/">http://blog.xebia.com/2007/06/21/mocking-static-calls/</a> mentions numerous ways that enable a developer to mock static calls, however, with the advent of new mocking frameworks mocking static calls is much more simpler, and would avoid changes in the original design that were made to make it testable. <a href="http://mockito.org/">Mockito</a> is quite a popular mocking framework, but it still doesn't support  mocking static method calls. Put <a href="http://code.google.com/p/powermock/">PowerMock</a> on top of it, and it just becomes icing on the cake.
-<!--more--></p>
-<p>Power up mockito in three!</p>
-<p>One: Tell PowerMock to prepare the class for testing, it acts as a signal that this class needs byte-code manipulation.
-<code>@PrepareForTest( {StaticMessageGenerator.class})</code></p>
-<p>Two: Enable static mocking for all methods of a class.
-<code>PowerMockito.mockStatic(StaticMessageGenerator.class);</code></p>
-<p>Three: Over to mockito
-<code>Mockito.when(StaticMessageGenerator.getMessage()).thenReturn("hi");</code></p>
-<p>In general PoweMock is a framework that allows unit testing of Java code that is otherwise difficult to test. PowerMock acts as a addon to existing frameworks namely <a href="http://easymock.org/">EasyMock</a> and Mockito.</p>
+The blog at <http://blog.xebia.com/2007/06/21/mocking-static-calls/> mentions numerous ways that enable a developer to mock static calls, however, with the advent of new mocking frameworks mocking static calls is much more simpler, and would avoid changes in the original design that were made to make it testable. [Mockito][1] is quite a popular mocking framework, but it still doesn't support mocking static method calls. Put [PowerMock][2] on top of it, and it just becomes icing on the cake. 
+
+Power up mockito in three!
+
+One: Tell PowerMock to prepare the class for testing, it acts as a signal that this class needs byte-code manipulation. `@PrepareForTest( {StaticMessageGenerator.class})`
+
+Two: Enable static mocking for all methods of a class. `PowerMockito.mockStatic(StaticMessageGenerator.class);`
+
+Three: Over to mockito `Mockito.when(StaticMessageGenerator.getMessage()).thenReturn("hi");`
+
+In general PoweMock is a framework that allows unit testing of Java code that is otherwise difficult to test. PowerMock acts as a addon to existing frameworks namely [EasyMock][3] and Mockito.
+
+   [1]: http://mockito.org/
+   [2]: http://code.google.com/p/powermock/
+   [3]: http://easymock.org/
 
 ## Comments
 

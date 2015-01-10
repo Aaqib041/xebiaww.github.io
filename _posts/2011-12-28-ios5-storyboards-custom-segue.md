@@ -11,45 +11,67 @@ comment_status: open
 
 # iOS5 Storyboards: Custom Segue
 
-<p>iOS5 have introduced <strong>Storyboards</strong>, using which you can connect your static views and easily prepare a navigation workflow. Prior to iOS5, we used to have .xib files for every view controller. With Storyboards, all the views (and their controllers) are in one single file with an extension .storyboard. View navigation using storyboard happens with <strong>Segues</strong>. Segues define a way using which you can define things like transition type, data flow, etc. To navigate from one view to another, you simply need to CTRL CLICK and DRAG from the source view controller to the destination view controller. For example, if on a click of a button you want the next screen to show up, CTRL CLICK and DRAG from that button to the desired view controller. When you release, you can see three options – PUSH, MODAL and CUSTOM. Push and Modal are self explanatory. But when do you want to use Custom Segues? Before the answer, lets have a look at a use case:</p>
-<!--more-->
+iOS5 have introduced **Storyboards**, using which you can connect your static views and easily prepare a navigation workflow. Prior to iOS5, we used to have .xib files for every view controller. With Storyboards, all the views (and their controllers) are in one single file with an extension .storyboard. View navigation using storyboard happens with **Segues**. Segues define a way using which you can define things like transition type, data flow, etc. To navigate from one view to another, you simply need to CTRL CLICK and DRAG from the source view controller to the destination view controller. For example, if on a click of a button you want the next screen to show up, CTRL CLICK and DRAG from that button to the desired view controller. When you release, you can see three options – PUSH, MODAL and CUSTOM. Push and Modal are self explanatory. But when do you want to use Custom Segues? Before the answer, lets have a look at a use case:
 
-<p>A table view controller shows a list of certain categories. When you select a category, a new table view controller is pushed on to the stack and shows the available items in the selected category.</p>
-<p><a href="http://xebee.xebia.in/2011/12/28/ios5-storyboards-custom-segue/screen-shot-2011-12-28-at-10-36-36-am/" rel="attachment wp-att-10619"></a><a href="http://xebee.xebia.in/2011/12/28/ios5-storyboards-custom-segue/screen-shot-2011-12-28-at-10-33-09-am/" rel="attachment wp-att-10620"><img height="300" width="159" src="http://xebee.xebia.in/wp-content/uploads/2011/12/Screen-Shot-2011-12-28-at-10.33.09-AM-159x300.png" title="Screen Shot 2011-12-28 at 10.33.09 AM" class="alignleft size-medium wp-image-10620" /></a><a href="http://xebee.xebia.in/2011/12/28/ios5-storyboards-custom-segue/screen-shot-2011-12-28-at-10-36-36-am/" rel="attachment wp-att-10619"><img height="300" width="159" src="http://xebee.xebia.in/wp-content/uploads/2011/12/Screen-Shot-2011-12-28-at-10.36.36-AM-159x300.png" title="Screen Shot 2011-12-28 at 10.36.36 AM" class="alignleft size-medium wp-image-10619" /></a></p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>It looked like i can easily use Segues here. In the .storyboard file, i created the navigation using segues for both the views, and using prepareForSegue: i passed on the required values. But this approach had a loophole. Whenever we use a Push or Modal segue, we are basically pushing a view controller on to the navigation stack. In my case, i would not like the navigationController to be full of the view controllers every time i have to select the item/category. But on the other hand, i do want to loose the ease of prepareForSegue: method. Then, whats the solution? The solution is to create a Custom Segue.</p>
-<p>A custom segue extends <a target="_blank" href="http://developer.apple.com/library/IOs/#documentation/UIKit/Reference/UIStoryboardSegue_Class/Reference/Reference.html">UIStoryboardSegue</a>. UIStoryboardSegue contains following properties:
-<ul>
-    <li>sourceViewController</li>
-    <li>destinationViewController</li>
-</ul>
-So you can easily specify the transition and navigation type between the source and destination view controllers. A custom segue class contains a <strong>perform</strong> method, where in you can specify the desired behavior.</p>
-<p>When you create a segue between views, choose Custom from the options and specify your custom class in the Attributes Inspector (CMD+OPT+4) under Segue Class. In your custom segue class you can write something like below:</p>
-<p>[code]
-- (void) perform {</p>
-<pre><code>UIViewController *src = (UIViewController *) self.sourceViewController;
+A table view controller shows a list of certain categories. When you select a category, a new table view controller is pushed on to the stack and shows the available items in the selected category.
 
-[UIView transitionWithView:src.navigationController.view duration:0.1
-                   options:UIViewAnimationOptionTransitionNone
-                animations:^{
-                    [src.navigationController popViewControllerAnimated:YES];
-                }
-                completion:NULL];
-</code></pre>
-<p>}
-[/code]</p>
-<p>As you can see i am popping out the current view controller. So now when i perform a navigation between my views using this custom segue, i will be popping out the current view. With this, i am not filling my navigationController with unnecessary view controllers, and i am also able to use the power of prepareForSegue method.</p>
-<p>I am attaching a working sample. Please download it from <a href="http://xebee.xebia.in/wp-content/uploads/2011/12/CustomSegues.zip">here</a>.</p>
+![][1]![][2]
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+It looked like i can easily use Segues here. In the .storyboard file, i created the navigation using segues for both the views, and using prepareForSegue: i passed on the required values. But this approach had a loophole. Whenever we use a Push or Modal segue, we are basically pushing a view controller on to the navigation stack. In my case, i would not like the navigationController to be full of the view controllers every time i have to select the item/category. But on the other hand, i do want to loose the ease of prepareForSegue: method. Then, whats the solution? The solution is to create a Custom Segue.
+
+A custom segue extends [UIStoryboardSegue][3]. UIStoryboardSegue contains following properties: 
+
+  * sourceViewController
+  * destinationViewController
+So you can easily specify the transition and navigation type between the source and destination view controllers. A custom segue class contains a **perform** method, where in you can specify the desired behavior.
+
+When you create a segue between views, choose Custom from the options and specify your custom class in the Attributes Inspector (CMD+OPT+4) under Segue Class. In your custom segue class you can write something like below:
+
+[code] \- (void) perform {
+    
+    
+    UIViewController *src = (UIViewController *) self.sourceViewController;
+    
+    [UIView transitionWithView:src.navigationController.view duration:0.1
+                       options:UIViewAnimationOptionTransitionNone
+                    animations:^{
+                        [src.navigationController popViewControllerAnimated:YES];
+                    }
+                    completion:NULL];
+    
+
+} [/code]
+
+As you can see i am popping out the current view controller. So now when i perform a navigation between my views using this custom segue, i will be popping out the current view. With this, i am not filling my navigationController with unnecessary view controllers, and i am also able to use the power of prepareForSegue method.
+
+I am attaching a working sample. Please download it from [here][4].
+
+   [1]: http://xebee.xebia.in/wp-content/uploads/2011/12/Screen-Shot-2011-12-28-at-10.33.09-AM-159x300.png (Screen Shot 2011-12-28 at 10.33.09 AM)
+   [2]: http://xebee.xebia.in/wp-content/uploads/2011/12/Screen-Shot-2011-12-28-at-10.36.36-AM-159x300.png (Screen Shot 2011-12-28 at 10.36.36 AM)
+   [3]: http://developer.apple.com/library/IOs/#documentation/UIKit/Reference/UIStoryboardSegue_Class/Reference/Reference.html
+   [4]: http://xebee.xebia.in/wp-content/uploads/2011/12/CustomSegues.zip
 
 ## Comments
 

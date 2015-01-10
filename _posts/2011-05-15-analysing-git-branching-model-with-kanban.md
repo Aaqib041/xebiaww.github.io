@@ -11,23 +11,27 @@ comment_status: open
 
 # Analysing GIT Branching model with Kanban
 
-<p>We have been working with GIT branching model for a long time now. <a href="http://git-scm.com/">GIT</a> allows you to maintain different branches in your codebase. It is a developer's choice when to make/merge branches. We, as a team decided on certain guidelines as to when make/merge branches. Apart from the user story specific branches, we had <em>Development </em>and <em>Master</em>. The concept of <em>Development </em>branch was introduced to keep our <em>Master </em>stable and be in a state to give release-ready builds. All the user story branches are merged into <em>Development</em>. <!--more--></p>
-<p>Just to have an idea, here is how our Kanban board looks like -</p>
-<p><img src="http://xebee.xebia.in/wp-content/uploads/2011/05/kanban-board.png" alt="Kanban Board" width="675" /></p>
-<p>So for each story, we made a remote branch in GIT. To make is simpler and globalized, we named all branches as US-XXXX. The user story branches were created from <em>Development</em>, so that we always have the updated code. The developers, either individually or in a pair worked on user stories. The story moves from left to right. Once it reaches the <em>Acceptance Done</em> column, it's time to merge them to a standard branch named <em>Developmen</em>t. Finally, the <em>Development </em>branch is being merged into <em>Master </em>whenever there is a Release.</p>
-<p>Over the time we realized there are some good things that comes with this approach.
-<ol>
-    <li> <strong><em>Master </em>always remain stable:</strong> With this approach, we were sure that we won't make any commit directly on master. We have enough buffer to check if our commit is not breaking any of the tests.</li>
-    <li><strong>Bugs:</strong> Whenever there is a new feature in the product, it is added as a user story. With the above approach we make a dedicated branch for that user story. So for any bug related to the user story, we always know which branch to work upon. So the bug can be worked upon in isolation.</li>
-    <li><strong>Test cases for each user story: </strong>Stories are not moved in <em>Development Done</em> untill there are Unit Test cases for it. So this way we make sure that the test cases are present on the branch only. The branch is fully testable before moving into the next column.</li>
-    <li><strong>Parallel development</strong>: Developers can work on work on their user story in parallel to others, which is  independent of other changes/modifications in the application.</li>
-</ol>
-Apart from these positive points, there were some issues also with this approach.
-<ol>
-    <li><strong>Story might get blocked:</strong> This is the most common problem we faced while following this approach. A practical use case is - Developer A working on a user story US-AAAA, and the story is currently in <em>Development</em> column. Developer A does heavy refactoring which affects all stories related to US-AAAA. A related story say US-BBBB is being picked by Developer B. The refactoring done by Developer A is now required by Developer B. But Developer B won't have this refactoring untill the story reaches <em>Acceptance Done</em> column. Because after this column, the story will be merged into <em>Development</em>. So for that particular time, US-AAAA remains blocked.</li>
-    <li><strong>Merge conflicts:</strong> Whenever a story is being merged with 'Development', we often face merge conflicts. The reason is pretty clear - All stories have their own branches, which may have common files/classes being modified. So when they are merged, GIT is not able to able auto-merge those changes.</li>
-</ol>
-We are using this approach for a good amount of time now, and we feel that the good things that we are getting with this approach is making our development smoother and efficient. Although we do come across some hurdles with this approach, but that's an opportunity to learn and adapt!</p>
+We have been working with GIT branching model for a long time now. [GIT][1] allows you to maintain different branches in your codebase. It is a developer's choice when to make/merge branches. We, as a team decided on certain guidelines as to when make/merge branches. Apart from the user story specific branches, we had _Development _and _Master_. The concept of _Development _branch was introduced to keep our _Master _stable and be in a state to give release-ready builds. All the user story branches are merged into _Development_. 
+
+Just to have an idea, here is how our Kanban board looks like -
+
+![Kanban Board][2]
+
+So for each story, we made a remote branch in GIT. To make is simpler and globalized, we named all branches as US-XXXX. The user story branches were created from _Development_, so that we always have the updated code. The developers, either individually or in a pair worked on user stories. The story moves from left to right. Once it reaches the _Acceptance Done_ column, it's time to merge them to a standard branch named _Developmen_t. Finally, the _Development _branch is being merged into _Master _whenever there is a Release.
+
+Over the time we realized there are some good things that comes with this approach. 
+
+  1. **_Master _always remain stable:** With this approach, we were sure that we won't make any commit directly on master. We have enough buffer to check if our commit is not breaking any of the tests.
+  2. **Bugs:** Whenever there is a new feature in the product, it is added as a user story. With the above approach we make a dedicated branch for that user story. So for any bug related to the user story, we always know which branch to work upon. So the bug can be worked upon in isolation.
+  3. **Test cases for each user story: **Stories are not moved in _Development Done_ untill there are Unit Test cases for it. So this way we make sure that the test cases are present on the branch only. The branch is fully testable before moving into the next column.
+  4. **Parallel development**: Developers can work on work on their user story in parallel to others, which is independent of other changes/modifications in the application.
+Apart from these positive points, there were some issues also with this approach. 
+  1. **Story might get blocked:** This is the most common problem we faced while following this approach. A practical use case is - Developer A working on a user story US-AAAA, and the story is currently in _Development_ column. Developer A does heavy refactoring which affects all stories related to US-AAAA. A related story say US-BBBB is being picked by Developer B. The refactoring done by Developer A is now required by Developer B. But Developer B won't have this refactoring untill the story reaches _Acceptance Done_ column. Because after this column, the story will be merged into _Development_. So for that particular time, US-AAAA remains blocked.
+  2. **Merge conflicts:** Whenever a story is being merged with 'Development', we often face merge conflicts. The reason is pretty clear - All stories have their own branches, which may have common files/classes being modified. So when they are merged, GIT is not able to able auto-merge those changes.
+We are using this approach for a good amount of time now, and we feel that the good things that we are getting with this approach is making our development smoother and efficient. Although we do come across some hurdles with this approach, but that's an opportunity to learn and adapt!
+
+   [1]: http://git-scm.com/
+   [2]: http://xebee.xebia.in/wp-content/uploads/2011/05/kanban-board.png
 
 ## Comments
 

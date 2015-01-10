@@ -13,184 +13,85 @@ comment_status: open
 
 # Indexing PDF, XML, Office docs with Lucene
 
-<p>Since Lucene by default does not handle anything but <em>java.lang.String </em>and<em> java.io.Reader</em> for indexing, we have to do something extra to handle the indexing for PDF, Microsoft Word and Excel. In this blog we'll talk about indexing these metadata documents.</p>
-<p>We will take a look at how to extract text from these meta-data documents and how to use Lucene's Core APIs to index and search. To get a snapshot on Lucene's Core APIs, you may want to visit <a href="http://xebee.xebia.in/2010/05/24/jump-start-lucene-indexing-and-search/">"Jump Start Lucene Indexing and Search"</a> blog.</p>
-<p>So let’s begin with looking at how to extract text from <strong>PDF</strong>.
-For PDF, we'll be using the <a href="http://pdfbox.apache.org/">PDFBox</a> open source API from Apache.
-We'll extract text as well as other information like author, title etc.
-Once we have the required texts available, we'll put those texts as the value of the <a href="http://lucene.apache.org/java/2_2_0/api/org/apache/lucene/document/Field.html">Field </a>class of Lucene and add these Fields to the <a href="http://lucene.apache.org/java/2_2_0/api/org/apache/lucene/document/Document.html">Document</a> class.
-<!--more-->
-So let's take a look at the code:</p>
-<p>[java]
-public Document getDocument(InputStream is) throws Exception {
-COSDocument cosDoc = null;
-cosDoc = parseDocument(is);
-PDDocument pdDoc = new PDDocument(cosDoc);
-String docText = null;
-PDFTextStripper stripper = new PDFTextStripper();
-docText = stripper.getText(pdDoc);
-Document doc = new Document();
-if (StringUtils.isNotEmpty(docText)) {
-doc.add(new Field(&quot;content&quot;, docText,Field.Store.NO,Field.Index.ANALYZED));
+Since Lucene by default does not handle anything but _java.lang.String _and_ java.io.Reader_ for indexing, we have to do something extra to handle the indexing for PDF, Microsoft Word and Excel. In this blog we'll talk about indexing these metadata documents.
+
+We will take a look at how to extract text from these meta-data documents and how to use Lucene's Core APIs to index and search. To get a snapshot on Lucene's Core APIs, you may want to visit ["Jump Start Lucene Indexing and Search"][1] blog.
+
+So let’s begin with looking at how to extract text from **PDF**. For PDF, we'll be using the [PDFBox][2] open source API from Apache. We'll extract text as well as other information like author, title etc. Once we have the required texts available, we'll put those texts as the value of the [Field ][3]class of Lucene and add these Fields to the [Document][4] class.  So let's take a look at the code:
+
+[java] public Document getDocument(InputStream is) throws Exception { COSDocument cosDoc = null; cosDoc = parseDocument(is); PDDocument pdDoc = new PDDocument(cosDoc); String docText = null; PDFTextStripper stripper = new PDFTextStripper(); docText = stripper.getText(pdDoc); Document doc = new Document(); if (StringUtils.isNotEmpty(docText)) { doc.add(new Field("content", docText,Field.Store.NO,Field.Index.ANALYZED)); } // extract PDF document's meta-data
+
+PDDocumentInformation docInfo = pdDoc.getDocumentInformation(); String author = docInfo.getAuthor(); String title = docInfo.getTitle(); String keywords = docInfo.getKeywords(); String summary = docInfo.getSubject(); if (StringUtils.isNotEmpty(author)) {
+
+doc.add(new Field("author", author,Field.Store.YES,Field.Index.NOT_ANALYZED)); } if (StringUtils.isNotEmpty(title)) { doc.add(new Field("title", title ,Field.Store.YES,Field.Index.ANALYZED)); } if (StringUtils.isNotEmpty(keywords)) {
+
+doc.add(new Field("keywords", keywords, Field.Store.YES,Field.Index.ANALYZED)); } if (StringUtils.isNotEmpty(summary)) { doc.add(new Field("summary", summary,Field.Store.YES,Field.Index.ANALYZED)); }
+
+return doc; }
+
+private static COSDocument parseDocument(InputStream is) throws IOException { PDFParser parser= null; parser = new PDFParser(is);
+
+parser.parse(); return parser.getDocument(); } [/java]
+
+Above method `getDocument()` takes the `InputStream` of PDF document as an argument. Since this method returns a `Document` instance, it can be added to an `IndexWriter` as follows:
+
+[java] doc.add(new Field("filename",new File(String pdfLocation).getCanonicalPath(),Field.Store.YES,Field.Index.NOT_ANALYZED)); IndexWriter writer = new IndexWriter(indexDir,new StandardAnalyzer(),IndexWriter.MaxFieldLength.UNLIMITED);//indexDir is the location of the Index writer.addDocument(doc); [/java]
+
+In the above code we have also added the complete canonical path of the file to the Document instance so that while searching the text we can retrieve the full file name. Now for **XML** we will use [SAX][5] parser to extract the text.
+
+[java] public Document getDocument(InputStream is) throws Exception { StringBuilder elementBuffer = new StringBuilder(); HashMap<String, String> attributeMap; Document doc; StringBuilder contents = new StringBuilder(); SAXParserFactory spf = SAXParserFactory.newInstance(); try { SAXParser parser = spf.newSAXParser(); parser.parse(is, this); } catch (IOException e) { throw new Exception("Cannot parse XML document", e); } catch (SAXException e) { throw new Exception("Cannot parse XML document", e); } return doc; }
+
+public void startDocument() { doc = new Document(); }
+
+public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException { elementBuffer.setLength(0);
+
+if (atts.getLength() > 0) { attributeMap = new HashMap<String,String>(); for (int i = 0; i < atts.getLength(); i++) { attributeMap.put(atts.getQName(i), atts.getValue(i)); } } }
+
+// called when cdata is found public void characters(char[] text, int start, int length) { elementBuffer.append(text, start, length); contents.append(elementBuffer.toString()).append(" "); System.out.println(contents.toString());
+
 }
-// extract PDF document's meta-data</p>
-<p>PDDocumentInformation docInfo = pdDoc.getDocumentInformation();
-String author = docInfo.getAuthor();
-String title = docInfo.getTitle();
-String keywords = docInfo.getKeywords();
-String summary = docInfo.getSubject();
-if (StringUtils.isNotEmpty(author)) {</p>
-<p>doc.add(new Field(&quot;author&quot;, author,Field.Store.YES,Field.Index.NOT_ANALYZED));
-}
-if (StringUtils.isNotEmpty(title)) {
-   doc.add(new Field(&quot;title&quot;, title ,Field.Store.YES,Field.Index.ANALYZED));
-}
-if (StringUtils.isNotEmpty(keywords)) {</p>
-<p>doc.add(new Field(&quot;keywords&quot;, keywords, Field.Store.YES,Field.Index.ANALYZED));
-}
-if (StringUtils.isNotEmpty(summary)) {
-doc.add(new Field(&quot;summary&quot;, summary,Field.Store.YES,Field.Index.ANALYZED));
-}</p>
-<p>return doc;
-}</p>
-<p>private static COSDocument parseDocument(InputStream is) throws IOException {
-PDFParser parser= null;
-parser = new PDFParser(is);</p>
-<p>parser.parse();
-return parser.getDocument();
-}
-[/java]</p>
-<p>Above method <code>getDocument()</code> takes the <code>InputStream</code> of PDF document as an argument. Since this method returns a <code>Document</code> instance, it can be added to an <code>IndexWriter</code> as follows:</p>
-<p>[java]
-doc.add(new Field(&quot;filename&quot;,new File(String pdfLocation).getCanonicalPath(),Field.Store.YES,Field.Index.NOT_ANALYZED));
-IndexWriter writer = new IndexWriter(indexDir,new StandardAnalyzer(),IndexWriter.MaxFieldLength.UNLIMITED);//indexDir is the location of the Index
-writer.addDocument(doc);
-[/java]</p>
-<p>In the above code we have also added the complete canonical path of the file to the Document instance so that while searching the text we can retrieve the full file name.
-Now for <strong>XML</strong> we will use <a href="http://www.saxproject.org/">SAX</a> parser to extract the text.</p>
-<p>[java]
-public Document getDocument(InputStream is) throws Exception {
-StringBuilder elementBuffer = new StringBuilder();
-HashMap&lt;String, String&gt; attributeMap;
-Document doc;
-StringBuilder contents = new StringBuilder();
-SAXParserFactory spf = SAXParserFactory.newInstance();
-try {
-SAXParser parser = spf.newSAXParser();
-parser.parse(is, this);
-} catch (IOException e) {
-throw new Exception(&quot;Cannot parse XML document&quot;, e);
-} catch (SAXException e) {
-throw new Exception(&quot;Cannot parse XML document&quot;, e);
-}
-return doc;
-}</p>
-<p>public void startDocument() {
-doc = new Document();
-}</p>
-<p>public void startElement(String uri, String localName, String qName,
-Attributes atts) throws SAXException {
-elementBuffer.setLength(0);</p>
-<p>if (atts.getLength() &gt; 0) {
-attributeMap = new HashMap&lt;String,String&gt;();
-for (int i = 0; i &lt; atts.getLength(); i++) {
-attributeMap.put(atts.getQName(i), atts.getValue(i));
-}
-}
-}</p>
-<p>// called when cdata is found
-public void characters(char[] text, int start, int length) {
-elementBuffer.append(text, start, length);
-contents.append(elementBuffer.toString()).append(&quot; &quot;);
-System.out.println(contents.toString());</p>
-<p>}</p>
-<p>public void endElement(String uri, String localName, String qName)
-throws SAXException {
-if(attributeMap !=null) {
-Iterator&lt;String&gt; iter = attributeMap.keySet().iterator();
-while (iter.hasNext()) {
-String attName = (String) iter.next();
-String attValue = (String) attributeMap.get(attName);
-doc.add(new Field(attName, attValue,Field.Store.YES , Field.Index.ANALYZED));</p>
-<p>}
-}</p>
-<p>doc.add(new Field(qName, elementBuffer.toString(),Field.Store.YES , Field.Index.ANALYZED));</p>
-<p>}
-public void endDocument() {
-//The all in one field which contains all the data.
-doc.add(new Field(&quot;content&quot;,contents.toString(),Field.Store.YES , Field.Index.ANALYZED));
-}
-[/java]</p>
-<p>Now since the above method returns the Document instance, we can add this Document instance to the IndeWriter</p>
-<p>[java]
-doc.add(new Field(&quot;filename&quot;,new File(String XmlLocation).getCanonicalPath(),Field.Store.YES,Field.Index.NOT_ANALYZED));
-writer.addDocument(doc);
-[/java]</p>
-<p>Now let us look at the scenario for <strong>Excel 2007</strong> documents. We will be using <a href="http://poi.apache.org/">Apache poi API </a>for text extraction</p>
-<p>[java]
-public Document getDocument(InputStream is) throws Exception {
-StringBuilder contents = new StringBuilder();
-POIFSFileSystem fileSystem = new POIFSFileSystem(is);
-HSSFWorkbook workBook = new HSSFWorkbook(fileSystem);
-for (int i =0; i&lt;workBook.getNumberOfSheets();i++) {
-HSSFSheet sheet = workBook.getSheetAt(i);
-Iterator&lt;Row&gt; rows = sheet.rowIterator();
-while (rows.hasNext()) {
-HSSFRow row = (HSSFRow)rows.next();
-//Display the row number
-System.out.println(row.getRowNum());
-Iterator&lt;Cell&gt; cells=row.cellIterator();
-while(cells.hasNext()) {
-HSSFCell cell = (HSSFCell) cells.next();
-//Disply the cell number of the current Row</p>
-<p>switch(cell.getCellType()) {
-case HSSFCell.CELL_TYPE_NUMERIC : {
-System.out.println(String.valueOf(cell.getNumericCellValue()));
-contents.append(String.valueOf(cell.getNumericCellValue())).append(&quot; &quot;);
-break;
-}
-case HSSFCell.CELL_TYPE_STRING : {</p>
-<p>HSSFRichTextString richTextString =cell.getRichStringCellValue();
-System.out.println(richTextString.toString());
-contents.append(richTextString.toString()).append(&quot; &quot;);
-break;
-}
-case HSSFCell.CELL_TYPE_BOOLEAN : {
-contents.append(String.valueOf(cell.getBooleanCellValue())).append(&quot; &quot;);
-break;
-}
-}</p>
-<p>}
-}</p>
-<p>}
-Document doc = new Document();
-doc.add(new Field(&quot;content&quot;,contents.toString(),Field.Store.YES,Field.Index.ANALYZED));
-System.out.println(contents.toString());
-return doc;
-}
-[/java]</p>
-<p>So again from the above method you can see we are getting Document instance which can be added to the IndexWriter instance <em>writer</em>.
-Let us now see the scenario for <strong>Word 2007</strong> documents.
-We will again use <a href="http://poi.apache.org/hwpf/index.html">Apache POI API</a> for text extraction.</p>
-<p>[java]
-public Document getDocument(InputStream is) throws POIXMLException,Exception{
-String bodyText = null;
-StringBuilder content = new StringBuilder();
-try {
-XWPFDocument wd = new XWPFDocument(is);
-XWPFWordExtractor wde = new XWPFWordExtractor(wd);
-bodyText = wde.getText();</p>
-<p>}catch(Exception e) {
-e.printStackTrace();
-}
-Document doc = new Document();</p>
-<p>if(!bodyText.equals(&quot;&quot;) &amp;&amp; bodyText != null) {
-doc.add(new Field(&quot;content&quot;,bodyText,Field.Store.NO,Field.Index.ANALYZED));
-}
-return doc;
-}
-[/java]</p>
-<p>Thus again we can add the returned Document instance to the IndexWriter’s <em>writer</em> method.</p>
+
+public void endElement(String uri, String localName, String qName) throws SAXException { if(attributeMap !=null) { Iterator<String> iter = attributeMap.keySet().iterator(); while (iter.hasNext()) { String attName = (String) iter.next(); String attValue = (String) attributeMap.get(attName); doc.add(new Field(attName, attValue,Field.Store.YES , Field.Index.ANALYZED));
+
+} }
+
+doc.add(new Field(qName, elementBuffer.toString(),Field.Store.YES , Field.Index.ANALYZED));
+
+} public void endDocument() { //The all in one field which contains all the data. doc.add(new Field("content",contents.toString(),Field.Store.YES , Field.Index.ANALYZED)); } [/java]
+
+Now since the above method returns the Document instance, we can add this Document instance to the IndeWriter
+
+[java] doc.add(new Field("filename",new File(String XmlLocation).getCanonicalPath(),Field.Store.YES,Field.Index.NOT_ANALYZED)); writer.addDocument(doc); [/java]
+
+Now let us look at the scenario for **Excel 2007** documents. We will be using [Apache poi API ][6]for text extraction
+
+[java] public Document getDocument(InputStream is) throws Exception { StringBuilder contents = new StringBuilder(); POIFSFileSystem fileSystem = new POIFSFileSystem(is); HSSFWorkbook workBook = new HSSFWorkbook(fileSystem); for (int i =0; i<workBook.getNumberOfSheets();i++) { HSSFSheet sheet = workBook.getSheetAt(i); Iterator<Row> rows = sheet.rowIterator(); while (rows.hasNext()) { HSSFRow row = (HSSFRow)rows.next(); //Display the row number System.out.println(row.getRowNum()); Iterator<Cell> cells=row.cellIterator(); while(cells.hasNext()) { HSSFCell cell = (HSSFCell) cells.next(); //Disply the cell number of the current Row
+
+switch(cell.getCellType()) { case HSSFCell.CELL_TYPE_NUMERIC : { System.out.println(String.valueOf(cell.getNumericCellValue())); contents.append(String.valueOf(cell.getNumericCellValue())).append(" "); break; } case HSSFCell.CELL_TYPE_STRING : {
+
+HSSFRichTextString richTextString =cell.getRichStringCellValue(); System.out.println(richTextString.toString()); contents.append(richTextString.toString()).append(" "); break; } case HSSFCell.CELL_TYPE_BOOLEAN : { contents.append(String.valueOf(cell.getBooleanCellValue())).append(" "); break; } }
+
+} }
+
+} Document doc = new Document(); doc.add(new Field("content",contents.toString(),Field.Store.YES,Field.Index.ANALYZED)); System.out.println(contents.toString()); return doc; } [/java]
+
+So again from the above method you can see we are getting Document instance which can be added to the IndexWriter instance _writer_. Let us now see the scenario for **Word 2007** documents. We will again use [Apache POI API][7] for text extraction.
+
+[java] public Document getDocument(InputStream is) throws POIXMLException,Exception{ String bodyText = null; StringBuilder content = new StringBuilder(); try { XWPFDocument wd = new XWPFDocument(is); XWPFWordExtractor wde = new XWPFWordExtractor(wd); bodyText = wde.getText();
+
+}catch(Exception e) { e.printStackTrace(); } Document doc = new Document();
+
+if(!bodyText.equals("") && bodyText != null) { doc.add(new Field("content",bodyText,Field.Store.NO,Field.Index.ANALYZED)); } return doc; } [/java]
+
+Thus again we can add the returned Document instance to the IndexWriter’s _writer_ method.
+
+   [1]: http://xebee.xebia.in/2010/05/24/jump-start-lucene-indexing-and-search/
+   [2]: http://pdfbox.apache.org/
+   [3]: http://lucene.apache.org/java/2_2_0/api/org/apache/lucene/document/Field.html
+   [4]: http://lucene.apache.org/java/2_2_0/api/org/apache/lucene/document/Document.html
+   [5]: http://www.saxproject.org/
+   [6]: http://poi.apache.org/
+   [7]: http://poi.apache.org/hwpf/index.html
 
 ## Comments
 

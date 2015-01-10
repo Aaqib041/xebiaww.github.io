@@ -11,102 +11,103 @@ comment_status: open
 
 # Yowsup - The WhatsApp API
 
-<p style="text-align: justify"><!-- P { margin-bottom: 0.21cm; }A:link {  } -->WhatsApp ! Do I even need to introduce it ? For a normal smartphone user, WhatsApp is the replacement of SMS service as it is free and runs on internet data of the phone. It allows us to send text as well as multimedia messages, create groups, share status etc. Lets see it formally:</p>
+WhatsApp ! Do I even need to introduce it ? For a normal smartphone user, WhatsApp is the replacement of SMS service as it is free and runs on internet data of the phone. It allows us to send text as well as multimedia messages, create groups, share status etc. Lets see it formally:
 
-<p style="text-align: justify">According to <a href="http://www.whatsapp.com/">WhatsApp.com</a>:</p>
+According to [WhatsApp.com][1]:
 
-<blockquote>
-<p style="padding-left: 30px;text-align: justify">“<em>WhatsApp Messenger is a cross-platform mobile messaging app which allows you to exchange messages without having to pay for SMS.</em>”</p>
-</blockquote>
+> “_WhatsApp Messenger is a cross-platform mobile messaging app which allows you to exchange messages without having to pay for SMS._”
 
-<p style="text-align: justify">But WhatsApp is not just another brick in the wall in terms of communication apps available in today's IT world. It has become “a must to have app” for any smartphone user.</p>
+But WhatsApp is not just another brick in the wall in terms of communication apps available in today's IT world. It has become “a must to have app” for any smartphone user.
 
-<p style="text-align: justify">According to a <a href="http://www.nextiphonenews.com/2013/11/is-facebook-inc-fb-losing-its-position/">news report</a>:</p>
+According to a [news report][2]:
 
-<blockquote>
-<p style="padding-left: 30px;text-align: justify">“<em>According to a recent survey by the statistics portal Statista, which interviewed 2,000 Apple Inc. iPhone users in Germany, <b>67 percent of users reported using WhatsApp,</b> with <b>Facebook Inc. finishing second with 63-percent use</b>.”</em></p>
-</blockquote>
+> “_According to a recent survey by the statistics portal Statista, which interviewed 2,000 Apple Inc. iPhone users in Germany, **67 percent of users reported using WhatsApp,** with **Facebook Inc. finishing second with 63-percent use**.”_
 
-<p style="text-align: justify">So, we can say that if we were to replace SMS with any other communication medium, our first choice should be WhatsApp. But why to replace SMS ? Reasons are straightforward: cost, lack of media support(MMS is even costlier), cross country/region SMSes are costlier, etc. WhatsApp works on Internet which is available on almost any smartphone. Also, subscription fee is free for one year and after that a nominal charge per year.</p>
+So, we can say that if we were to replace SMS with any other communication medium, our first choice should be WhatsApp. But why to replace SMS ? Reasons are straightforward: cost, lack of media support(MMS is even costlier), cross country/region SMSes are costlier, etc. WhatsApp works on Internet which is available on almost any smartphone. Also, subscription fee is free for one year and after that a nominal charge per year.
 
-<p style="text-align: justify">So, as a developer, why should I bother about all this ?</p>
+So, as a developer, why should I bother about all this ?
 
-<p style="text-align: justify">You must, if your app is still dependent on emails and SMS API's for notifications and other communications. Emails are not as reliable. Someone may forget to check his email but would never miss a WhatsApp message.</p>
+You must, if your app is still dependent on emails and SMS API's for notifications and other communications. Emails are not as reliable. Someone may forget to check his email but would never miss a WhatsApp message.
 
-<p style="text-align: justify">Ok but how do I use it ?</p>
+Ok but how do I use it ?
 
-<p style="text-align: justify"><strong><span style="font-size: 22px">Yowsup !</span></strong></p>
+**Yowsup !**
 
-<blockquote>
-<p style="padding-left: 30px;text-align: justify" align="JUSTIFY"><em>“<a href="https://github.com/tgalal/yowsup/wiki/About-and-Features#wiki-about">Yowsup</a> is a cross platform python library that allows you to do all the previous (what WhatsApp can do) in your own app. Yowsup allows you to login and use the Whatsapp service and provides you with all capabilities of an official Whatsapp client, allowing you to create a full-fledged custom Whatsapp client.”</em></p>
-</blockquote>
+> _“[Yowsup][3] is a cross platform python library that allows you to do all the previous (what WhatsApp can do) in your own app. Yowsup allows you to login and use the Whatsapp service and provides you with all capabilities of an official Whatsapp client, allowing you to create a full-fledged custom Whatsapp client.”_
 
-<p style="text-align: justify">Yowsup can be used in your application to provide all the functionalities of Whatsapp service. It allows for two way communication i.e. it can send as well as receive messages from other users just like any other WhatsApp client.</p>
+Yowsup can be used in your application to provide all the functionalities of Whatsapp service. It allows for two way communication i.e. it can send as well as receive messages from other users just like any other WhatsApp client.
 
-<p style="text-align: justify">Basic Yowsup library provides a set of signals that you can register callbacks to. Connection Manager is responsible for calling these callbacks on the corresponding event. Library also provides a set of methods that you can use to send information(message, acknowledgement, media, typing signal etc) to the WhatsApp server.</p>
+Basic Yowsup library provides a set of signals that you can register callbacks to. Connection Manager is responsible for calling these callbacks on the corresponding event. Library also provides a set of methods that you can use to send information(message, acknowledgement, media, typing signal etc) to the WhatsApp server.
 
-<p style="text-align: justify">Yowsup package comes bundled with some examples implemented on top of this library which fulfill basic tasks required to interact with WhatsApp server. However, you are always free to modify it according to your needs.</p>
+Yowsup package comes bundled with some examples implemented on top of this library which fulfill basic tasks required to interact with WhatsApp server. However, you are always free to modify it according to your needs.
 
-<p style="text-align: justify">But it is python library, and I am using Java ?</p>
+But it is python library, and I am using Java ?
 
-<p style="text-align: justify"><strong><span style="font-size: 22px">Integration with Java</span></strong></p>
+**Integration with Java**
 
-<p style="text-align: justify">It comes with a CLI client that can help in integrating it with any other application that is not even written in python. Lets go through the following steps and see how can we embed this library in a Java application:</p>
+It comes with a CLI client that can help in integrating it with any other application that is not even written in python. Lets go through the following steps and see how can we embed this library in a Java application:
 
-<p style="text-align: justify"><em>(Note: I am using Linux. Similar steps can be followed on Windows machine).</em></p>
+_(Note: I am using Linux. Similar steps can be followed on Windows machine)._
 
-<ol style="text-align: justify">
-<ol>
-<ol>
-    <li>Download the Yowsup library from the “Download Zip” link on <a href="https://github.com/tgalal/yowsup">Yowsup github page. </a>Extract its “<b>src”</b> folder in home directory <code>~/Yowsup/</code>. It should contain 2 directories(Examples, Yowsup) and 3 files.Set environment variable $PYTHONPATH to the above location.</li>
-    <li>First of all we have to register a number on Whatsapp server. For this you should have an unused mobile number that should be specifically obtained for your application. (Why ? Lets keep this question for later). Edit <code>config.example</code>: put your country code in “cc” (without + or 00), mobile number obtained in “phone”, random text in “id” (14 digit). Leave password as blank.</li>
-    <li>Now, open a terminal and navigate to <code>~/Yowsup/</code> and enter:
-<pre>$ python yowsup-cli -c config.example -r sms</pre>
-Note: if you get error like:
-<pre>Traceback (most recent call last):
-File yowsup-cli, line 306, in &lt;module&gt;
-elif args["dbus"]:
-KeyError: 'dbus'</pre>
-then edit yowsup-cli and uncomment line number 207
-However, if you do not receive sms use <a href="https://coderus.openrepos.net/whitesoft/whatsapp_sms">this link</a> to generate 6 digit verification code</li>
-    <li>After you recieve 6 digit verification code on that number like <code>abc-def</code>(You would need a phone for that), Enter command:
-<pre>$python yowsup-cli -c config.example -R abc-def</pre>
-you will receive some key value pairs in output, one of which <code>pw:</code> contains your password.
+      1. Download the Yowsup library from the “Download Zip” link on [Yowsup github page. ][4]Extract its “**src”** folder in home directory `~/Yowsup/`. It should contain 2 directories(Examples, Yowsup) and 3 files.Set environment variable $PYTHONPATH to the above location.
+      2. First of all we have to register a number on Whatsapp server. For this you should have an unused mobile number that should be specifically obtained for your application. (Why ? Lets keep this question for later). Edit `config.example`: put your country code in “cc” (without + or 00), mobile number obtained in “phone”, random text in “id” (14 digit). Leave password as blank.
+      3. Now, open a terminal and navigate to `~/Yowsup/` and enter: 
+            
+                        $ python yowsup-cli -c config.example -r sms
 
-Copy this password in your <code>config.example</code>'s password property.</li>
-    <li>Now you are ready to send and recieve messages. For trial send a message to your personal number using following command:
-<pre>$python yowsup-cli -c config.example -s &lt;your personal number including cc&gt; &lt;message&gt;</pre>
-</li>
-    <li>To embed it in Java, all you have to do is call this command from Java's process builder framework. For this, first create a shell script to send message. Name it <code>sendMessage.sh</code> which looks like:
-<pre> #!/bin/bash
- python yowsup-cli -c config.example -s $1 "$2"</pre>
-Make it executable by command: chmod +x sendMessage.sh</li>
-    <li>Open a java editor and type below code in the main method (modify paths according to environment):
-<pre>String message = "The message goes here";
-String[] sendCommand = { "/bin/bash", “path/to/sendMessage.sh”, "&lt;to number including cc&gt;", message };
-ProcessBuilder processBuilder = new ProcessBuilder();processBuilder.directory(new File(&lt;YOWSUP_HOME&gt;));
-processBuilder.environment().put("PYTHONPATH", &lt;YOWSUP_HOME&gt;);
-processBuilder.command(sendCommand);
-System.out.println(processBuilder.environment());
-Process process = processBuilder.start();
-process.waitFor();</pre>
-</li>
-    <li>Run the above program and your message will be sent to the intended receiver.</li>
-    <li>You can read the <code> process.getInputStream()</code>
-to get the output of the script you executed. For ex-
-<pre>InputStream stream = process.getInputStream();
-BufferedReader br = new BufferedReader(new InputStreamReader(stream));
-String str = null;
-while ((str = br.readLine()) != null) {
-    System.out.println(str);
-}</pre>
-</li>
-</ol>
+Note: if you get error like: 
+            
+                        Traceback (most recent call last):
+            File yowsup-cli, line 306, in <module>
+            elif args["dbus"]:
+            KeyError: 'dbus'
 
-<p></ol>
-</ol>
-<p style="text-align: justify">Now, coming back to the question, why should I use a new unused mobile number. The answer is simple: one phone number can not be registered on two WhatsApp accounts. So as soon as you install Whatsapp on the phone which is using this number it will again verify your account and assign a new password. So, your application will become unusable because the password stored in config file is no longer valid.</p>
-<p style="text-align: justify"><span style="font-size: 20px"><strong>Conclusion</strong></span></p></p>
+then edit yowsup-cli and uncomment line number 207 However, if you do not receive sms use [this link][5] to generate 6 digit verification code
+      4. After you recieve 6 digit verification code on that number like `abc-def`(You would need a phone for that), Enter command: 
+            
+                        $python yowsup-cli -c config.example -R abc-def
+
+you will receive some key value pairs in output, one of which `pw:` contains your password. Copy this password in your `config.example`'s password property.
+      5. Now you are ready to send and recieve messages. For trial send a message to your personal number using following command: 
+            
+                        $python yowsup-cli -c config.example -s <your personal number including cc> <message>
+
+      6. To embed it in Java, all you have to do is call this command from Java's process builder framework. For this, first create a shell script to send message. Name it `sendMessage.sh` which looks like: 
+            
+                         #!/bin/bash
+             python yowsup-cli -c config.example -s $1 "$2"
+
+Make it executable by command: chmod +x sendMessage.sh
+      7. Open a java editor and type below code in the main method (modify paths according to environment): 
+            
+                        String message = "The message goes here";
+            String[] sendCommand = { "/bin/bash", “path/to/sendMessage.sh”, "<to number including cc>", message };
+            ProcessBuilder processBuilder = new ProcessBuilder();processBuilder.directory(new File(<YOWSUP_HOME>));
+            processBuilder.environment().put("PYTHONPATH", <YOWSUP_HOME>);
+            processBuilder.command(sendCommand);
+            System.out.println(processBuilder.environment());
+            Process process = processBuilder.start();
+            process.waitFor();
+
+      8. Run the above program and your message will be sent to the intended receiver.
+      9. You can read the ` process.getInputStream()` to get the output of the script you executed. For ex- 
+            
+                        InputStream stream = process.getInputStream();
+            BufferedReader br = new BufferedReader(new InputStreamReader(stream));
+            String str = null;
+            while ((str = br.readLine()) != null) {
+                System.out.println(str);
+            }
+
+Now, coming back to the question, why should I use a new unused mobile number. The answer is simple: one phone number can not be registered on two WhatsApp accounts. So as soon as you install Whatsapp on the phone which is using this number it will again verify your account and assign a new password. So, your application will become unusable because the password stored in config file is no longer valid.
+
+**Conclusion**
+
+   [1]: http://www.whatsapp.com/
+   [2]: http://www.nextiphonenews.com/2013/11/is-facebook-inc-fb-losing-its-position/
+   [3]: https://github.com/tgalal/yowsup/wiki/About-and-Features#wiki-about
+   [4]: https://github.com/tgalal/yowsup
+   [5]: https://coderus.openrepos.net/whitesoft/whatsapp_sms
 
 ## Comments
 

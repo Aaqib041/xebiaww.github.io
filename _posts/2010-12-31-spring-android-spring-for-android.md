@@ -11,127 +11,96 @@ comment_status: open
 
 # Spring-Android: Spring for Android!!!
 
-<p>With an aim to ease the development of android applications <a href="http://www.springsource.org/spring-android">Spring-Android</a>, an extension to Spring framework is released.The framework with it's first release brings in RestTemplate and commons-logging support for the Android based applications.</p>
-<p>This blog is the result of my experience while using the Spring-Android framework in one of the android applications that I am  currently working on.This post mainly focuses on the steps involved to get it working.</p>
-<!--more-->
+With an aim to ease the development of android applications [Spring-Android][1], an extension to Spring framework is released.The framework with it's first release brings in RestTemplate and commons-logging support for the Android based applications.
 
-<p>The sample Webservice in this scenario has a method defined to handle GET requests that return all the Projects presently configured along with certain details and an array of issues. The class is as below:</p>
-<p>[code language="java"]
-public class Project {
-    private String name;
-    private Integer id;
-    private String owner;
-    private Issue[] issues;
-    …
-    //getter and setters for all
-    …
-}
-[/code]</p>
-<p>On a Web-service <em>GET</em> request, the project data is retrieved in JSON representation. 
-A request to get all projects configured in the system gets back with the response below: </p>
-<p>[code language="java"]
-[{&quot;class&quot;:&quot;com.xyz.Project&quot;,&quot;id&quot;:1,&quot;issues&quot;:[],&quot;name&quot;:&quot;TestProject0&quot;,&quot;owner&quot;:&quot;Test0&quot;},
-{&quot;class&quot;:&quot;com.xyz.Project&quot;,&quot;id&quot;:2,&quot;issues&quot;:[],&quot;name&quot;:&quot;TestProject1&quot;,&quot;owner&quot;:&quot;Test1&quot;},
-{&quot;class&quot;:&quot;com.xyz.Project&quot;,&quot;id&quot;:3,&quot;issues&quot;:[],&quot;name&quot;:&quot;TestProject2&quot;,&quot;owner&quot;:&quot;Test2&quot;}]
-[/code]</p>
-<p>That completes the Rest service scenario description. Now let's find out how to access it in an Android application using Spring-Android's RestTemplate.</p>
-<p>With my basic eclipse Android project already in place, I just created a lib folder so as to include Spring-Android's jar. You can download the jar files from <a href="http://www.springsource.com/download/community">here</a></p>
-<p>Specifically, I have included spring-android-rest-template-1.0.0.M1.jar and spring-android-commons-logging-1.0.0.M1.jar.
-Apart from these two, we need to have commons-httpclient 3.x jar. This jar is required for using Spring-Android's RestTemplate. Android supports commons-httpclient 4.x. and Spring-Android's RestTemplate may support this in future.</p>
-<p>Please note that we have to <strong>include the Jars from the lib folder to the Project's class path</strong> for the Dex compilation process.</p>
-<p>Now, with the basic setup done, let's move over to our simple Android Activity that makes use of the Spring-Android's RestTemplate.</p>
-<p>[sourcecode language="java" highlight="7,8,9,10"]
-public class DefaultActivity extends Activity {
-    /*<em> Called when the activity is first created. </em>/
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);</p>
-<pre><code>RestTemplate restTemplate = new RestTemplate();
-restTemplate.setRequestFactory(new CommonsClientHttpRequestFactory());
-String url = &amp;quot;http://192.168.1.146:8080/grailsRestWS/project/&amp;quot;;
-String data = restTemplate.getForObject(url, String.class);
-setContentView(R.layout.main);
-}
-</code></pre>
-<p>[/sourcecode]</p>
-<p>Let's try to understand the code given above</p>
-<p><strong>Line 7:</strong> It creates a restTemplate object. The RestTemplate aides Restful communication with the HTTP servers.</p>
-<p><strong>Line 8:</strong> The restTemplate is assigned a requestFactory. 
-RequestFactory is used for creating HttpClientRequest representing a client side http request.</p>
-<p><strong>Line 9:</strong> The url used is not localhost or the loop back address 127.0.0.1.
-You might have guessed it already. The application is deployed onto a device or an Android emulator. It is the device that takes the localhost IP not the development machine. To resolve this, I have used the IP address as per my machine's network configuration.</p>
-<p><strong>Line 10:</strong> It is a rest call to the web-service url. Please notice that it is a HTTP GET request as indicated by the name getForObject().
-I have specified the String.class as the second argument to the method which means the data returned is to be interpreted as String data.</p>
-<p>The method supported by the <strong>RestTemplate</strong> are listed below
-[code language="java" light="true"]
-HTTP            RestTemplate
-DELETE          delete(String, String...)
-GET             getForObject(String, Class, String...)
-HEAD            headForHeaders(String, String...)
-OPTIONS         optionsForAllow(String, String...)
-POST            postForLocation(String, Object, String...)
-PUT             put(String, Object, String...)
-[/code]
-But, when I try to run this code I get an exception</p>
-<p>[sourcecode language="java" light="true"]
-no suitable HttpMessageConverter found for response type [com.xebia.android.Project] and
-content type [application/json]
-[/sourcecode]
-That's because we are not dealing with text data here but JSON data type</p>
-<p>Making this work requires few changes to our activity class. Below are the changes to be made
-[sourcecode language="java"]
-public class DefaultActivity extends Activity {
-    /*<em> Called when the activity is first created. </em>/
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        ...
-        RestTemplate restTemplate = &lt;strong&gt;getRestTemplate()&lt;/strong&gt;;
-        JSONData[] jsonData =   restTemplate.getForObject(url,ProjectData[].class);
-        ...
-    }</p>
-<pre><code>private RestTemplate getRestTemplate() {
+This blog is the result of my experience while using the Spring-Android framework in one of the android applications that I am currently working on.This post mainly focuses on the steps involved to get it working.
+
+The sample Webservice in this scenario has a method defined to handle GET requests that return all the Projects presently configured along with certain details and an array of issues. The class is as below:
+
+[code language="java"] public class Project { private String name; private Integer id; private String owner; private Issue[] issues; … //getter and setters for all … } [/code]
+
+On a Web-service _GET_ request, the project data is retrieved in JSON representation. A request to get all projects configured in the system gets back with the response below: 
+
+[code language="java"] [{"class":"com.xyz.Project","id":1,"issues":[],"name":"TestProject0","owner":"Test0"}, {"class":"com.xyz.Project","id":2,"issues":[],"name":"TestProject1","owner":"Test1"}, {"class":"com.xyz.Project","id":3,"issues":[],"name":"TestProject2","owner":"Test2"}] [/code]
+
+That completes the Rest service scenario description. Now let's find out how to access it in an Android application using Spring-Android's RestTemplate.
+
+With my basic eclipse Android project already in place, I just created a lib folder so as to include Spring-Android's jar. You can download the jar files from [here][2]
+
+Specifically, I have included spring-android-rest-template-1.0.0.M1.jar and spring-android-commons-logging-1.0.0.M1.jar. Apart from these two, we need to have commons-httpclient 3.x jar. This jar is required for using Spring-Android's RestTemplate. Android supports commons-httpclient 4.x. and Spring-Android's RestTemplate may support this in future.
+
+Please note that we have to **include the Jars from the lib folder to the Project's class path** for the Dex compilation process.
+
+Now, with the basic setup done, let's move over to our simple Android Activity that makes use of the Spring-Android's RestTemplate.
+
+[sourcecode language="java" highlight="7,8,9,10"] public class DefaultActivity extends Activity { /*_ Called when the activity is first created. _/ @Override public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState);
+    
+    
     RestTemplate restTemplate = new RestTemplate();
     restTemplate.setRequestFactory(new CommonsClientHttpRequestFactory());
-    &amp;lt;strong&amp;gt;MappingJacksonHttpMessageConverter jsonConverter = 
-                            new MappingJacksonHttpMessageConverter();
-    List&amp;lt;MediaType&amp;gt; supportedMediaTypes = new ArrayList&amp;lt;MediaType&amp;gt;();
-    supportedMediaTypes.add(new MediaType(&amp;quot;application&amp;quot;,&amp;quot;json&amp;quot;));
-    jsonConverter.setSupportedMediaTypes(supportedMediaTypes);&amp;lt;/strong&amp;gt;
+    String url = &quot;http://192.168.1.146:8080/grailsRestWS/project/&quot;;
+    String data = restTemplate.getForObject(url, String.class);
+    setContentView(R.layout.main);
+    }
+    
 
-    List&amp;lt;HttpMessageConverter&amp;lt;?&amp;gt;&amp;gt; listHttpMessageConverters = restTemplate
-            .getMessageConverters();
-    restTemplate.setMessageConverters(listHttpMessageConverters);
-    return restTemplate;
-}
-</code></pre>
-<p>[/sourcecode]</p>
-<p>To handle the JSON array data the response should be understandable by the restTemplate.</p>
-<p>As such, in the code above I have registered a <strong> MappingJacksonHttpMessageConverter </strong>with the restTemplate so as to read and write JSON data. </p>
-<p>Also, we need to convey what sort of data our converter can handle e.g. text, xml, jpeg, json etc. 
-This is done by defining a supported <strong>MediaType</strong> which in our case is MediaType("application","json")</p>
-<p>You may have noticed that the second argument to the getForObject method in the code above is changed from String.class to ProjectData.class.
-This is because the messageCoverters for JSON and the mediaType which our converter can handle have been implemented.
-We can now safely state that the response from the web service is an array of ProjectData.</p>
-<p>Here's our <strong>Android client </strong>side class representing Project data</p>
-<p>[code language="java"]
-@JsonIgnoreProperties( {&quot;class&quot; })
-public class JSONData {
-    private String name;
-    private Integer id;
-    private String owner;
-    private Issue[] issues;
-    …
-    //getter and setters for all
-    …
-}
-[/code]</p>
-<p>here, JsonIgnoreProperties annotation conveys the JSON mapper that these are the properties to be excluded.
-The JSON response contains a class variable which I am ignoring in the code above.
-[sourcecode language="java"]
-{&quot;class&quot;:&quot;com.xyz.Project&quot;,&quot;id&quot;:1,&quot;issues&quot;:[],&quot;name&quot;:&quot;TestProject0&quot;,&quot;owner&quot;:&quot;Test0&quot;}
-[/sourcecode]</p>
-<p>Please note that issues property is declared as an array. This is because with JSON it's easier to work with arrays.</p>
-<p>Note: I was getting <strong>java.lang.VerifyError </strong> when I tried to run the application in my environment and after including jackson-core-asl-1.6.1.jar and jackson-mapper-asl-1.6.1.jar everything seems to be working fine.</p>
+[/sourcecode]
+
+Let's try to understand the code given above
+
+**Line 7:** It creates a restTemplate object. The RestTemplate aides Restful communication with the HTTP servers.
+
+**Line 8:** The restTemplate is assigned a requestFactory. RequestFactory is used for creating HttpClientRequest representing a client side http request.
+
+**Line 9:** The url used is not localhost or the loop back address 127.0.0.1. You might have guessed it already. The application is deployed onto a device or an Android emulator. It is the device that takes the localhost IP not the development machine. To resolve this, I have used the IP address as per my machine's network configuration.
+
+**Line 10:** It is a rest call to the web-service url. Please notice that it is a HTTP GET request as indicated by the name getForObject(). I have specified the String.class as the second argument to the method which means the data returned is to be interpreted as String data.
+
+The method supported by the **RestTemplate** are listed below [code language="java" light="true"] HTTP RestTemplate DELETE delete(String, String...) GET getForObject(String, Class, String...) HEAD headForHeaders(String, String...) OPTIONS optionsForAllow(String, String...) POST postForLocation(String, Object, String...) PUT put(String, Object, String...) [/code] But, when I try to run this code I get an exception
+
+[sourcecode language="java" light="true"] no suitable HttpMessageConverter found for response type [com.xebia.android.Project] and content type [application/json] [/sourcecode] That's because we are not dealing with text data here but JSON data type
+
+Making this work requires few changes to our activity class. Below are the changes to be made [sourcecode language="java"] public class DefaultActivity extends Activity { /*_ Called when the activity is first created. _/ @Override public void onCreate(Bundle savedInstanceState) { ... RestTemplate restTemplate = <strong>getRestTemplate()</strong>; JSONData[] jsonData = restTemplate.getForObject(url,ProjectData[].class); ... }
+    
+    
+    private RestTemplate getRestTemplate() {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setRequestFactory(new CommonsClientHttpRequestFactory());
+        &lt;strong&gt;MappingJacksonHttpMessageConverter jsonConverter = 
+                                new MappingJacksonHttpMessageConverter();
+        List&lt;MediaType&gt; supportedMediaTypes = new ArrayList&lt;MediaType&gt;();
+        supportedMediaTypes.add(new MediaType(&quot;application&quot;,&quot;json&quot;));
+        jsonConverter.setSupportedMediaTypes(supportedMediaTypes);&lt;/strong&gt;
+    
+        List&lt;HttpMessageConverter&lt;?&gt;&gt; listHttpMessageConverters = restTemplate
+                .getMessageConverters();
+        restTemplate.setMessageConverters(listHttpMessageConverters);
+        return restTemplate;
+    }
+    
+
+[/sourcecode]
+
+To handle the JSON array data the response should be understandable by the restTemplate.
+
+As such, in the code above I have registered a ** MappingJacksonHttpMessageConverter **with the restTemplate so as to read and write JSON data. 
+
+Also, we need to convey what sort of data our converter can handle e.g. text, xml, jpeg, json etc. This is done by defining a supported **MediaType** which in our case is MediaType("application","json")
+
+You may have noticed that the second argument to the getForObject method in the code above is changed from String.class to ProjectData.class. This is because the messageCoverters for JSON and the mediaType which our converter can handle have been implemented. We can now safely state that the response from the web service is an array of ProjectData.
+
+Here's our **Android client **side class representing Project data
+
+[code language="java"] @JsonIgnoreProperties( {"class" }) public class JSONData { private String name; private Integer id; private String owner; private Issue[] issues; … //getter and setters for all … } [/code]
+
+here, JsonIgnoreProperties annotation conveys the JSON mapper that these are the properties to be excluded. The JSON response contains a class variable which I am ignoring in the code above. [sourcecode language="java"] {"class":"com.xyz.Project","id":1,"issues":[],"name":"TestProject0","owner":"Test0"} [/sourcecode]
+
+Please note that issues property is declared as an array. This is because with JSON it's easier to work with arrays.
+
+Note: I was getting **java.lang.VerifyError ** when I tried to run the application in my environment and after including jackson-core-asl-1.6.1.jar and jackson-mapper-asl-1.6.1.jar everything seems to be working fine.
+
+   [1]: http://www.springsource.org/spring-android
+   [2]: http://www.springsource.com/download/community
 
 ## Comments
 
